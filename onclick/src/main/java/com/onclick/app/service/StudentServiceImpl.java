@@ -1,12 +1,16 @@
 //211027 jhr ÀÛ¾÷
 package com.onclick.app.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onclick.app.domain.EnrollDTO;
+import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.persistence.StudentService_Mapper;
 
 @Service("studentServiceImpl")
@@ -43,7 +47,36 @@ public class StudentServiceImpl implements StudentService{
 		return cnt;
 	}
 
-	
+	@Override
+	public StudentVO studentLogin(int id, String pwd) {
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("id", id);
+		hm.put("pwd", pwd);
+		
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		StudentVO sv = ssm.studentLogin(hm);
+		
+		return sv;
+	}
+
+	@Override
+	public ArrayList<EnrollDTO> stuLecSelectAll(int id) {
+		
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		ArrayList<EnrollDTO> alist = ssm.stuLecSelectAll(id);
+		
+		return alist;
+	}
+
+	@Override
+	public LecVO stuLecHome(int lidx) {
+		
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		LecVO lv = ssm.stuLecHome(lidx);
+		
+		return lv;
+	}
 
 
 
