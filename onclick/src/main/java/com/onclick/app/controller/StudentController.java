@@ -83,11 +83,28 @@ public class StudentController {
 		return "/lecture/home";
 	}
 	
-	/*@RequestMapping(value="/stuDashBoard.do")
+
+	//학생 로그인 후 대시보드 이동
+	@RequestMapping(value="/student/stuLogin.do")
 	public String studentLogin() {
-		//학생 로그인 
-		return "student/stuDashBoard";
-	}*/
+		String str = "";
+		//로그인
+//		StudentVO sv = ss.studentLogin(id, pwd);
+//		
+//		if(sv != null) { //로그인 성공 시
+//			//강의 이름 가져오기(대시보드-강의목록)
+//			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(id);
+//			model.addAttribute("alist", alist);
+			
+			
+//			str = "/student/stuDashBoard";	
+//		} else {//로그인 실패 시 -> 인덱스 다시 이동
+//			str = "redirect:/";
+//		}
+		
+		return str;
+	}
+	
 	
 	/*
 	@RequestMapping(value="/.do")
@@ -96,7 +113,7 @@ public class StudentController {
 		return null;
 	}
 	
-	@RequestMapping(value="/.do")
+	@RequestMapijping(value="/.do")
 	public String studentModifyAction() {
 		//학생 정보 수정실행
 		return null;
