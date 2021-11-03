@@ -1,14 +1,19 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.onclick.app.domain.EnrollDTO;
+import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.service.StudentService;
 
 @Controller
@@ -40,6 +45,42 @@ public class StudentController {
 		int cnt = ss.studentJoin(sidx, spwd, sname, sphone, semail);
 
 		return "mypage";
+	}
+	
+	//학생 로그인 후 대시보드 이동
+	@RequestMapping(value="/student/stuLogin.do")
+	public String studentLogin( @RequestParam("stuId") int id,
+								@RequestParam("stuPwd") String pwd,
+								Model model) {
+		String str = "";
+		//로그인
+		StudentVO sv = ss.studentLogin(id, pwd);
+		
+		if(sv != null) { //로그인 성공 시
+			//강의 이름 가져오기(대시보드-강의목록)
+			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(id);
+			model.addAttribute("alist", alist);
+			
+			str = "/student/stuDashBoard";	
+		} else {//로그인 실패 시 -> 인덱스 다시 이동
+			str = "redirect:/";
+		}
+		
+		return str;
+	}
+	
+	
+	//학생  강의 홈 이동
+	@RequestMapping(value="/student/lecHome.do")
+	public String studentLecHome(@RequestParam("lidx") int lidx,
+								 Model model) {
+//		System.out.println("test");
+		
+		//학생이 선택한 강의의 메인 홈으로 이동
+		LecVO lv = ss.stuLecHome(lidx);
+		model.addAttribute("lv", lv);
+		
+		return "/lecture/home";
 	}
 	
 	/*@RequestMapping(value="/stuDashBoard.do")

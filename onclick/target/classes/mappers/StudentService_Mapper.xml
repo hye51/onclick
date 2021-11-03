@@ -16,4 +16,19 @@ SET sname=#{sname},spwd=#{spwd},semail=#{semail},sphone=#{sphone}
 WHERE sidx=#{sidx}
 </update>
 
+<select id="studentLogin" parameterType="HashMap" resultType="sv">
+		<![CDATA[select * from onclick_student where sdelYN='N' and sidx=#{id} and spwd=#{pwd}]]>
+	</select>
+	
+	<select id="stuLecSelectAll" parameterType="int" resultType="ed">
+		select a.eidx, a.sidx, a.lidx, b.lname
+			from onclick_enroll a
+			inner join onclick_prolec b
+				on a.lidx = b.lidx
+				where a.sidx=#{id}
+	</select>
+	
+	<select id="stuLecHome" parameterType="int" resultType="lv">
+		select * from onclick_prolec where ldelyn='N' and lidx=#{lidx}
+	</select>
 </mapper>
