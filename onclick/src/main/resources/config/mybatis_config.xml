@@ -2,5 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
      
  <configuration> 
-
+ <typeAliases>
+ <typeAlias alias="sv" type="com.onclick.app.domain.StudentVO"/>
+ <typeAlias alias="ed" type="com.onclick.app.domain.EnrollDTO"/>
+ <typeAlias alias="lv" type="com.onclick.app.domain.LecVO"/>
+ </typeAliases>  
  </configuration>

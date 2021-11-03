@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService{
 		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
 		int cnt = ssm.studentJoin(hm);
 
-		return 0;
+		return cnt;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public StudentVO studentLogin(int id, String pwd) {
-		
+		//학생 로그인
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("id", id);
 		hm.put("pwd", pwd);
@@ -62,7 +62,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public ArrayList<EnrollDTO> stuLecSelectAll(int id) {
-		
+		//학생과목
 		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
 		ArrayList<EnrollDTO> alist = ssm.stuLecSelectAll(id);
 		
@@ -71,7 +71,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public LecVO stuLecHome(int lidx) {
-		
+		//강의홈가기
 		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
 		LecVO lv = ssm.stuLecHome(lidx);
 		

@@ -25,56 +25,52 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value="/student/idCheck.do")
 	public int studentIdCheck(@RequestParam("sidx") String sidx) {
-		//******************************
 		//학생 학번 중복체크 - ajax 이용
-		//******************************
 		int cnt = ss.studentIdChcek(sidx);
 		
 		return cnt;
 	}
-	
 	
 	@RequestMapping(value="/student/joinAction.do")
 	public String studentJoinAction(@RequestParam("sidx") int sidx, 
 									@RequestParam("spwd") String spwd,
 									@RequestParam("sname") String sname,
 									@RequestParam("sphone") int sphone,
-									@RequestParam("semail") String semail
-									) {
+									@RequestParam("semail") String semail) {
 		//학생 회원 가입 
 		int cnt = ss.studentJoin(sidx, spwd, sname, sphone, semail);
 
-		return "mypage";
+		return "redirect:/";
 	}
 	
-	//학생 로그인 후 대시보드 이동
 	@RequestMapping(value="/student/stuLogin.do")
-	public String studentLogin( @RequestParam("stuId") int id,
-								@RequestParam("stuPwd") String pwd,
+	public String studentLogin( @RequestParam("stuId") int sidx,
+								@RequestParam("stuPwd") String spwd,
 								Model model) {
+		//학생 로그인 후 대시보드 이동
 		String str = "";
-		//로그인
-		StudentVO sv = ss.studentLogin(id, pwd);
+		StudentVO sv = ss.studentLogin(sidx, spwd);
 		
-		if(sv != null) { //로그인 성공 시
+		if(sv != null) { 
+			//로그인 성공 시
 			//강의 이름 가져오기(대시보드-강의목록)
-			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(id);
+			System.out.println("로그인 성공");
+			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(sidx);
 			model.addAttribute("alist", alist);
-			
 			str = "/student/stuDashBoard";	
-		} else {//로그인 실패 시 -> 인덱스 다시 이동
+		} else {
+			//로그인 실패 시 
 			str = "redirect:/";
 		}
 		
 		return str;
 	}
 	
-	
+/*	
 	//학생  강의 홈 이동
 	@RequestMapping(value="/student/lecHome.do")
 	public String studentLecHome(@RequestParam("lidx") int lidx,
 								 Model model) {
-//		System.out.println("test");
 		
 		//학생이 선택한 강의의 메인 홈으로 이동
 		LecVO lv = ss.stuLecHome(lidx);
@@ -82,37 +78,15 @@ public class StudentController {
 		
 		return "/lecture/home";
 	}
-	
 
-	//학생 로그인 후 대시보드 이동
-	@RequestMapping(value="/student/stuLogin.do")
-	public String studentLogin() {
-		String str = "";
-		//로그인
-//		StudentVO sv = ss.studentLogin(id, pwd);
-//		
-//		if(sv != null) { //로그인 성공 시
-//			//강의 이름 가져오기(대시보드-강의목록)
-//			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(id);
-//			model.addAttribute("alist", alist);
-			
-			
-//			str = "/student/stuDashBoard";	
-//		} else {//로그인 실패 시 -> 인덱스 다시 이동
-//			str = "redirect:/";
-//		}
-		
-		return str;
-	}
 	
-	
-	/*
-	@RequestMapping(value="/.do")
+	@RequestMapping(value="/student/pwdCheck.do")
 	public String studentModify() {
 		//학생 정보 수정화면
-		return null;
+		return "/student/pwdCheck";
 	}
-	
+*/	
+	/*
 	@RequestMapijping(value="/.do")
 	public String studentModifyAction() {
 		//학생 정보 수정실행
