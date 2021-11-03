@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.StudentService_Mapper">
+
+<select id="studentIdChcek" parameterType="HashMap" resultType="Integer">
+SELECT count(*) as cnt 
+FROM  onclick_student  
+WHERE sdelYn='N'
+AND sidx=#{sidx}
+</select>
+
+<update id="studentJoin" parameterType="HashMap">
+UPDATE onclick_student
+SET sname=#{sname},spwd=#{spwd},semail=#{semail},sphone=#{sphone}
+WHERE sidx=#{sidx}
+</update>
+
+</mapper>
