@@ -17,21 +17,33 @@ WHERE sidx=#{sidx}
 </update>
 
 <select id="studentLogin" parameterType="HashMap" resultType="sv">
-<![CDATA[select * from onclick_student where sdelyn='N' and sidx=#{id} and spwd=#{pwd}]]>
+SELECT * 
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND sidx=#{id} 
+AND spwd=#{pwd}
 </select>
 
 <select id="stuLecSelectAll" parameterType="int" resultType="ed">
-select a.eidx, a.sidx, a.lidx, b.lname
-from onclick_enroll a
-inner join onclick_prolec b
-on a.lidx = b.lidx
-where a.sidx=#{id}
+SELECT a.eidx, a.sidx, a.lidx, b.lname
+FROM onclick_enroll a
+INNER JOIN onclick_prolec b
+ON a.lidx = b.lidx
+WHERE a.sidx=#{id}
 </select>
 	
 <select id="stuLecHome" parameterType="int" resultType="lv">
-select * from onclick_prolec 
-where ldelyn='N' 
-and lidx=#{lidx}
+SELECT * 
+FROM onclick_prolec 
+WHERE ldelyn='N' 
+AND lidx=#{lidx}
+</select>
+
+<select id="studentPwdCheck"  parameterType="HashMap" resultType="Integer">
+SELECT count(*) as cnt
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND spwd=#{spwd}
 </select>
 	
 </mapper>

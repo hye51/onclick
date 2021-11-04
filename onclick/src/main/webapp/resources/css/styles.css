@@ -11798,3 +11798,8 @@ body {
 	color : red;
 	display : none;
 }
+/*회원정보 수정시 비밀번호 틀린경우*/
+.pwdNok{
+	color : red;
+	display : none;
+}
