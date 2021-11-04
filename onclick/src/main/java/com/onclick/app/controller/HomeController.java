@@ -13,6 +13,12 @@ public class HomeController {
 	//@Autowired(required = false)
 	//DriverManagerDataSource db;
 	
+	@RequestMapping(value="/")
+	public String main() {
+		//Main 페이지 전환
+		return "index";
+	}
+	
 	@RequestMapping(value="/join.do")
 	public String join() {
 		//학생,교수 회원 가입 화면
@@ -20,13 +26,8 @@ public class HomeController {
 		//System.out.println("db  : " + db );
 		return "join";
 	}
-/*	
-	@RequestMapping(value="/find.do")
-	public String find() {
-		//학생,교수 비밀번호 찾기 화면
-		return "find";
-	}
 	
+/*	
 	
 	@RequestMapping(value = "/pwdCheck.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
