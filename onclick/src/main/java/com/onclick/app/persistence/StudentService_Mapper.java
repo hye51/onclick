@@ -24,4 +24,9 @@ public interface StudentService_Mapper {
 	//강의홈
 	public LecVO stuLecHome(int lidx);
 	
+	//학생 비밀번호 확인
+	public int studentPwdCheck(HashMap<String,String> hm);
+	
+	//학생 정보 수정 
+	public int studentModifyAction(HashMap<String,Object> hm);
 }

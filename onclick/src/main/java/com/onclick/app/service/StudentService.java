@@ -24,4 +24,10 @@ public interface StudentService {
 	
 	//강의홈가기
 	public LecVO stuLecHome(int lidx);
+	
+	//학생 비밀번호 확인
+	public int studentPwdCheck(String spwd);
+	
+	//학생 정보 수정 
+	public int studentModifyAction(int sidx, String spwd);
 }

@@ -78,6 +78,31 @@ public class StudentServiceImpl implements StudentService{
 		return lv;
 	}
 
+	@Override
+	public int studentPwdCheck(String spwd) {
+		//학생 비밀번호 확인
+		HashMap<String,String> hm = new HashMap<String,String>();
+		hm.put("spwd", spwd);
+		
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		int cnt = ssm.studentPwdCheck(hm);
+
+		return cnt;
+	}
+
+	@Override
+	public int studentModifyAction(int sidx, String spwd) {
+		//학생 정보 수정 
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("sidx", sidx);
+		hm.put("spwd", spwd);
+		
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		int cnt = ssm.studentModifyAction(hm);
+		
+		return cnt;
+	}
+
 
 
 }

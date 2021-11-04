@@ -63,7 +63,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                     <a class="nav-link" href="<%=request.getContextPath()%>/pwdCheck.do">정보 수정</a>
+                                     <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -105,18 +105,17 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">정보 수정</li>
                         </ol>
-                        <form>
+                        <form name="pwdCheck">
                         	<div class="row justify-content-center py-5">
 							    <div class="col-2">
 									<label>비밀번호 확인 </label>
 							    </div>
 								<div class="col-4">
-									<input class="form-control" type="password" placeholder="비밀번호를 입력하세요" />
+									<input class="form-control" type="password" id="pwd" placeholder="비밀번호를 입력하세요" />
+									<span class="pwdNok">비밀번호가 올바르지 않습니다.</span>
 								</div>
 								<div class="col-4">
-								<a href="<%=request.getContextPath()%>/studentModify.do" >
-									<button type="button" class="btn btn-secondary">확인</button>
-								</a>
+									<button type="button" class="btn btn-secondary" id="check">확인</button>
 								</div>
 							</div>
                         </form>                     
@@ -143,5 +142,30 @@
         <script src="../resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../resources/js/datatables-simple-demo.js"></script>
+        <!-- jquery 3.3.1 라이브러리 활용 -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">    
+        $(function(){
+	        $("#check").click(function(){ // 확인버튼을 클릭하면 
+	        	var pwd = $('#pwd').val();
+	        	$.ajax({
+	        		url:"<%=request.getContextPath()%>/student/pwdCheckAction.do",
+	        		type:'post',
+	        		data:{"pwd" : pwd},
+	        		success:function(cnt){
+	        			if(cnt==1){
+	        				//비밀번호가 올바르며 수정페이지로 전환 
+	        				location.href="<%=request.getContextPath()%>/student/stuModify.do";
+	        			}else{
+							 $('.pwdNok').css("display","inline-block");	        				
+	        			}
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.");
+	        		}
+	        	});
+	        });
+        });
+        </script>
     </body>
 </html>

@@ -4,6 +4,9 @@ package com.onclick.app.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,33 +44,30 @@ public class StudentController {
 									RedirectAttributes rttr ) {
 		//학생 회원 가입 
 		int cnt = ss.studentJoin(sidx, spwd, sname, sphone, semail);
-		rttr.addFlashAttribute("msg", "회원가입에 성공하였습니다");
-		System.out.println("msggg ");
+		rttr.addFlashAttribute("joinOk", "회원가입에 성공하였습니다");
+		
 		return "redirect:/";
 	}
-	
 
 	
 	@RequestMapping(value="/student/stuLogin.do")
 	public String studentLogin( @RequestParam("stuId") int sidx,
 								@RequestParam("stuPwd") String spwd,
-								RedirectAttributes rttr) {
+								Model model) {
 		//학생 로그인 후 대시보드 이동
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
+		System.out.println("login id is !! " + sv.getSidx());
 		
 		if(sv != null) { 
 			//로그인 성공 시
 			//강의 이름 가져오기(대시보드-강의목록)
-			System.out.println("로그인 성공");
 			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(sidx);
-			rttr.addAttribute("alist", alist);
-			rttr.addFlashAttribute("msg2", "로그인 성공");
-			System.out.println("======");
+			model.addAttribute("alist", alist);
 			str = "redirect:/student/stuDashBoard.do";	
 		} else {
 			//로그인 실패 시 
-			rttr.addFlashAttribute("msg3", "로그인 실패");
+			//rttr.addFlashAttribute("loginNok", "로그인에 실패하였습니다.");
 			str = "redirect:/";
 		}
 		
@@ -76,8 +76,7 @@ public class StudentController {
 	
 	@RequestMapping(value="/student/stuDashBoard.do")
 	public String studentLecHome() {
-
-		
+		//학생 대시보드 이동 
 		return "/student/stuDashBoard";
 	}
 /*	
@@ -95,18 +94,38 @@ public class StudentController {
 */
 	
 	@RequestMapping(value="/student/pwdCheck.do")
-	public String studentModify() {
-		//학생 정보 수정화면
+	public String studentpwdCheck() {
+		//학생 정보수정 - 비밀번호 확인 페이지
 		return "/student/pwdCheck";
 	}
 	
-	/*
-	@RequestMapijping(value="/.do")
-	public String studentModifyAction() {
-		//학생 정보 수정실행
-		return null;
+	@ResponseBody
+	@RequestMapping(value="/student/pwdCheckAction.do")
+	public int studentpwdCheckAction(@RequestParam("pwd") String spwd) {
+		//학생 정보수정 - 비밀번호 확인 실행 
+		int cnt = ss.studentPwdCheck(spwd);
+		System.out.println("비밀번호 확인 메소드 ~ " + cnt );
+		return cnt;
 	}
 	
+	@RequestMapping(value="/student/stuModify.do")
+	public String studentModify(HttpServletRequest request) {
+		//학생 정보 수정화면 
+		System.out.println("회원 정보 수정 메소드 in ~~~ ");
+		HttpSession session = request.getSession();
+		int sidx = (Integer)request.getAttribute("sidx");
+		System.out.println("sidx ===== " + sidx);
+		return "/student/stuModify";
+	}
+
+	@RequestMapping(value="/student/stuModifyAction.do")
+	public String studentModifyAction() {
+		//학생 정보 수정실행
+		
+		return "redirect:/student/pwdCheck.do";
+	}
+
+/*	
 	@RequestMapping(value="/.do")
 	public String studentLogout() {
 		//학생 로그아웃

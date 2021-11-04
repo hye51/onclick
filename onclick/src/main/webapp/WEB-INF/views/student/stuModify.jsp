@@ -11,14 +11,14 @@
         <meta name="author" content="" />
         <title>정보 수정</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../app/resources/css/styles.css" rel="stylesheet" />
+        <link href="../resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>">
-           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="../resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -32,7 +32,7 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
+          <button type="button"><img alt="" src="../resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -51,7 +51,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/user.png">
+						<img alt="" src="../resources/assets/img/user.png">
 							홍길동님
 						</div>
                         <div class="nav">
@@ -63,7 +63,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/mypage.do">정보 수정</a>
+                                     <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -106,45 +106,47 @@
                             <li class="breadcrumb-item active">정보 수정</li>
                         </ol>
                         <form>
-                        	<!-- 211027 -->
-							<div class="row mb-3">
-							  <label class="col-sm-2 col-form-label">비밀번호 변경</label>
-							  <div class="col-sm-10">
-							    <input type="password" class="form-control">
-							  </div>
-							</div>
-							<div class="row mb-3">
-							  <label class="col-sm-2 col-form-label">비밀번호 확인</label>
-							  <div class="col-sm-10">
-							    <input type="password" class="form-control" id="inputPassword3">
-							  </div>
-							</div>
-							<div class="row mb-3">
-							  <label class="col-sm-2 col-form-label">이메일</label>
-								<div class="col-sm-10">
-									<div class="input-group mb-3">
-									  <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-									  <span class="input-group-text">@</span>
-									  <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+                        	<div class="row justify-content-center py-5">
+	                        	<!-- 211027 -->
+								<div class="row mb-3">
+								  <label class="col-sm-2 col-form-label">비밀번호 변경</label>
+								  <div class="col-sm-6">
+								    <input type="password" class="form-control">
+								  </div>
+								</div>
+								<div class="row mb-3">
+								  <label class="col-sm-2 col-form-label">비밀번호 확인</label>
+								  <div class="col-sm-6">
+								    <input type="password" class="form-control" id="inputPassword3">
+								  </div>
+								</div>
+								<div class="row mb-3">
+								  <label class="col-sm-2 col-form-label">이메일</label>
+									<div class="col-sm-6">
+										<div class="input-group mb-3">
+										  <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+										  <span class="input-group-text">@</span>
+										  <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+										</div>
 									</div>
 								</div>
+								<div class="row mb-3">
+								  <label class="col-sm-2 col-form-label">연락처</label>
+								  <div class="col-sm-2">
+								    <input type="text" class="form-control">
+								  </div>
+								  -
+								  <div class="col-sm-2">
+								    <input type="text" class="form-control">
+								  </div>
+								  -
+								  <div class="col-sm-2">
+								    <input type="text" class="form-control">
+								  </div>
+								</div>
 							</div>
-							<div class="row mb-3">
-							  <label class="col-sm-2 col-form-label">연락처</label>
-							  <div class="col-sm">
-							    <input type="text" class="form-control">
-							  </div>
-							  -
-							  <div class="col-sm">
-							    <input type="text" class="form-control">
-							  </div>
-							  -
-							  <div class="col-sm">
-							    <input type="text" class="form-control">
-							  </div>
-							</div>
-							<button type="button" class="btn btn-primary">수정</button>
-							<button type="button" class="btn btn-secondary">취소</button>
+								<button type="button" class="btn btn-primary">수정</button>
+								<button type="button" class="btn btn-secondary">취소</button>
                         </form>                     
                     </div>
                 </main>
@@ -163,11 +165,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/scripts.js"></script>
+        <script src="../resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="../resources/assets/demo/chart-area-demo.js"></script>
+        <script src="../resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="../resources/js/datatables-simple-demo.js"></script>
     </body>
 </html>
