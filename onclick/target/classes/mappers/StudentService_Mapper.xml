@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.StudentService_Mapper">
 
-<select id="studentIdChcek" parameterType="HashMap" resultType="Integer">
+<select id="studentIdChcek" parameterType="Integer" resultType="Integer">
 SELECT count(*) as cnt 
 FROM  onclick_student  
 WHERE sdelYn='N'
@@ -45,5 +45,12 @@ FROM onclick_student
 WHERE sdelyn='N' 
 AND spwd=#{spwd}
 </select>
+	
+<select id="studentSelectOne"  parameterType="Integer" resultType="sv">
+SELECT *
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND sidx=#{sidx}
+</select>	
 	
 </mapper>

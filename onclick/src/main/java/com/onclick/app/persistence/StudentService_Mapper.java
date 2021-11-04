@@ -13,7 +13,7 @@ public interface StudentService_Mapper {
 	public int studentJoin(HashMap<String,Object> hm);
 	
 	//학생 아이디 중복 체크
-	public int studentIdChcek(HashMap<String,String> hm);
+	public int studentIdChcek(int sidx);
 	
 	//학생로그인
 	public StudentVO studentLogin(HashMap<String,Object> hm);
@@ -29,4 +29,7 @@ public interface StudentService_Mapper {
 	
 	//학생 정보 수정 
 	public int studentModifyAction(HashMap<String,Object> hm);
+	
+	//학생 정보 가져오기
+	public StudentVO studentSelectOne(int sidx);
 }

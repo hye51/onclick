@@ -28,7 +28,7 @@ public class StudentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/student/idCheck.do")
-	public int studentIdCheck(@RequestParam("sidx") String sidx) {
+	public int studentIdCheck(@RequestParam("sidx") int sidx) {
 		//학생 학번 중복체크 - ajax 이용
 		int cnt = ss.studentIdChcek(sidx);
 		
@@ -39,7 +39,7 @@ public class StudentController {
 	public String studentJoinAction(@RequestParam("sidx") int sidx, 
 									@RequestParam("spwd") String spwd,
 									@RequestParam("sname") String sname,
-									@RequestParam("sphone") int sphone,
+									@RequestParam("sphone") String sphone,
 									@RequestParam("semail") String semail,
 									RedirectAttributes rttr ) {
 		//학생 회원 가입 
@@ -53,21 +53,22 @@ public class StudentController {
 	@RequestMapping(value="/student/stuLogin.do")
 	public String studentLogin( @RequestParam("stuId") int sidx,
 								@RequestParam("stuPwd") String spwd,
-								Model model) {
+								RedirectAttributes rttr, 
+								HttpSession session) {
 		//학생 로그인 후 대시보드 이동
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
-		System.out.println("login id is !! " + sv.getSidx());
+		
+		//학번 세션에 저장 
+		session.setAttribute("sidx", sidx);
 		
 		if(sv != null) { 
 			//로그인 성공 시
-			//강의 이름 가져오기(대시보드-강의목록)
-			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(sidx);
-			model.addAttribute("alist", alist);
+			rttr.addAttribute("sidx", sidx);
 			str = "redirect:/student/stuDashBoard.do";	
-		} else {
+		} else{
 			//로그인 실패 시 
-			//rttr.addFlashAttribute("loginNok", "로그인에 실패하였습니다.");
+			rttr.addFlashAttribute("loginNok", "로그인에 실패하였습니다.");
 			str = "redirect:/";
 		}
 		
@@ -75,8 +76,12 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/student/stuDashBoard.do")
-	public String studentLecHome() {
+	public String studenDashBoard(@RequestParam("sidx") String sidx, RedirectAttributes rttr) {
 		//학생 대시보드 이동 
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(Integer.parseInt(sidx));
+		rttr.addAttribute("alist", alist);
+		
 		return "/student/stuDashBoard";
 	}
 /*	
@@ -102,25 +107,35 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value="/student/pwdCheckAction.do")
 	public int studentpwdCheckAction(@RequestParam("pwd") String spwd) {
-		//학생 정보수정 - 비밀번호 확인 실행 
+		//학생 정보수정 - 비밀번호 확인 실행 ajax
 		int cnt = ss.studentPwdCheck(spwd);
-		System.out.println("비밀번호 확인 메소드 ~ " + cnt );
+		
 		return cnt;
 	}
 	
 	@RequestMapping(value="/student/stuModify.do")
-	public String studentModify(HttpServletRequest request) {
-		//학생 정보 수정화면 
-		System.out.println("회원 정보 수정 메소드 in ~~~ ");
-		HttpSession session = request.getSession();
-		int sidx = (Integer)request.getAttribute("sidx");
-		System.out.println("sidx ===== " + sidx);
+	public String studentModify(HttpSession session, HttpServletRequest request) {
+		//학생 정보 수정화면 이동
+		int sidx = (Integer)session.getAttribute("sidx");
+		StudentVO sv = ss.studentSelectOne(sidx);
+		request.setAttribute("sv", sv);
+
 		return "/student/stuModify";
 	}
 
 	@RequestMapping(value="/student/stuModifyAction.do")
-	public String studentModifyAction() {
+	public String studentModifyAction(@RequestParam("spwd") String spwd,
+									  @RequestParam("semail1") String semail1,
+									  @RequestParam("semail2") String semail2,
+									  @RequestParam("sphone1") String sphone1,
+									  @RequestParam("sphone2") String sphone2,
+									  @RequestParam("sphone3") String sphone3
+									) {
 		//학생 정보 수정실행
+		String semail = semail1+"@"+semail2;
+		System.out.println(semail);
+		
+		String sphone = sphone1 + "-" + sphone2 + "-" +sphone3;
 		
 		return "redirect:/student/pwdCheck.do";
 	}
