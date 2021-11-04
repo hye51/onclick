@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
@@ -36,17 +37,21 @@ public class StudentController {
 									@RequestParam("spwd") String spwd,
 									@RequestParam("sname") String sname,
 									@RequestParam("sphone") int sphone,
-									@RequestParam("semail") String semail) {
+									@RequestParam("semail") String semail,
+									RedirectAttributes rttr ) {
 		//학생 회원 가입 
 		int cnt = ss.studentJoin(sidx, spwd, sname, sphone, semail);
-
+		rttr.addFlashAttribute("msg", "회원가입에 성공하였습니다");
+		System.out.println("msggg ");
 		return "redirect:/";
 	}
+	
+
 	
 	@RequestMapping(value="/student/stuLogin.do")
 	public String studentLogin( @RequestParam("stuId") int sidx,
 								@RequestParam("stuPwd") String spwd,
-								Model model) {
+								RedirectAttributes rttr) {
 		//학생 로그인 후 대시보드 이동
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
@@ -56,16 +61,25 @@ public class StudentController {
 			//강의 이름 가져오기(대시보드-강의목록)
 			System.out.println("로그인 성공");
 			ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(sidx);
-			model.addAttribute("alist", alist);
-			str = "/student/stuDashBoard";	
+			rttr.addAttribute("alist", alist);
+			rttr.addFlashAttribute("msg2", "로그인 성공");
+			System.out.println("======");
+			str = "redirect:/student/stuDashBoard.do";	
 		} else {
 			//로그인 실패 시 
+			rttr.addFlashAttribute("msg3", "로그인 실패");
 			str = "redirect:/";
 		}
 		
 		return str;
 	}
 	
+	@RequestMapping(value="/student/stuDashBoard.do")
+	public String studentLecHome() {
+
+		
+		return "/student/stuDashBoard";
+	}
 /*	
 	//학생  강의 홈 이동
 	@RequestMapping(value="/student/lecHome.do")
@@ -78,14 +92,14 @@ public class StudentController {
 		
 		return "/lecture/home";
 	}
-
+*/
 	
 	@RequestMapping(value="/student/pwdCheck.do")
 	public String studentModify() {
 		//학생 정보 수정화면
 		return "/student/pwdCheck";
 	}
-*/	
+	
 	/*
 	@RequestMapijping(value="/.do")
 	public String studentModifyAction() {
