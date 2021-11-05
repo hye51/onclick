@@ -78,7 +78,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/student/stuDashBoard.do")
-	public String studenDashBoard(@RequestParam("sidx") String sidx, Model model) {
+	public String DashBoard(@RequestParam("sidx") String sidx, Model model) {
 		//학생 대시보드 이동 
 		//강의 이름 가져오기(대시보드-강의목록)
 		ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(Integer.parseInt(sidx));

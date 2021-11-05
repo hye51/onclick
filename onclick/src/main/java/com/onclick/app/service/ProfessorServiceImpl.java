@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onclick.app.domain.ProfessorVO;
 import com.onclick.app.persistence.ProfessorService_Mapper;
 
 @Service("professorServiceImpl")
@@ -40,6 +41,19 @@ public class ProfessorServiceImpl implements ProfessorService {
 		int cnt = psm.professorJoin(hm);
 		
 		return cnt;
+	}
+
+	@Override
+	public ProfessorVO professorLogin(int pidx, String ppwd) {
+		//교수 로그인 
+		HashMap<String, Object> hm = new HashMap<String,Object>();
+		hm.put("pidx", pidx);
+		hm.put("ppwd", ppwd);
+		
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		ProfessorVO pv  = psm.professorLogin(hm);
+		
+		return pv;
 	}
 
 }

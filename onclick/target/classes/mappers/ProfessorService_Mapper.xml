@@ -16,4 +16,12 @@ SET pname=#{pname},ppwd=#{ppwd},pemail=#{pemail},pphone=#{pphone}
 WHERE pidx=#{pidx}
 </update>
 
+<select id="professorLogin" parameterType="HashMap" resultType="pv">
+SELECT *
+FROM  onclick_professor  
+WHERE pdelYn='N'
+AND pidx=#{pidx}
+AND ppwd=#{ppwd}
+</select>
+
 </mapper>

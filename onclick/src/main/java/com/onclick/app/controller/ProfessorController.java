@@ -1,11 +1,20 @@
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.ProfessorVO;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.ProfessorService;
 
 @Controller
@@ -13,6 +22,9 @@ public class ProfessorController {
 
 	@Autowired
 	ProfessorService ps;
+	
+	@Autowired
+	LecService ls;
 	
 	@ResponseBody
 	@RequestMapping(value="/professor/idCheck.do")
@@ -32,15 +44,49 @@ public class ProfessorController {
 		//교수 회원가입 완료
 		int cnt = ps.professorJoin(pidx, pname, ppwd, pphone, pemail);
 		
-		return "mypage";
+		return "redirect:/";
 	}
-/*	
-	@RequestMapping(value="*.do")
-	public String professorLogin() {
-		//교수 로그인
-		return "";
-	}
+
+	@RequestMapping(value="/professor/proLogin.do")
+	public String professorLogin(@RequestParam("pidx") int pidx,
+								 @RequestParam("ppwd") String ppwd,
+								 RedirectAttributes rttr,
+								 HttpSession session) {
+		//교수 로그인 
+		ProfessorVO pv = ps.professorLogin(pidx, ppwd);
 		
+		String location = "";
+		if(pv != null) {
+			//login 성공시 
+			System.out.println("pro longing ");
+			//사번 저장 
+			session.setAttribute("pidx", pidx);
+			
+			location ="redirect:/professor/proDashBoard.do";	
+		}else {
+			//login 실패시 
+			rttr.addFlashAttribute("loginNok", "로그인 실패하셨습니다");
+			location ="redirect:/";
+		}
+		return location;
+	}
+	
+	@RequestMapping(value="/professor/proDashBoard.do")
+	public String professorLecList(HttpSession session, Model model) {
+		//대시보드 이동
+		
+		int pidx = (Integer)session.getAttribute("pidx");
+		
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		for(LecVO lv : alist) {
+			System.out.println("****************");
+			System.out.println(lv.getLname());			
+		}
+		return "/professor/proDashBoard" ;
+	}
+/*		
 	@RequestMapping(value="*.do")
 	public String professorModify() {
 		//교수 정보 수정 화면

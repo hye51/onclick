@@ -4,6 +4,7 @@
  <configuration> 
  <typeAliases>
  <typeAlias alias="sv" type="com.onclick.app.domain.StudentVO"/>
+ <typeAlias alias="pv" type="com.onclick.app.domain.ProfessorVO"/>
  <typeAlias alias="ed" type="com.onclick.app.domain.EnrollDTO"/>
  <typeAlias alias="lv" type="com.onclick.app.domain.LecVO"/>
  <typeAlias alias="tv" type="com.onclick.app.domain.TaskVO"/>
