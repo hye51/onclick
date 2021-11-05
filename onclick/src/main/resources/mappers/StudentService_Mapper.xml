@@ -52,5 +52,22 @@ FROM onclick_student
 WHERE sdelyn='N' 
 AND sidx=#{sidx}
 </select>	
+
+<select id="stuTaskSelectAll" parameterType="int" resultType="HashMap">
+select a.eidx, a.sidx, a.lidx, b.tuname
+from onclick_enroll a
+inner join onclick_taskupload b
+on a.lidx = b.lidx
+where a.sidx=#{id}
+</select>
+
+<select id="stuTaskContent" parameterType="String" resultType="tv">
+select *
+from onclick_taskupload
+where tedelyn='n'
+and tuname=#{tuname}
+order by tudate desc
+limit 5
+</select>
 	
 </mapper>

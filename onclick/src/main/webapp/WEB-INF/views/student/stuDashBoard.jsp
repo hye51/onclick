@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="com.onclick.app.domain.*" %>
+
+<%ArrayList<EnrollDTO> alist = (ArrayList<EnrollDTO>)request.getAttribute("alist"); %>
+<%List<Map<String,Object>>  list = (List<Map<String,Object>>)request.getAttribute("list"); %>
+<%List<String> tunameList = (List<String>)request.getAttribute("tunameList"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -94,9 +102,9 @@
                             </a>
                             <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/home.do">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
+                                     	<% for(EnrollDTO ed : alist) { %>
+	                                    <a class="nav-link" href="<%=request.getContextPath()%>/student/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></a>
+                                    <% } %>
                                 </nav>
                             </div>
                              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -131,8 +139,13 @@
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">강의목록</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            <table class="text-center">
+                                       	<% for(EnrollDTO ed : alist) { %>
+											<tr>
+											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/student/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></td>
+											</tr>
+										<% } %>
+                                       </table>
                                     </div>
                                 </div>
                             </div>
@@ -198,5 +211,8 @@
         <script src="../resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        
+        </script>
     </body>
 </html>

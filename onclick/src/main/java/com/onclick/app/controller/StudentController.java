@@ -3,6 +3,8 @@ package com.onclick.app.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -76,32 +78,50 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/student/stuDashBoard.do")
-	public String studenDashBoard(@RequestParam("sidx") String sidx, RedirectAttributes rttr) {
+	public String studenDashBoard(@RequestParam("sidx") String sidx, Model model) {
 		//학생 대시보드 이동 
 		//강의 이름 가져오기(대시보드-강의목록)
 		ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(Integer.parseInt(sidx));
-		rttr.addAttribute("alist", alist);
+		model.addAttribute("alist", alist);
+		
+		//대시보드-과제목록
+		List<Map<String,Object>> list = ss.stuTaskSelectAll(Integer.parseInt(sidx));
+		List<String> tunameList = new ArrayList<String>();
+		
+		for(Map<String,Object> data : list) {
+			tunameList.add(data.get("TUNAME").toString());
+		}
+
+		model.addAttribute("list", list);
+		model.addAttribute("tunameList", tunameList);
 		
 		return "/student/stuDashBoard";
 	}
-/*	
-	//학생  강의 홈 이동
+
 	@RequestMapping(value="/student/lecHome.do")
 	public String studentLecHome(@RequestParam("lidx") int lidx,
 								 Model model) {
 		
-		//학생이 선택한 강의의 메인 홈으로 이동
+		//대시보드 강의 목록에서 강의 메인 홈으로 넘어가기
 		LecVO lv = ss.stuLecHome(lidx);
 		model.addAttribute("lv", lv);
 		
-		return "/lecture/home";
+		return "lecture/home";
 	}
-*/
 	
 	@RequestMapping(value="/student/pwdCheck.do")
 	public String studentpwdCheck() {
 		//학생 정보수정 - 비밀번호 확인 페이지
+		
 		return "/student/pwdCheck";
+	}
+	
+	@RequestMapping(value="/student/taskContent.do")
+	public String studentTaskContent(@RequestParam("tuname") String tuname,
+									 Model model) {
+		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
+		
+		return "";
 	}
 	
 	@ResponseBody
@@ -133,8 +153,6 @@ public class StudentController {
 									) {
 		//학생 정보 수정실행
 		String semail = semail1+"@"+semail2;
-		System.out.println(semail);
-		
 		String sphone = sphone1 + "-" + sphone2 + "-" +sphone3;
 		
 		return "redirect:/student/pwdCheck.do";

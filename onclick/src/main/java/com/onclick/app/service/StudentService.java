@@ -3,10 +3,13 @@ package com.onclick.app.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.domain.TaskVO;
 
 public interface StudentService {
 
@@ -20,8 +23,11 @@ public interface StudentService {
 	public StudentVO studentLogin(int id, String pwd);
 	
 	//학생과목
-	public ArrayList<EnrollDTO> stuLecSelectAll(int id);
+	public ArrayList<EnrollDTO> stuLecSelectAll(int sidx);
 	
+	//학생과제
+	public List<Map<String,Object>> stuTaskSelectAll(int sidx);
+		
 	//강의홈가기
 	public LecVO stuLecHome(int lidx);
 	
@@ -33,4 +39,7 @@ public interface StudentService {
 	
 	//학생 정보 가져오기
 	public StudentVO studentSelectOne(int sidx);
+	
+	//대시보드에서 과제 내용보기로 이동
+	public TaskVO stuTaskContent(String tuname);
 }
