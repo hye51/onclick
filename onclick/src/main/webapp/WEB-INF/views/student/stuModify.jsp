@@ -1,6 +1,8 @@
 <!-- 211027 jhr 작업 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ page import="com.onclick.app.domain.*" %>    
+<% StudentVO sv = (StudentVO)request.getAttribute("sv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -105,48 +107,48 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">정보 수정</li>
                         </ol>
-                        <form>
+                        <form name="frm">
                         	<div class="row justify-content-center py-5">
 	                        	<!-- 211027 -->
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">비밀번호 변경</label>
 								  <div class="col-sm-6">
-								    <input type="password" class="form-control">
+								    <input type="password" class="form-control" name="spwd" value="<%=sv.getSpwd()%>">
 								  </div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">비밀번호 확인</label>
 								  <div class="col-sm-6">
-								    <input type="password" class="form-control" id="inputPassword3">
+								    <input type="password" class="form-control" name="spwd2">
 								  </div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">이메일</label>
 									<div class="col-sm-6">
 										<div class="input-group mb-3">
-										  <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+										  <input type="text" class="form-control" value="" name="semail1">
 										  <span class="input-group-text">@</span>
-										  <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+										  <input type="text" class="form-control" value="" name="semail2" >
 										</div>
 									</div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">연락처</label>
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control">
+								    <input type="text" class="form-control" value="" name="sphone1">
 								  </div>
 								  -
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control">
+								    <input type="text" class="form-control" value="" name="sphone2" >
 								  </div>
 								  -
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control">
+								    <input type="text" class="form-control" value="" name="sphone3">
 								  </div>
 								</div>
 							</div>
-								<button type="button" class="btn btn-primary">수정</button>
-								<button type="button" class="btn btn-secondary">취소</button>
+								<button type="button" class="btn btn-primary" onclick="modify(); return false;">수정</button>
+								<button type="reset" class="btn btn-primary" >취소</button>
                         </form>                     
                     </div>
                 </main>
@@ -171,5 +173,37 @@
         <script src="../resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../resources/js/datatables-simple-demo.js"></script>
+    	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+        //emil split
+        var beforeEmail= "<%=sv.getSemail()%>";
+        var afterEmail = beforeEmail.split('@');
+        $('input[name=semail1]').attr('value',afterEmail[0]);
+        $('input[name=semail2]').attr('value',afterEmail[1]);
+        
+        //phone split
+        var beforePhone= "<%=sv.getSphone()%>";
+        var afterPhone = beforePhone.split('-');
+        $('input[name=sphone1]').attr('value',afterPhone[0]);
+        $('input[name=sphone2]').attr('value',afterPhone[1]);
+        $('input[name=sphone3]').attr('value',afterPhone[2]);
+        
+        function modify(){
+        	var fm = document.frm;
+        	 if(fm.semail1.value == "" || fm.semail2.value == "" ){
+ 				fm.semail1.focus();
+ 				alert("이메일을 입력하세요");
+ 				return false;
+        	 }else if(fm.sphone1.value == "" || fm.sphone2.value == ""){
+				fm.pphone1.focus();
+				alert("연락처를 입력하세요");
+				return false;
+			}
+			fm.action="<%=request.getContextPath()%>/student/stuModifyAction.do";
+			fm.method = "post";
+			fm.submit();
+			return;
+        };
+        </script>
     </body>
 </html>

@@ -11,10 +11,10 @@ import com.onclick.app.domain.StudentVO;
 public interface StudentService {
 
 	//학생 아이디 중복체크
-	public int studentIdChcek(String sidx);
+	public int studentIdChcek(int sidx);
 	
 	//학생회원가입
-	public int studentJoin(int sidx, String spwd,String sname,int sphone,String semail);
+	public int studentJoin(int sidx, String spwd,String sname,String sphone,String semail);
 	
 	//학생로그인
 	public StudentVO studentLogin(int id, String pwd);
@@ -30,4 +30,7 @@ public interface StudentService {
 	
 	//학생 정보 수정 
 	public int studentModifyAction(int sidx, String spwd);
+	
+	//학생 정보 가져오기
+	public StudentVO studentSelectOne(int sidx);
 }

@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService{
 	SqlSession sqlSession;
 	
 	@Override
-	public int studentJoin(int sidx, String spwd,String sname,int sphone,String semail) {
+	public int studentJoin(int sidx, String spwd,String sname,String sphone,String semail) {
 		//학생 가입
 		HashMap<String,Object> hm = new HashMap<String,Object>();
 		hm.put("sidx", sidx);
@@ -36,13 +36,10 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public int studentIdChcek(String sidx) {
+	public int studentIdChcek(int sidx) {
 		//학생 아이디 중복 체크
-		HashMap<String,String> hm = new HashMap<String,String>();
-		hm.put("sidx", sidx);
-	
 		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
-		int cnt = ssm.studentIdChcek(hm);
+		int cnt = ssm.studentIdChcek(sidx);
 		
 		return cnt;
 	}
@@ -103,6 +100,14 @@ public class StudentServiceImpl implements StudentService{
 		return cnt;
 	}
 
+	@Override
+	public StudentVO studentSelectOne(int sidx) {
+		//학생정보 가져오기
+		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
+		StudentVO sv = ssm.studentSelectOne(sidx);
+		
+		return sv;
+	}
 
 
 }

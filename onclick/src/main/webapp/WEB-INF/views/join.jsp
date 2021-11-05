@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="col-md-3">	
                                             <!-- 학번 중복 체크 -->
-                                            <input class="form-control" id="studentId" name="sidx" type="text" placeholder="학번을 입력하세요"  required oninput="checkId()"/>  
+                                            <input class="form-control" id="studentId" name="sidx" type="number" placeholder="학번을 입력하세요"  required oninput="checkId()"/>  
                                             <span class="sidUseOk">사용 가능한 학번입니다.</span>
                                             <span class="sidUseNok">등록되지 않은 학번입니다.</span>
                                         </div> 
@@ -77,7 +77,7 @@
                                           	<label>연락처</label>
                                           </div>
                                           <div class="col-md-3">	
-                                              <input class="form-control" name="sphone" type="number" placeholder="전화번호를 입력하세요" />
+                                              <input class="form-control" name="sphone" type="text" placeholder="전화번호를 입력하세요" />
                                           </div>	                                                    
                                       </div>
 									  <div class="row">
@@ -137,7 +137,7 @@
                                           	<label>연락처</label>
                                           </div>
                                           <div class="col-md-3">	
-                                              <input class="form-control" name="pphone" type="number" placeholder="전화번호를 입력하세요" />
+                                              <input class="form-control" name="pphone" type="text" placeholder="전화번호를 입력하세요" />
                                           </div>	                                                    
                                       </div>
 									  <div class="row">
