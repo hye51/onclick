@@ -87,7 +87,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/pwdCheck.do">정보 수정</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -98,7 +98,7 @@
                             <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                    <%for(LecVO lv : alist){%>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/home.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a>
                                    <% } %>
                                 </nav>
                             </div>
@@ -138,8 +138,9 @@
 								</thead>
 								<tbody>
 									<tr>
-                       				 <%for(LecVO lv : alist){%>
-										<th scope="row">1</th>
+                       				 <%int i=1 ;
+                       				 for(LecVO lv : alist){ %>
+										<th scope="row"><%=i++%></th>
 									    <td><%=lv.getLname()%></td>
 									</tr>
 									<%} %>

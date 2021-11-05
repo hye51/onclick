@@ -9,4 +9,6 @@ public interface LecService_Mapper {
 	//강의 리스트 가져오기 
 	public ArrayList<LecVO> lecSelectAll(int pidx);
 	
+	//강의홈
+	public LecVO lecHome(int lidx);
 }

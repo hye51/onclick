@@ -12,4 +12,7 @@ public interface ProfessorService {
 	
 	//교수 로그인 
 	public ProfessorVO professorLogin(int pidx, String ppwd);
+	
+	//교수 비밀번호 확인
+	public int proPwdCheck(String ppwd);
 }

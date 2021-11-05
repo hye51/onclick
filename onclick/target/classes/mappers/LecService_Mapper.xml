@@ -8,6 +8,12 @@ SELECT *
 FROM  onclick_prolec 
 WHERE pidx=#{pidx}
 </select>
-
+	
+<select id="lecHome" parameterType="int" resultType="lv">
+SELECT * 
+FROM onclick_prolec 
+WHERE ldelyn='N' 
+AND lidx=#{lidx}
+</select>
 
 </mapper>

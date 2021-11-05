@@ -15,4 +15,6 @@ public interface ProfessorService_Mapper {
 	//교수 로그인 
 	public ProfessorVO professorLogin(HashMap<String,Object> hm);
 	
+	//교수 비밀번호 확인
+	public int proPwdCheck(HashMap<String,String> hm);
 }

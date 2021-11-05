@@ -70,15 +70,6 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public LecVO stuLecHome(int lidx) {
-		//강의홈가기
-		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
-		LecVO lv = ssm.stuLecHome(lidx);
-		
-		return lv;
-	}
-
-	@Override
 	public int studentPwdCheck(String spwd) {
 		//학생 비밀번호 확인
 		HashMap<String,String> hm = new HashMap<String,String>();

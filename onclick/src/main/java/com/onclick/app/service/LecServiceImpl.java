@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.persistence.LecService_Mapper;
+import com.onclick.app.persistence.StudentService_Mapper;
 
 @Service("lecServiceImpl")
 public class LecServiceImpl implements LecService{
@@ -22,6 +23,15 @@ public class LecServiceImpl implements LecService{
 		ArrayList<LecVO> alist = lsm.lecSelectAll(pidx);
 		
 		return alist;
+	}
+
+	@Override
+	public LecVO lecHome(int lidx) {
+		//강의홈가기
+		LecService_Mapper lsm = sqlSession.getMapper(LecService_Mapper.class);
+		LecVO lv = lsm.lecHome(lidx);
+		
+		return lv;
 	}
 
 }

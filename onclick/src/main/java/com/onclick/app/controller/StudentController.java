@@ -97,24 +97,6 @@ public class StudentController {
 		
 		return "/student/stuDashBoard";
 	}
-
-	@RequestMapping(value="/student/lecHome.do")
-	public String studentLecHome(@RequestParam("lidx") int lidx,
-								 Model model) {
-		
-		//대시보드 강의 목록에서 강의 메인 홈으로 넘어가기
-		LecVO lv = ss.stuLecHome(lidx);
-		model.addAttribute("lv", lv);
-		
-		return "lecture/home";
-	}
-	
-	@RequestMapping(value="/student/pwdCheck.do")
-	public String studentpwdCheck() {
-		//학생 정보수정 - 비밀번호 확인 페이지
-		
-		return "/student/pwdCheck";
-	}
 	
 	@RequestMapping(value="/student/taskContent.do")
 	public String studentTaskContent(@RequestParam("tuname") String tuname,
@@ -122,6 +104,13 @@ public class StudentController {
 		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 		
 		return "";
+	}
+	
+	@RequestMapping(value="/student/pwdCheck.do")
+	public String studentpwdCheck() {
+		//학생 정보수정 - 비밀번호 확인 페이지
+		
+		return "/student/pwdCheck";
 	}
 	
 	@ResponseBody

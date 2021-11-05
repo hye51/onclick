@@ -58,7 +58,7 @@ public class ProfessorController {
 		String location = "";
 		if(pv != null) {
 			//login 성공시 
-			System.out.println("pro longing ");
+
 			//사번 저장 
 			session.setAttribute("pidx", pidx);
 			
@@ -80,11 +80,22 @@ public class ProfessorController {
 		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
 		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
 		model.addAttribute("alist", alist);
-		for(LecVO lv : alist) {
-			System.out.println("****************");
-			System.out.println(lv.getLname());			
-		}
+
 		return "/professor/proDashBoard" ;
+	}
+	@RequestMapping(value="/professor/pwdCheck.do")
+	public String professorpwdCheck() {
+		//학생 정보수정 - 비밀번호 확인 페이지
+		return "/professor/pwdCheck";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/professor/pwdCheckAction.do")
+	public int professorPwdCheckAction(@RequestParam("pwd") String ppwd) {
+		//교수 정보수정 - 비밀번호 확인 실행 ajax
+		int cnt = ps.proPwdCheck(ppwd);
+		
+		return cnt;
 	}
 /*		
 	@RequestMapping(value="*.do")

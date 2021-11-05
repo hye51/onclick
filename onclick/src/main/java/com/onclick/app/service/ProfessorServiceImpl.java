@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.onclick.app.domain.ProfessorVO;
 import com.onclick.app.persistence.ProfessorService_Mapper;
+import com.onclick.app.persistence.StudentService_Mapper;
 
 @Service("professorServiceImpl")
 public class ProfessorServiceImpl implements ProfessorService {
@@ -56,4 +57,15 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return pv;
 	}
 
+	@Override
+	public int proPwdCheck(String ppwd) {
+		//교수 비밀번호 확인
+		HashMap<String,String> hm = new HashMap<String,String>();
+		hm.put("ppwd", ppwd);
+		
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		int cnt = psm.proPwdCheck(hm);
+
+		return cnt;
+	}
 }
