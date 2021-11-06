@@ -58,11 +58,11 @@
                    	   	<div class="card-body tab-pane fade" id="proLogin" role="tabpanel" aria-labelledby="proLogin">
 	                    	<form name="pfrm">
                                 <div class="form-floating mb-3">
-                                     <input class="form-control" name="proId" type="text" placeholder="Id"  />
+                                     <input class="form-control" name="pidx" type="text" placeholder="Id"  />
                                      <label>사번</label>
                                 </div>
                                  <div class="form-floating mb-3">
-                                     <input class="form-control" name="proPwd" type="password" placeholder="Password" />
+                                     <input class="form-control" name="ppwd" type="password" placeholder="Password" />
                                      <label>비밀번호</label>
                                  </div>
                                  <div class="form-check mb-3">
@@ -99,6 +99,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
     	<script type="text/javascript">
+    	
 	        var msg = '${loginNok}';
 	        if(msg != ""){
 	        	//로그인 실패시 알림창
@@ -111,7 +112,7 @@
 	        	alert(msg);
 	        }
 	        
-			//학생
+			//학생 로그인 
         	function stuCheck(){
 			
 				var sfm = document.sfrm;
@@ -132,16 +133,16 @@
 				return;
 			}
         	
-        	//교수
+        	//교수 로그인 
         	function proCheck(){
     			
 				var pfm = document.pfrm;
 				
-				if (pfm.proId.value == ""){
+				if (pfm.pidx.value == ""){
 					alert("사번을 입력하세요");
 				    pfm.proId.focus();
 				    return false;		
-				}else if (pfm.proPwd.value ==""){
+				}else if (pfm.ppwd.value ==""){
 					alert("비밀번호를 입력하세요");
 					pfm.proPwd.focus();
 					return false;

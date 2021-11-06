@@ -27,9 +27,6 @@ public interface StudentService {
 	
 	//학생과제
 	public List<Map<String,Object>> stuTaskSelectAll(int sidx);
-		
-	//강의홈가기
-	public LecVO stuLecHome(int lidx);
 	
 	//학생 비밀번호 확인
 	public int studentPwdCheck(String spwd);

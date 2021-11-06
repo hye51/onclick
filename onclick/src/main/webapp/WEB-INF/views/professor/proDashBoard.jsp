@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="com.onclick.app.domain.*" %>
-
-<%ArrayList<EnrollDTO> alist = (ArrayList<EnrollDTO>)request.getAttribute("alist"); %>
-<%List<Map<String,Object>>  list = (List<Map<String,Object>>)request.getAttribute("list"); %>
-<%List<String> tunameList = (List<String>)request.getAttribute("tunameList"); %>
+<%ArrayList<LecVO> alist = (ArrayList<LecVO>)request.getAttribute("alist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +14,7 @@
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../resources/css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>   
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -52,7 +47,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../app/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -80,7 +75,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/user.png">
+						<img alt="" src="../resources/assets/img/user.png">
 							홍길동님
 						</div>
                         <div class="nav">
@@ -92,7 +87,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">정보 수정</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -102,9 +97,9 @@
                             </a>
                             <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                     	<% for(EnrollDTO ed : alist) { %>
-	                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></a>
-                                    <% } %>
+                                   <%for(LecVO lv : alist){%>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a>
+                                   <% } %>
                                 </nav>
                             </div>
                              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -134,60 +129,23 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">강의목록</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <table class="text-center">
-                                       	<% for(EnrollDTO ed : alist) { %>
-											<tr>
-											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></td>
-											</tr>
-										<% } %>
-                                       </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">과제</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">최근 수강중인 강의</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">마감 예정인 강의</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card text-dark text-black mb-4">
-                                    <div class="card-body">추가</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-black stretched-link" href="#">View Details</a>
-                                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        
+                        <table class="table table-bordered">
+								<thead>
+									<tr class="table-secondary">
+										<th scope="col-3">no</th>
+									    <th scope="col-5">과목명</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+                       				 <%int i=1 ;
+                       				 for(LecVO lv : alist){ %>
+										<th scope="row"><%=i++%></th>
+									    <td><%=lv.getLname()%></td>
+									</tr>
+									<%} %>
+								</tbody>
+						</table>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -211,8 +169,5 @@
         <script src="../resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../resources/js/datatables-simple-demo.js"></script>
-        <script type="text/javascript">
-        
-        </script>
     </body>
 </html>
