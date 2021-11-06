@@ -26,7 +26,7 @@ public interface StudentService {
 	public ArrayList<EnrollDTO> stuLecSelectAll(int sidx);
 	
 	//학생과제
-	public List<Map<String,Object>> stuTaskSelectAll(int sidx);
+	public ArrayList<TaskVO> stuTaskSelectAll(int sidx);
 	
 	//학생 비밀번호 확인
 	public int studentPwdCheck(String spwd);

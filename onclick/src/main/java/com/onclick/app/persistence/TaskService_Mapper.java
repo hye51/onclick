@@ -1,9 +1,10 @@
-package com.onclick.app.service;
+package com.onclick.app.persistence;
 
 import com.onclick.app.domain.TaskVO;
 
-public interface TaskService {
+public interface TaskService_Mapper {
+
 	
 	public TaskVO taskContent(int tuidx);
-
+		
 }

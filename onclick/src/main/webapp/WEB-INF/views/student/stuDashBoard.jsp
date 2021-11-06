@@ -2,12 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="com.onclick.app.domain.*" %>
 
-<%ArrayList<EnrollDTO> alist = (ArrayList<EnrollDTO>)request.getAttribute("alist"); %>
-<%List<Map<String,Object>>  list = (List<Map<String,Object>>)request.getAttribute("list"); %>
-<%List<String> tunameList = (List<String>)request.getAttribute("tunameList"); %>
+<%ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList"); %>
+<%ArrayList<TaskVO> stuTaskList = (ArrayList<TaskVO>)request.getAttribute("stuTaskList"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -102,7 +100,7 @@
                             </a>
                             <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                     	<% for(EnrollDTO ed : alist) { %>
+                                     	<% for(EnrollDTO ed : stuLecList) { %>
 	                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></a>
                                     <% } %>
                                 </nav>
@@ -140,7 +138,7 @@
                                     <div class="card-body">강의목록</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                             <table class="text-center">
-                                       	<% for(EnrollDTO ed : alist) { %>
+                                       	<% for(EnrollDTO ed : stuLecList) { %>
 											<tr>
 											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></td>
 											</tr>
@@ -153,8 +151,13 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">과제</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <table class="text-center">
+                                        <% for(TaskVO tv : stuTaskList) { %>
+											<tr>
+											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/student/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
+											</tr>
+										<% } %>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
