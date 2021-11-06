@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.StudentService;
 
 @Controller
@@ -81,19 +82,12 @@ public class StudentController {
 	public String studenDashBoard(@RequestParam("sidx") String sidx, Model model) {
 		//학생 대시보드 이동 
 		//강의 이름 가져오기(대시보드-강의목록)
-		ArrayList<EnrollDTO> alist = ss.stuLecSelectAll(Integer.parseInt(sidx));
-		model.addAttribute("alist", alist);
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(Integer.parseInt(sidx));
+		model.addAttribute("stuLecList", stuLecList);
 		
 		//대시보드-과제목록
-		List<Map<String,Object>> list = ss.stuTaskSelectAll(Integer.parseInt(sidx));
-		List<String> tunameList = new ArrayList<String>();
-		
-		for(Map<String,Object> data : list) {
-			tunameList.add(data.get("TUNAME").toString());
-		}
-
-		model.addAttribute("list", list);
-		model.addAttribute("tunameList", tunameList);
+		ArrayList<TaskVO> stuTaskList = ss.stuTaskSelectAll(Integer.parseInt(sidx));
+		model.addAttribute("stuTaskList", stuTaskList);
 		
 		return "/student/stuDashBoard";
 	}
@@ -116,13 +110,7 @@ public class StudentController {
 		return "/student/pwdCheck";
 	}
 	
-	@RequestMapping(value="/student/taskContent.do")
-	public String studentTaskContent(@RequestParam("tuname") String tuname,
-									 Model model) {
-		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
-		
-		return "";
-	}
+
 	
 	@ResponseBody
 	@RequestMapping(value="/student/pwdCheckAction.do")

@@ -108,23 +108,23 @@
 						<table class="table mx-auto bg-light" style="width:80%">   
 							<thead>    
 								<tr>			      
-							      	<td colspan="4" scope="row" style="border:0;">제목</td>
+							      	<td colspan="4" scope="row" style="border:0;"></td>
 							    </tr>
 							</thead>
 							<tbody>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">제출기간</td>
 							      	<td colspan="1" style="border-bottom:0; width:45%">
-							      		<input class="form-control" type="date" style="border:0; black; width:100%" >
+							      		<input class="form-control" type="date" style="border:0; black; width:100%">
 							      	</td>
 							      	<td colspan="2" style="border-bottom:0; width:45%">
-							    		<input class="form-control" type="date" style="border:0; black; width:100%"></td>
+							    		<input class="form-control" type="date" style="border:0; black; width:100%" >
 									</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
 							      	<td style="border-bottom:0; width:40%">
-							      		<input class="form-control" type="date" style="border:0; black; width:100%"> 
+							      		<input class="form-control" type="date" style="border:0; black; width:100%" > 
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">제출여부</td>
 							      	<td style="border-bottom:0; width:40%">

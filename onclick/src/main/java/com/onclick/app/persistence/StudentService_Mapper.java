@@ -25,7 +25,7 @@ public interface StudentService_Mapper {
 	public ArrayList<EnrollDTO> stuLecSelectAll(int id);
 	
 	//학생과제
-	public List<Map<String,Object>> stuTaskSelectAll(int sidx);
+	public ArrayList<TaskVO> stuTaskSelectAll(int sidx);
 	
 	//강의홈
 	public LecVO stuLecHome(int lidx);

@@ -113,12 +113,12 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<Map<String,Object>> stuTaskSelectAll(int sidx) {
+	public ArrayList<TaskVO> stuTaskSelectAll(int sidx) {
 		//학생 과제(대시보드)
 		StudentService_Mapper ssm = sqlSession.getMapper(StudentService_Mapper.class);
-		List<Map<String,Object>> list = ssm.stuTaskSelectAll(sidx);
+		ArrayList<TaskVO> stuTaskList = ssm.stuTaskSelectAll(sidx);
 
-		return list;
+		return stuTaskList;
 	}
 	
 	@Override
