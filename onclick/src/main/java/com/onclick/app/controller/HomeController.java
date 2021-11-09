@@ -2,6 +2,8 @@ package com.onclick.app.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
 
@@ -35,11 +38,11 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/lecHome.do")
-	public String LecHome(@RequestParam("lidx") int lidx, Model model) {
+	public String LecHome(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 		
 		//대시보드 강의 목록에서 강의 메인 홈으로 넘어가기
 		LecVO lv = ls.lecHome(lidx);
-		model.addAttribute("lv", lv);
+		session.setAttribute("lv", lv);
 		
 		ArrayList<LecNoticeVO> lndList = lns.lecNoticeSelectDash(lidx);
 		model.addAttribute("lndList", lndList);
@@ -47,6 +50,14 @@ public class HomeController {
 		return "lecture/home";
 	}
 	
+	@RequestMapping(value="/stuList.do")
+	public String lecStudentList(@RequestParam("lidx") int lidx, Model model) {
+		//강의 - 학생 목록 
+		ArrayList<StudentVO> alist = ls.lecStudentList(lidx);
+		model.addAttribute("alist", alist);
+		
+		return "lecture/stuList";
+	}
 	
 
 }

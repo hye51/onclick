@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.onclick.app.domain.*" %>
+<%ProfessorVO pv = (ProfessorVO)request.getAttribute("pv");%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -96,25 +98,25 @@
 				<div class="card mb-3 mx-auto my-auto" style="width:50%">
 				  <div class="row g-0">
 				    <div class="col-md-2">
-				      <img src="../resources/assets/img/proinfo.png" class="img-fluid rounded-start">
+				      <img src="../resources/assets/img/profess.png" class="img-fluid rounded-start">
 				    </div>
 				    <div class="col-md-7">
 				      <div class="card-body">
 				         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">성함</label>
 						<div class="col-sm-10">
-						  <input type="text" class="form-control form-control-sm">
+						<input type="text" class="form-control form-control-sm" value="<%=pv.getPname() %>">
 						</div>
 						 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">연락처</label>
 						<div class="col-sm-10">
-						  <input type="text" class="form-control form-control-sm">
+						  <input type="text" class="form-control form-control-sm" value="<%=pv.getPphone() %>">
 						</div>
 						 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">이메일</label>
 						<div class="col-sm-10">
-						  <input type="text" class="form-control form-control-sm">
+						  <input type="text" class="form-control form-control-sm" value="<%=pv.getPemail() %>">
 						</div>
 						 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">연구실</label>
 						<div class="col-sm-10">
-						  <input type="text" class="form-control form-control-sm">
+						  <input type="text" class="form-control form-control-sm" value="<%=pv.getPlab() %>" >
 						</div>
 				      </div>
 				    </div>

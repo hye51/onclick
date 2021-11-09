@@ -68,4 +68,13 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 		return cnt;
 	}
+	
+	@Override
+	public ProfessorVO proInfo(int pidx) {
+		//교수 정보 보기 
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		ProfessorVO pv  = psm.proInfo(pidx);
+		
+		return pv;
+	}
 }

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%ArrayList<StudentVO> alist = (ArrayList<StudentVO>)request.getAttribute("alist"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,7 +54,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							강의이름
+							<%=lv.getLname() %>
 						<img alt="" src="../resources/assets/img/home.png">
 						</div>
                         <div class="nav">
@@ -111,12 +115,15 @@
 									</tr>
 								</thead>
 								<tbody>
+									<% int i = 1;
+									for(StudentVO sv : alist) {%>
 									<tr>
-										<th scope="row">1</th>
-									    <td>Mark</td>
-									    <td>Otto</td>
-									    <td>@mdo</td>
+										<th scope="row"><%=i++%></th>
+									    <td><%=sv.getSidx()%></td>
+									    <td><%=sv.getSname()%></td>
+									    <td><%=sv.getSdep()%></td>
 									</tr>
+									 <% } %>
 								</tbody>
 							</table>
                         </div>

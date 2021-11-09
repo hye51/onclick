@@ -97,6 +97,16 @@ public class ProfessorController {
 		
 		return cnt;
 	}
+	
+
+	@RequestMapping(value="/professor/proInfo.do")
+	public String professorInfo(@RequestParam("pidx") int pidx,Model model) {
+		//교수정보 보기
+		ProfessorVO pv = ps.proInfo(pidx);
+		model.addAttribute("pv", pv);
+
+		return "professor/proInfo";
+	}
 /*		
 	@RequestMapping(value="*.do")
 	public String professorModify() {
