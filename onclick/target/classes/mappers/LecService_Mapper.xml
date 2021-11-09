@@ -16,4 +16,10 @@ WHERE ldelyn='N'
 AND lidx=#{lidx}
 </select>
 
+<select id="lecSelectOne" parameterType="Integer" resultType="lv">
+SELECT *
+FROM onclick_prolec
+WHERE ldelyn='N'
+and lidx=#{lidx}
+</select>
 </mapper>

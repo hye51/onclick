@@ -12,7 +12,14 @@ public class TaskVO { //교수님 과제 업로드
 	private String tunotyn; //알림 여부
 	private String tudelyn;
 	private int lidx; //강의고유번호
+	private String tucontents; //과제 내용
 	
+	public String getTucontents() {
+		return tucontents;
+	}
+	public void setTucontents(String tucontents) {
+		this.tucontents = tucontents;
+	}
 	public int getTuidx() {
 		return tuidx;
 	}

@@ -11,4 +11,7 @@ public interface LecService {
 	
 	//강의홈가기
 	public LecVO lecHome(int lidx);
+	
+	//해당 강의 정보 가져오기
+	public LecVO lecSelectOne(int lidx);
 }

@@ -24,7 +24,7 @@ AND sidx=#{id}
 AND spwd=#{pwd}
 </select>
 
-<select id="stuLecSelectAll" parameterType="int" resultType="ed">
+<select id="stuLecSelectAll" parameterType="Integer" resultType="ed">
 SELECT a.eidx, a.sidx, a.lidx, b.lname
 FROM onclick_enroll a
 INNER JOIN onclick_prolec b
@@ -46,21 +46,24 @@ WHERE sdelyn='N'
 AND sidx=#{sidx}
 </select>	
 
-<select id="stuTaskSelectAll" parameterType="int" resultType="tv">
-select a.lidx, b.tuname, b.tuidx
-from onclick_enroll a
-inner join onclick_taskupload b
-on a.lidx = b.lidx
-where a.sidx=#{id}
+<select id="stuTaskSelectAll" parameterType="Integer" resultType="tv">
+SELECT a.lidx, b.tuname, b.tuidx
+FROM onclick_enroll a
+INNER JOIN onclick_taskupload b
+ON a.lidx = b.lidx
+WHERE a.sidx=#{id}
 </select>
 
 <select id="stuTaskContent" parameterType="String" resultType="tv">
-select *
-from onclick_taskupload
-where tudelyn='n'
-and tuname=#{tuname}
-order by tudate desc
-limit 5
+<![CDATA[SELECT *
+FROM(
+     SELECT *
+     FROM onclick_taskupload
+     AND tuname=#{tuname}
+     WHERE tudelyn='N'
+     ORDER BY tudate DESC
+     )
+WHERE ROWNUM <= 5 ]]>
 </select>
 	
 </mapper>

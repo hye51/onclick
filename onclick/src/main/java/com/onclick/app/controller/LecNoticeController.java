@@ -1,11 +1,44 @@
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.onclick.app.domain.LecNoticeVO;
+import com.onclick.app.service.LecNoticeService;
 
 @Controller
 public class LecNoticeController { //과목 공지사항 컨트롤러
 
+	@Autowired
+	LecNoticeService lns;
+	
+	@RequestMapping(value="/noticeList.do")
+	public String lecNoticeList(@RequestParam("lidx") String lidx, Model model) {
+		//강의 공지사항 목록
+		ArrayList<LecNoticeVO> lnList = lns.lecNoticeSelectAll(Integer.parseInt(lidx));		
+		model.addAttribute("lnList", lnList);
+		
+		return "lecture/noticeList";
+	}
+	
+	@RequestMapping(value="/lecNoticeContent.do")
+	public String lecNoticeContents(@RequestParam("lnidx") int lnidx, Model model,
+									HttpSession session) {
+		//강의 공지사항 내용보기
+		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
+		model.addAttribute("lnv", lnv);
+		
+		return "lecture/noticeContent";
+	}
+	
+	
 /*	@RequestMapping(value="*.do")
 	public String lecNoticeWrite() {
 		//과목 공지사항 작성 화면
@@ -15,18 +48,6 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	@RequestMapping(value="*.do")
 	public String lecNoticeWriteAction() {
 		//과목 공지사항 작성 완료
-		return "";
-	}
-	
-	@RequestMapping(value="*.do")
-	public String lecNoticeList() {
-		//과목 공지사항 목록
-		return "";
-	}
-	
-	@RequestMapping(value="*.do")
-	public String lecNoticeContents() {
-		//과목 공지사항 내용보기
 		return "";
 	}
 	

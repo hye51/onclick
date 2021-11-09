@@ -8,5 +8,6 @@
  <typeAlias alias="ed" type="com.onclick.app.domain.EnrollDTO"/>
  <typeAlias alias="lv" type="com.onclick.app.domain.LecVO"/>
  <typeAlias alias="tv" type="com.onclick.app.domain.TaskVO"/>
+ <typeAlias alias="lnv" type="com.onclick.app.domain.LecNoticeVO"/>
  </typeAliases>  
  </configuration>
