@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
-<%LecVO lv = (LecVO)request.getAttribute("lv"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<LecNoticeVO> lndList = (ArrayList<LecNoticeVO>)request.getAttribute("lndList"); %>
 <!DOCTYPE html>
 <html>
