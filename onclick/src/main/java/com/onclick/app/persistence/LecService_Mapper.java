@@ -11,4 +11,7 @@ public interface LecService_Mapper {
 	
 	//강의홈
 	public LecVO lecHome(int lidx);
+	
+	//해당 강의 정보 가져오기
+	public LecVO lecSelectOne(int lidx);
 }

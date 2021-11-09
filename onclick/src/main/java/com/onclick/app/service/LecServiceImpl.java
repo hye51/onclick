@@ -34,4 +34,13 @@ public class LecServiceImpl implements LecService{
 		return lv;
 	}
 
+	@Override
+	public LecVO lecSelectOne(int lidx) {
+		//해당 과목 정보 가져오기
+		LecService_Mapper lsm = sqlSession.getMapper(LecService_Mapper.class);
+		LecVO lv = lsm.lecSelectOne(lidx);
+		
+		return lv;
+	}
+
 }

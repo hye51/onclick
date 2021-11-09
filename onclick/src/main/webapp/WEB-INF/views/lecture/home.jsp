@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)request.getAttribute("lv"); %>
+<%ArrayList<LecNoticeVO> lndList = (ArrayList<LecNoticeVO>)request.getAttribute("lndList"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -89,8 +91,8 @@
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                             <a class="nav-link collapsed" href="<%=request.getContextPath()%>/lecture/noticeList.do">
-                              <div class="sb-nav-link-icon"></div>
+                             <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		공지사항
                               <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
@@ -103,7 +105,66 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">공지사항</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                       	<table>
+                                       	<% for(LecNoticeVO lnv : lndList) { %>
+	                                       	<tr>
+		                                    <td><a style="color:white; text-decoration:none; text-align:left" href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject() %></a></td>
+	                                    	</tr>
+                                    	<% } %>
+                                    	</table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">과제</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                    	<a class="small text-black stretched-link" href="#">View Details</a>
+                                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">일정</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">마감 예정인 강의</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-dark text-black mb-4">
+                                    <div class="card-body">추가</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-black stretched-link" href="#">View Details</a>
+                                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

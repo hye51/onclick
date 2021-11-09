@@ -1,10 +1,10 @@
-package com.onclick.app.service;
+package com.onclick.app.persistence;
 
 import java.util.ArrayList;
 
 import com.onclick.app.domain.LecNoticeVO;
 
-public interface LecNoticeService {
+public interface LecNoticeService_Mapper {
 	
 	//강의 공지사항 목록
 	public ArrayList<LecNoticeVO> lecNoticeSelectAll(int lidx);

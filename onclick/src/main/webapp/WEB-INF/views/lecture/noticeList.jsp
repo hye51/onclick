@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.onclick.app.domain.*" %>
+<%ArrayList<LecNoticeVO> lnList = (ArrayList<LecNoticeVO>)request.getAttribute("lnList"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +13,7 @@
         <meta name="author" content="" />
         <title>강의 공지사항</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../resources/css/styles.css" rel="stylesheet" />
+        <link href="../app/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -27,7 +30,7 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="../resources/assets/img/alarm.png"></button>
+          <button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -47,7 +50,7 @@
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
 							강의이름
-						<img alt="" src="../resources/assets/img/home.png">
+						<img alt="" src="../app/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -83,7 +86,11 @@
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                             
+                            <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                              		공지사항
+                              <div class="sb-sidenav-collapse-arrow"></div>
+                            </a> 
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -94,60 +101,27 @@
             </div>
             <div id="layoutSidenav_content">
  				<main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                DataTable Example
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
- 									</tbody>
-                                </table>
-                            </div>
+                    <h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">공지사항 목록</h4>
+                    	<div class="card-body mx-auto d-block " style="width:80%">
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th style="width:10%">No</th>
+									    <th style="width:60%">공지사항 제목</th>
+									    <th style="width:30%">작성일</th>
+									</tr>
+								</thead>
+                                <tbody>
+	                                <% for(LecNoticeVO lnv : lnList) { %>
+										<tr>
+										<td><%=lnv.getLnidx()%></td>
+										<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject()%></a></td>
+										<td><%=lnv.getLndate()%></td>
+										</tr>
+									<% }%>
+ 								</tbody>
+                            </table>
                         </div>
-                    </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -164,11 +138,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/js/scripts.js"></script>
+        <script src="../app/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../resources/js/datatables-simple-demo.js"></script>
+        <script src="../app/resources/js/datatables-simple-demo.js"></script>
     </body>
 </html>
