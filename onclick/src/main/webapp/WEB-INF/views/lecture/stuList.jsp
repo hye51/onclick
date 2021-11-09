@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%ArrayList<StudentVO> alist = (ArrayList<StudentVO>)request.getAttribute("alist"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,10 +18,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+              <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -31,7 +35,29 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="<%=request.getContextPath() %>/resources/assets/img/alarm.png"></button>
+          	<!-- Nav Item - Alerts -->
+          	<div class="dropdown">
+				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fas fa-bell fa-fw"></i>
+				    <!-- Counter - Alerts -->
+				    <span class="badge badge-danger badge-counter">3+</span>
+				</a>
+				<!-- Dropdown - Alerts -->
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<h6 class="dropdown-header">Alerts</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-secondary">
+                           <img src="../app/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 12, 2019</div>
+                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    </div>
+                </a>
+				</ul>     
+			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -50,7 +76,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							강의이름
+							<%=lv.getLname() %>
 						<img alt="" src="../resources/assets/img/home.png">
 						</div>
                         <div class="nav">
@@ -111,12 +137,15 @@
 									</tr>
 								</thead>
 								<tbody>
+									<% int i = 1;
+									for(StudentVO sv : alist) {%>
 									<tr>
-										<th scope="row">1</th>
-									    <td>Mark</td>
-									    <td>Otto</td>
-									    <td>@mdo</td>
+										<th scope="row"><%=i++%></th>
+									    <td><%=sv.getSidx()%></td>
+									    <td><%=sv.getSname()%></td>
+									    <td><%=sv.getSdep()%></td>
 									</tr>
+									 <% } %>
 								</tbody>
 							</table>
                         </div>

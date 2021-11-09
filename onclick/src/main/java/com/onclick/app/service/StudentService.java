@@ -39,4 +39,5 @@ public interface StudentService {
 	
 	//대시보드에서 과제 내용보기로 이동
 	public TaskVO stuTaskContent(String tuname);
+
 }

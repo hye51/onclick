@@ -24,4 +24,11 @@ AND pidx=#{pidx}
 AND ppwd=#{ppwd}
 </select>
 
+<select id="proInfo" parameterType="Integer" resultType="pv">
+SELECT *
+FROM  onclick_professor  
+WHERE pdelYn='N'
+AND pidx=#{pidx}
+</select>
+
 </mapper>

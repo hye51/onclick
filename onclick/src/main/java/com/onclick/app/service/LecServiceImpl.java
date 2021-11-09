@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.persistence.LecService_Mapper;
 import com.onclick.app.persistence.StudentService_Mapper;
 
@@ -41,6 +42,15 @@ public class LecServiceImpl implements LecService{
 		LecVO lv = lsm.lecSelectOne(lidx);
 		
 		return lv;
+	}
+	
+	@Override
+	public ArrayList<StudentVO> lecStudentList(int lidx) {
+		//강의 수강 멤버리스트 
+		LecService_Mapper lsm = sqlSession.getMapper(LecService_Mapper.class);
+		ArrayList<StudentVO> alist = lsm.lecStudentList(lidx);
+		
+		return alist;
 	}
 
 }

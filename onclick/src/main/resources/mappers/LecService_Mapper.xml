@@ -22,4 +22,12 @@ FROM onclick_prolec
 WHERE ldelyn='N'
 and lidx=#{lidx}
 </select>
+
+<select id="lecStudentList" parameterType="Integer" resultType="sv">
+SELECT * 
+FROM onclick_student a
+JOIN onclick_enroll b
+ON a.sidx = b.sidx
+WHERE lidx=#{lidx} 
+</select>
 </mapper>
