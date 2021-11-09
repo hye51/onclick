@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<LecNoticeVO> lnList = (ArrayList<LecNoticeVO>)request.getAttribute("lnList"); %>
 <!DOCTYPE html>
 <html>
@@ -49,48 +50,48 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							강의이름
+							<%=lv.getLname() %>
 						<img alt="" src="../app/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLecInfo" aria-expanded="false" aria-controls="collapseLecInfo">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강의정보
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLecInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="layout-static.html">강의계획서</a>
                                     <a class="nav-link" href="<%=request.getContextPath()%>/lecture/proInfo.do">담당 교수 정보</a>
                                     <a class="nav-link" href="<%=request.getContextPath()%>/lecture/stuList.do">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                          	<a class="nav-link" href="#" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                           	<a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                           	<a class="nav-link" href="#">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                           	<a class="nav-link " href="#">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                            <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do">
+                             <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		공지사항
                               <div class="sb-sidenav-collapse-arrow"></div>
-                            </a> 
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -107,7 +108,7 @@
 								<thead>
 									<tr class="table-secondary">
 										<th style="width:10%">No</th>
-									    <th style="width:60%">공지사항 제목</th>
+									    <th style="width:60%">제목</th>
 									    <th style="width:30%">작성일</th>
 									</tr>
 								</thead>
