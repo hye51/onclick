@@ -39,7 +39,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/lecHome.do")
 	public String LecHome(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
-		
+
 		//대시보드 강의 목록에서 강의 메인 홈으로 넘어가기
 		LecVO lv = ls.lecHome(lidx);
 		session.setAttribute("lv", lv);
