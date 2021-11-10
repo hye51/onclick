@@ -77,7 +77,7 @@
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="#">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
@@ -113,11 +113,12 @@
 									</tr>
 								</thead>
                                 <tbody>
-	                                <% for(LecNoticeVO lnv : lnList) { %>
+	                                <% 	int i = 1;
+	                                	for(LecNoticeVO lnv : lnList) { %>
 										<tr>
-										<td><%=lnv.getLnidx()%></td>
+										<th scope="row"><%=i++ %></th>
 										<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject()%></a></td>
-										<td><%=lnv.getLndate()%></td>
+										<td><%=lnv.getLndate().substring(0, 10)%></td>
 										</tr>
 									<% }%>
  								</tbody>

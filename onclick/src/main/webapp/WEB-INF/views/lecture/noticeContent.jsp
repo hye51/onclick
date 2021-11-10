@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -79,7 +80,7 @@
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="#">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
@@ -106,7 +107,7 @@
             <div id="layoutSidenav_content">
 	            <h2 class="mt-4 ms-3">공지사항</h2>
                 	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active">공지사항 제목</li>
+                    	<li class="breadcrumb-item active"><%=lnv.getLnsubject() %></li>
                 	</ol>
             	<main> 
             		<div class="container-fluid px-4 ">
@@ -114,9 +115,9 @@
 							<thead>    
 								<tr>
 									<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>			      
-							      		<td colspan="3" scope="row" style="border:0; width:100%">제목</td>
+							      		<td colspan="3" scope="row" style="border:0; width:100%"><%=lnv.getLnsubject() %></td>
 							      	<%} else {%>
-							      		<td colspan="3" scope="row" style="border:0; width:90%">제목</td>
+							      		<td colspan="3" scope="row" style="border:0; width:90%"><%=lnv.getLnsubject() %></td>
 							      		<td style="border:0; width:10%; text-align:right">
 							      		<div class="dropdown">
 											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -136,20 +137,24 @@
 							<tbody>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" type="date" style="border:0; black;"></td>
+							    	<td colspan="3" style="width:90%"><%=lnv.getLndate().substring(0, 10)%></td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" id="inputLNfile" type="file" placeholder="" /> </td>
+							    	<% if(lnv.getLnfile() != null) {%>
+							      		<td colspan="3" style="width:90%"><%=lnv.getLnfile()%></td>
+							    	<%} else {%>
+							    		<td colspan="3" style="width:90%"></td>
+							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input class="form-control" type="text" style="width:100%; height:300px; border:0; solid; black"></td>
+							    	<td colspan="4" style="border-bottom:0"><input class="form-control" style="width:100%; height:300px; border:0; solid; black" value="<%=lnv.getLncontents()%>"></td>
 							    </tr>
 							</tbody>
 						</table>
 						<div class="form-row text-center">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">목록</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">목록</a></button>
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
                     	</div>
                 	</div>
