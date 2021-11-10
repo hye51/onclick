@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,45 +54,48 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/user.png">
-							홍길동님
+						<%=lv.getLname() %>
+						<img alt="" src="../resources/assets/img/home.png">
 						</div>
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-sidenav-menu-heading"></div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLecInfo" aria-expanded="false" aria-controls="collapseLecInfo">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                MyPage
+                                	강의정보
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLecInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/mypage.do">정보 수정</a>
+                                    <a class="nav-link" href="layout-static.html">강의계획서</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/proInfo.do">담당 교수 정보</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/stuList.do">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
+                          	<a class="nav-link" href="#" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	강의 목록
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                            <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                </nav>
-                            </div>
-                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Zoom 다운로드
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                           	<a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
- 									다운로드 링크
-                                    </a>
-                                </nav>
-                            </div>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
+                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                               		과제
+                               <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<a class="nav-link " href="#">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                              		자료
+                              <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                            <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                              		공지사항
+                              <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -107,22 +114,24 @@
 							<table class="table text-center">
 								<thead>
 									<tr class="table-secondary">
-										<th scope="col-3">No</th>
-									    <th scope="col-5">과제 제목</th>
-									    <th scope="col-5">제출 기간</th>
-									    <th scope="col-5">제출일</th>
-									    <th scope="col-5">제출 여부</th>
-									    <th scope="col-5">진행상태</th>
+										<th style="width:10%">No</th>
+									    <th style="width:30%">과제 제목</th>
+									    <th style="width:30%">제출 기간</th>
+									    <th style="width:10%">제출일</th>
+									    <th style="width:10%">제출여부</th>
+									    <th style="width:10%">진행상태</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<th scope="row">1</th>
-									    <td>Mark</td>
-									    <td>Otto</td>
-									    <td>@mdo</td>
-									    <td>@mdo</td>
-									    <td>@mdo</td>
+										<% for(TaskVO tv : tlist) {%>
+											<th scope="row"><%=tv.getTuidx() %></th>
+										    <td><%=tv.getTuname() %></td>
+										    <td><%=tv.getTustart() %>~<%=tv.getTufin() %></td>
+										    <td></td>
+										    <td></td>
+										    <td><%=tv.getTuing() %></td>
+									    <%} %>
 									</tr>
 								</tbody>
 							</table>

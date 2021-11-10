@@ -29,11 +29,11 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	}
 	
 	@RequestMapping(value="/lecNoticeContent.do")
-	public String lecNoticeContents(@RequestParam("lnidx") int lnidx, Model model,
+	public String lecNoticeContents(@RequestParam("lnidx") int lnidx,
 									HttpSession session) {
 		//강의 공지사항 내용보기
 		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
-		model.addAttribute("lnv", lnv);
+		session.setAttribute("lnv", lnv);
 		
 		return "lecture/noticeContent";
 	}

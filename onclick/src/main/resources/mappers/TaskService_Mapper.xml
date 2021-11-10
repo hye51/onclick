@@ -10,4 +10,11 @@ WHERE tudelyn='N'
 AND tuidx=#{tuidx}
 </select>
 
+<select id="taskSelectAll" parameterType="Integer" resultType="tv">
+SELECT *
+FROM onclick_taskupload
+WHERE tudelyn='N'
+AND lidx=#{lidx}
+</select>
+
 </mapper> 

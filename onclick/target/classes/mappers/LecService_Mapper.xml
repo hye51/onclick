@@ -9,7 +9,7 @@ FROM  onclick_prolec
 WHERE pidx=#{pidx}
 </select>
 	
-<select id="lecHome" parameterType="int" resultType="lv">
+<select id="lecHome" parameterType="Integer" resultType="lv">
 SELECT * 
 FROM onclick_prolec 
 WHERE ldelyn='N' 

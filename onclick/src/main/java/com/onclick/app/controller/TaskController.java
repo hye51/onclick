@@ -1,5 +1,9 @@
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +26,26 @@ public class TaskController { //교수 과제 컨트롤러
 
 		@RequestMapping(value="/student/taskContent.do")
 		public String taskContent(@RequestParam("tuidx") int tuidx, 
-								@RequestParam("lidx") int lidx, Model model) {
+								@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 			
 			//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 			TaskVO tv = ts.taskContent(tuidx);
 			model.addAttribute("tv", tv);
 			//해당 과목 정보 가져오기
 			LecVO lv = ls.lecSelectOne(lidx);
-			model.addAttribute("lv", lv);
+			session.setAttribute("lv", lv);
 			
 			return "/student/taskContent";
 		}
 
+		@RequestMapping(value="/taskList.do")
+		public String taskList(@RequestParam("lidx") int lidx, Model model) {
+			//교수 과제 목록
+			ArrayList<TaskVO> tlist = ts.taskSelectAll(lidx);
+			model.addAttribute("tlist", tlist);
+			
+			return "student/taskList";
+		}
 		
 /*
 	@RequestMapping(value="*.do")
@@ -47,13 +59,7 @@ public class TaskController { //교수 과제 컨트롤러
 		//교수 과제 작성 완료
 		return "";
 	}
-	
-	@RequestMapping(value="*.do")
-	public String taskList() {
-		//교수 과제 목록
-		return "";
-	}
-	
+		
 	@RequestMapping(value="*.do")
 	public String taskContents() {
 		//과제 내용보기
