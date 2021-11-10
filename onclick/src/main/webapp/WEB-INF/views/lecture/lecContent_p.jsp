@@ -134,13 +134,21 @@
 					<div class="container-fluid px-4" style="width:90%; height:700px;">
 						<div class="row m-0" style="width:100%; height:100%">
 						    <div class="col-md-8">
-						      <div class="bg-secondary" style="width:100%; height:450px">
+						
+						      
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
-								<video style="width:100%; height:450px" controls>
+						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
+								<video  id="myVideo" style="width:100%; height:450px" poster="<%=request.getContextPath()%>/resources/assets/img/thumbnail.png" controlsList="nodownload" preload="auto" controls>
 								  <source src="<%=request.getContextPath()%>/resources/assets/video/test.mp4" type="video/mp4">
 								</video>
-						      </div>
+
+								
+								<!-- 재생 상태 -->
+								<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>
+
+								
+									
 						      <div class="text-center mt-2">
 						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
 						      	 | 
@@ -190,5 +198,44 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+         <!-- jquery 3.3.1 라이브러리 활용 -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+        	//동영상 총 시간 출력 
+			var video = document.getElementById("myVideo");
+        
+       	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
+        	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
+			video.addEventListener('loadedmetadata', function() {
+			    var videoFulltime = video.duration;
+			    console.log(videoFulltime);
+			});
+			
+			//동영상 재생 시간이 바뀌면 호출되는 이벤트
+			video.addEventListener('timeupdate', function(e){
+				//현재 재생 시간 (초 단위 절삭)
+				var playtime = Math.floor(video.currentTime);
+				//전체 재생 시간 (초 단위 절삭)
+				var total = Math.floor(video.duration);
+			//상태 표시
+			$("#videoProgress").html(playtime + " / " + total);
+			}, false);
+
+			//동영상 재생되면 호출되는 이벤트
+			video.addEventListener('play', function(e){
+				//현재 재생 시간 (초 단위 절삭)
+				var startTime = video.currentTime;
+				
+				console.log("startTime :" + startTime);
+			}, false);
+
+			//동영상 정지되면 호출되는 이벤트
+			video.addEventListener('pause', function(e){
+				//현재 재생 시간 (초 단위 절삭)
+				var endTime = video.currentTime;
+				
+				console.log("endTime :" + endTime);
+			}, false);
+        </script>
     </body>
 </html>

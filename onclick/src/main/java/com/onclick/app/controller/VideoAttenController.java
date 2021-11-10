@@ -1,8 +1,10 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
 public class VideoAttenController {
 /*
 	@RequestMapping(value="/.do")
@@ -28,13 +30,15 @@ public class VideoAttenController {
 		//시청시작 버튼 누른 경우
 		return null;
 	}
+ */	
 	
-	@RequestMapping(value="/.do")
-	public String videoStuAtten() {
+	@RequestMapping(value="/lecContent.do")
+	public String lecContent() {
 		//학생 동영상 출석 화면
-		return null;
+		return "lecture/lecContent_p";
 	}
 	
+/*	
 	@RequestMapping(value="/.do")
 	public String videoProAtten() {
 		//교수 동영상 출석 화면
