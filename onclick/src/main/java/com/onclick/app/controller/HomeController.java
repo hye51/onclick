@@ -59,5 +59,12 @@ public class HomeController {
 		return "lecture/stuList";
 	}
 	
+	@RequestMapping(value="/lecContent.do")
+	public String lecContent() {
+		//동영상 강의 보기
+		System.out.println("*****************************");
+		return "lecture/lecContent_p";
+	}
+	
 
 }
