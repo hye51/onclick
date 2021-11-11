@@ -34,7 +34,29 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          	<button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
+          	<!-- Nav Item - Alerts -->
+          	<div class="dropdown">
+				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fas fa-bell fa-fw"></i>
+				    <!-- Counter - Alerts -->
+				    <span class="badge badge-danger badge-counter">3+</span>
+				</a>
+				<!-- Dropdown - Alerts -->
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<h6 class="dropdown-header">Alerts</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-secondary">
+                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 12, 2019</div>
+                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    </div>
+                </a>
+				</ul>     
+			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -109,30 +131,15 @@
                 	<ol class="breadcrumb mb-4 ms-4">
                     	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
                 	</ol>
-            	<main> 
-            		<div class="container-fluid px-4 ">
+            	<main>
+            		<!-- 학생 과제 내용보기 -->
+					<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>
+					<div class="container-fluid px-4 ">
 						<table class="table mx-auto bg-light" style="width:80%">   
 							<thead>
-								<tr>
-									<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>      
-							      		<td colspan="4" scope="row" style="border:0; font-weight: 700; width:100%"><%=tv.getTuname()%></td>
-							      	<%} else {%>
-							      		<td colspan="3" scope="row" style="border:0; font-weight: 700; width:90%"><%=tv.getTuname()%></td>
-							      		<td style="border:0; width:10%; text-align:right">
-							      		<div class="dropdown">
-											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical mx-auto d-block" viewBox="0 0 16 16">
-												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-												</svg>
-										  	</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
-											  	</ul>
-										</div>
-										</td>
-							      	<%} %>
-							    </tr>
+								<tr>   
+			      					<td colspan="4" scope="row" style="border:0; font-weight: 700; width:100%"><%=tv.getTuname()%></td>
+			      				</tr>
 							</thead>
 							<tbody>
 							    <tr>
@@ -169,6 +176,63 @@
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmit.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
                     	</div>
                 	</div>
+                	<!-- 교수 과제 내용보기 -->
+					<%} else {%>
+					<div class="container-fluid px-4 ">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<thead>
+								<tr>
+									<td colspan="3" scope="row" style="border:0; font-weight: 700; width:90%"><%=tv.getTuname()%></td>
+						      		<td style="border:0; width:10%; text-align:right">
+							      		<div class="dropdown">
+											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical mx-auto d-block" viewBox="0 0 16 16">
+												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+												</svg>
+										  	</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+												    <li><a class="dropdown-item" href="#">수정하기</a></li>
+												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
+											  	</ul>
+										</div>
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
+							      	<td colspan="3" style="width:45%">
+							      		<%=tv.getTustart().substring(0, 10) %> - <%=tv.getTufin().substring(0, 10) %>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
+							      	<td style="width:40%">
+							      		<%=tv.getTudate().substring(0, 10) %>
+							      	</td>
+							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
+							      	<td style="width:40%">
+							      	
+							      	</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
+							      	<% if(tv.getTufile() != 0) {%>
+							      		<td colspan="3" style="width:90%"><%=tv.getTufile()%></td>
+							    	<%} else {%>
+							    		<td colspan="3" style="width:90%"></td>
+							    	<%} %>
+							    </tr>
+							    <tr>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=tv.getTucontents()%>"></td>
+							    </tr>
+							</tbody>
+						</table>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
+                    	</div>
+                	</div>
+			      	<%} %>		    
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
