@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,7 +34,29 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          	<button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
+          	<!-- Nav Item - Alerts -->
+          	<div class="dropdown">
+				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fas fa-bell fa-fw"></i>
+				    <!-- Counter - Alerts -->
+				    <span class="badge badge-danger badge-counter">3+</span>
+				</a>
+				<!-- Dropdown - Alerts -->
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<h6 class="dropdown-header">Alerts</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-secondary">
+                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 12, 2019</div>
+                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    </div>
+                </a>
+				</ul>     
+			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -52,45 +75,48 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/user.png">
-							홍길동님
+						<%=lv.getLname() %>
+						<img alt="" src="../resources/assets/img/home.png">
 						</div>
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-sidenav-menu-heading"></div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLecInfo" aria-expanded="false" aria-controls="collapseLecInfo">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                MyPage
+                                	강의정보
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLecInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/mypage.do">정보 수정</a>
+                                    <a class="nav-link" href="layout-static.html">강의계획서</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/proInfo.do">담당 교수 정보</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/stuList.do">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
+                          	<a class="nav-link" href="#" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	강의 목록
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                            <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                </nav>
-                            </div>
-                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Zoom 다운로드
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                           	<a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
- 									다운로드 링크
-                                    </a>
-                                </nav>
-                            </div>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
+                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                               		과제
+                               <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<a class="nav-link " href="#">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                              		자료
+                              <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                            <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
+                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                              		공지사항
+                              <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -122,9 +148,9 @@
 									</td>
 							    </tr>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" id="s_taskFile" name="s_taskFile" type="file" value="" multiple/> 
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부파일</td>
+					            	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control" name="s_taskFile" type="file" /> 
 							      	</td>
 							    </tr>
 							    <tr>
@@ -174,8 +200,9 @@
 			}
 				fm.action="<%=request.getContextPath()%>/taskWriteAction.do";
 				fm.method = "post";
+				//fm.submit();
 				enctype="multipart/form-data"
-				fm.submit();
+				
 				return;
 		};
 		</script>

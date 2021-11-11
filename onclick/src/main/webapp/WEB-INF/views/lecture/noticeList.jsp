@@ -20,9 +20,13 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/views/index.jsp">ONclick</a>
+            <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
+           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+            | ONclick 
+            <span class="fs-6">online non-contact system</span>
+            </a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
@@ -31,7 +35,29 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
+          	<!-- Nav Item - Alerts -->
+          	<div class="dropdown">
+				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fas fa-bell fa-fw"></i>
+				    <!-- Counter - Alerts -->
+				    <span class="badge badge-danger badge-counter">3+</span>
+				</a>
+				<!-- Dropdown - Alerts -->
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<h6 class="dropdown-header">Alerts</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-secondary">
+                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 12, 2019</div>
+                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    </div>
+                </a>
+				</ul>     
+			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
