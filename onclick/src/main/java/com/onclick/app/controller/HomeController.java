@@ -63,6 +63,8 @@ public class HomeController {
 	public String lecList() {
 		//강좌목록 페이지 
 		return "lecture/classList";
+
 	}
+
 
 }

@@ -41,8 +41,10 @@ public class VideoAttenController {
 		//시청시작 버튼 누른 경우
 		return null;
 	}
+<<<<<<< HEAD
 
 	 */
+
 	
 	@RequestMapping(value="/lecContent.do")
 	public String lecContent() {

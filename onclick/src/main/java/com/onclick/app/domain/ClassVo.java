@@ -16,7 +16,7 @@ public class ClassVo {
 	private String cnotyn;/* 알림 여부 */
 	private String cdelyn; /* 삭제 여부 */
 	private int lidx;/* 강의 고유번호 */
-	
+
 	public int getCidx() {
 		return cidx;
 	}

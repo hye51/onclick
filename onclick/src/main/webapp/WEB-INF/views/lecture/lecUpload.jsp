@@ -140,7 +140,7 @@
                                 	강의 업로드 작성
                             </div>
                             <div class="card-body">
-                            <form name="upload">
+            <form name="upload">
 	                            <table class="table">
 								  <tbody>
 								    <tr>
@@ -185,6 +185,7 @@
 									<button class="btn btn-secondary" type= "reset">취소</button>								
 								</nav>
                             </form>
+
                             </div>
                         </div>
                     </div>
