@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
-<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv"); %>
+<%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -53,48 +52,45 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							<%=lv.getLname() %>
-						<img alt="" src="../app/resources/assets/img/home.png">
+						<img alt="" src="../app/resources/assets/img/user.png">
+							홍길동님
 						</div>
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading"></div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLecInfo" aria-expanded="false" aria-controls="collapseLecInfo">
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	강의정보
+                                MyPage
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLecInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">강의계획서</a>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/proInfo.do">담당 교수 정보</a>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/stuList.do">멤버 목록</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/mypage.do">정보 수정</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link" href="#" >
+                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	강의 목록
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                           	<a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	강좌 목록
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                            <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link" href="layout-static.html">강의1</a>
+                                    <a class="nav-link" href="layout-static.html">강의1</a>
+                                    <a class="nav-link" href="layout-static.html">강의1</a>
+                                </nav>
+                            </div>
+                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Zoom 다운로드
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
-                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                               		과제
-                               <div class="sb-sidenav-collapse-arrow"></div>
-                            </a>
-                           	<a class="nav-link " href="#">
-                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                              		자료
-                              <div class="sb-sidenav-collapse-arrow"></div>
-                            </a>
-                             <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
-                              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                              		공지사항
-                              <div class="sb-sidenav-collapse-arrow"></div>
-                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+ 									다운로드 링크
+                                    </a>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -103,67 +99,51 @@
                     </div>
                 </nav>
             </div>
-            <!-- 공지사항 내용보기-->
+            <!-- 과제 제출 화면-->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">공지사항</h2>
+	            <h2 class="mt-4 ms-3">제출하기</h2>
                 	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active"><%=lnv.getLnsubject() %></li>
+                    	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
                 	</ol>
             	<main> 
             		<div class="container-fluid px-4 ">
-						<table class="table mx-auto bg-light" style="width:80%">
+            		<form name="frm">
+						<table class="table mx-auto bg-light" style="width:80%">   
 							<thead>    
-								<tr>
-									<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>			      
-							      		<td colspan="4" scope="row" style="border:0; width:100%"><%=lnv.getLnsubject() %></td>
-							      	<%} else {%>
-							      		<td colspan="3" scope="row" style="border:0; width:90%"><%=lnv.getLnsubject() %></td>
-							      		<td style="border:0; width:10%; text-align:right">
-							      		<div class="dropdown">
-											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical mx-auto d-block" viewBox="0 0 16 16">
-												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-												</svg>
-										  	</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
-											  	</ul>
-										</div>
-										</td>
-									<%} %>
+								<tr>			      
+							      	<td colspan="4" scope="row" style="border:0;"><input class="form-control" type="text" name="s_taskSubject" style="border:0; black; width:100%" placeholder="제목을 입력하세요"></td>
 							    </tr>
-							</thead>    
+							</thead>
 							<tbody>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="width:90%"><%=lnv.getLndate().substring(0, 10)%></td>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">제출기간</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %>
+									</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							    	<% if(lnv.getLnfile() != null) {%>
-							      		<td colspan="3" style="width:90%"><%=lnv.getLnfile()%></td>
-							    	<%} else {%>
-							    		<td colspan="3" style="width:90%"></td>
-							    	<%} %>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control" id="s_taskFile" name="s_taskFile" type="file" value="" multiple/> 
+							      	</td>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input class="form-control" style="width:100%; height:300px; border:0; solid; black" value="<%=lnv.getLncontents()%>"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" name="s_taskContents" style="width:100%; height:300px; border:0; solid; black"></td>
 							    </tr>
 							</tbody>
 						</table>
-						<div class="form-row text-center">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">목록</a></button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">취소</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">제출</button>
                     	</div>
+                    </form>
                 	</div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div >
+                            <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
@@ -180,5 +160,24 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+			function check() {
+			var fm= document.frm;
+			if(fm.s_taskSubject.value == ""){
+				alert("제목을 입력하세요");
+				fm.s_taskSubject.focus();
+				return false;
+			}else if(fm.s_taskContents.value == ""){
+				alert("내용을 입력하세요");
+				fm.s_taskContents.focus();
+				return false;
+			}
+				fm.action="<%=request.getContextPath()%>/taskWriteAction.do";
+				fm.method = "post";
+				enctype="multipart/form-data"
+				fm.submit();
+				return;
+		};
+		</script>
     </body>
 </html>
