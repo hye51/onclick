@@ -130,7 +130,7 @@
             <div id="layoutSidenav_content">
                <main>
 					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">과제 목록</h4>
-					
+					<%if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) { %> <!-- 학생 -->
 						<div class="card-body mx-auto d-block " style="width:80%">
 							<table class="table text-center">
 								<thead>
@@ -162,7 +162,40 @@
 								</tbody>
 							</table>
                         </div>
-					
+					<%} else { %> <!-- 교수 -->
+						<div class="card-body mx-auto d-block " style="width:80%">
+							<button type="button" class="btn btn-secondary mb-2" style="float:right">과제 업로드</button>
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th style="width:10%">No</th>
+									    <th style="width:30%">과제제목</th>
+									    <th style="width:30%">제출기간</th>
+									    <th style="width:10%">작성일</th>
+									    <th style="width:10%">진행상태</th>
+									    <th style="width:10%">제출목록</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<% 	int i = 1;
+											for(TaskVO tv : tlist) {%>
+											<th scope="row"><%=i++%></th>
+										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
+										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
+										    <td><%=tv.getTudate().substring(0, 10) %></td>
+										    <% if(tv.getTuing().equals("진행")) { %>
+										    	<td style="color:blue"><%=tv.getTuing() %></td>
+										    <%} else { %>
+										    	<td style="color:red"><%=tv.getTuing() %></td>
+										    <%} %>
+										    <td><a href="">제출현황</a></td>
+									    <%} %>
+									</tr>
+								</tbody>
+							</table>
+                        </div>
+					<%} %>
                 </main>
                 
                 <footer class="py-4 bg-light mt-auto">

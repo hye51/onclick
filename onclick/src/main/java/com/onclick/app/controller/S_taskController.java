@@ -1,16 +1,19 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import java.io.File;
 import java.util.HashMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.S_taskService;
 import com.onclick.app.service.TaskService;
@@ -24,6 +27,9 @@ public class S_taskController {
 	@Autowired
 	S_taskService sts;
 	
+	@Resource(name="uploadPath")
+	private String uploadPath;
+	
 	@RequestMapping(value="/taskSubmit.do")
 	public String taskWrite(@RequestParam("tuidx") int tuidx, HttpSession session) {
 		//학생 과제작성 화면
@@ -31,15 +37,30 @@ public class S_taskController {
 		session.setAttribute("tv", tv);
 		session.setAttribute("tuidx", tuidx);
 		
-		return "student/taskWrite";
+		return "lecture/stuTaskWrite";
 	}
 	
 
 	@RequestMapping(value="/taskWriteAction.do")
 	public String taskWriteAction(@RequestParam("s_taskSubject") String tsubject,
-								@RequestParam("s_taskFile") String tfile,
+								@RequestParam("s_taskFile") MultipartFile tfile,
 								@RequestParam("s_taskContents") String tcontents,
-								HttpSession session) {
+								HttpSession session, Model model) throws Exception{
+		//첨부파일 저장
+		//파일명
+		String originalFileName = tfile.getOriginalFilename();
+		System.out.println(originalFileName);
+		//파일명 중 확장자만 추출
+		String orignalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		//파일경로
+		String route = uploadPath;
+		//파일 저장
+		if(!tfile.getOriginalFilename().isEmpty()) {
+			tfile.transferTo(new File(uploadPath, originalFileName));
+		} else {
+			model.addAttribute("msg", "파일 업로드를 완료하지 못했습니다.");
+		}
+		
 		//학생 과제작성 실행
 		int sidx = (Integer)session.getAttribute("sidx");
 		int tuidx = (Integer)session.getAttribute("tuidx");
@@ -47,13 +68,13 @@ public class S_taskController {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("tsubject", tsubject);
 		hm.put("tcontents", tcontents);
-		hm.put("tfile", tfile);
+		hm.put("tfile", originalFileName);
 		hm.put("sidx", sidx);
 		hm.put("tuidx", tuidx);
 		
 		int value = sts.s_taskInsert(hm);
 		
-		return "";
+		return "lecture/stuTaskSubmit";
 	}
 	
 		/*
