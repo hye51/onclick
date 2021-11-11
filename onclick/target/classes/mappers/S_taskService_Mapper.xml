@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.S_taskService_Mapper">
+
+<insert id="s_taskInsert" parameterType="HashMap">
+INSERT INTO onclick_stutask (TIDX,TSUBYN,TSUBJECT,TDATE,TCONTENTS,TFILE,SIDX,TUIDX)
+VALUES(tidx_seq.nextval,'y',#{tsubject},sysdate,#{tcontents},#{tfile},#{sidx},#{tuidx})
+</insert>
+
+</mapper> 

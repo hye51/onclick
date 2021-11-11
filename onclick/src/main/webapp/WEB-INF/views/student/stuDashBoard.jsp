@@ -154,7 +154,7 @@
                                         <table class="text-center">
                                         <% for(TaskVO tv : stuTaskList) { %>
 											<tr>
-											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/student/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
+											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
 											</tr>
 										<% } %>
                                         </table>
