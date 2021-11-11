@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>    
 <%@ page import="com.onclick.app.domain.*" %>
-<%@ page import="java.util.ArrayList" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
+<%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,14 +13,14 @@
         <meta name="author" content="" />
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
+        <link href="../app/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -35,7 +34,7 @@
                 </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="<%=request.getContextPath() %>/resources/assets/img/alarm.png"></button>
+          	<button type="button"><img alt="" src="../app/resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -55,7 +54,7 @@
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
 						<%=lv.getLname() %>
-						<img alt="" src="../resources/assets/img/home.png">
+						<img alt="" src="../app/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -104,46 +103,78 @@
                     </div>
                 </nav>
             </div>
-            
+            <!--과제 내용보기-->
             <div id="layoutSidenav_content">
-               <main>
-                    
-					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">과제 목록</h4>
-												
-						<div class="card-body mx-auto d-block " style="width:80%">
-							<table class="table text-center">
-								<thead>
-									<tr class="table-secondary">
-										<th style="width:10%">No</th>
-									    <th style="width:30%">과제 제목</th>
-									    <th style="width:30%">제출 기간</th>
-									    <th style="width:10%">제출일</th>
-									    <th style="width:10%">제출여부</th>
-									    <th style="width:10%">진행상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<% for(TaskVO tv : tlist) {%>
-											<th scope="row"><%=tv.getTuidx() %></th>
-										    <td><%=tv.getTuname() %></td>
-										    <td><%=tv.getTustart() %>~<%=tv.getTufin() %></td>
-										    <td></td>
-										    <td></td>
-										    <td><%=tv.getTuing() %></td>
-									    <%} %>
-									</tr>
-								</tbody>
-							</table>
-                        </div>
-
+	            <h2 class="mt-4 ms-3">과제 목록</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
+                	</ol>
+            	<main> 
+            		<div class="container-fluid px-4 ">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<thead>
+								<tr>
+									<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>      
+							      		<td colspan="4" scope="row" style="border:0; font-weight: 700; width:100%"><%=tv.getTuname()%></td>
+							      	<%} else {%>
+							      		<td colspan="3" scope="row" style="border:0; font-weight: 700; width:90%"><%=tv.getTuname()%></td>
+							      		<td style="border:0; width:10%; text-align:right">
+							      		<div class="dropdown">
+											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical mx-auto d-block" viewBox="0 0 16 16">
+												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+												</svg>
+										  	</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+												    <li><a class="dropdown-item" href="#">수정하기</a></li>
+												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
+											  	</ul>
+										</div>
+										</td>
+							      	<%} %>
+							    </tr>
+							</thead>
+							<tbody>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
+							      	<td colspan="3" style="width:45%">
+							      		<%=tv.getTustart().substring(0, 10) %> - <%=tv.getTufin().substring(0, 10) %>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
+							      	<td style="width:40%">
+							      		<%=tv.getTudate().substring(0, 10) %>
+							      	</td>
+							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
+							      	<td style="width:40%">
+							      	
+							      	</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
+							      	<% if(tv.getTufile() != 0) {%>
+							      		<td colspan="3" style="width:90%"><%=tv.getTufile()%></td>
+							    	<%} else {%>
+							    		<td colspan="3" style="width:90%"></td>
+							    	<%} %>
+							    </tr>
+							    <tr>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=tv.getTucontents()%>"></td>
+							    </tr>
+							</tbody>
+						</table>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmit.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+                    	</div>
+                	</div>
                 </main>
-                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
+                            <div >
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
@@ -154,11 +185,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
+        <script src="../app/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script src="../app/resources/js/datatables-simple-demo.js"></script>
     </body>
 </html>

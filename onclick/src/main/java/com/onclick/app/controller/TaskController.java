@@ -24,27 +24,27 @@ public class TaskController { //교수 과제 컨트롤러
 		@Autowired
 		LecService ls;
 
-		@RequestMapping(value="/student/taskContent.do")
+		@RequestMapping(value="/taskContent.do")
 		public String taskContent(@RequestParam("tuidx") int tuidx, 
 								@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 			
 			//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 			TaskVO tv = ts.taskContent(tuidx);
-			model.addAttribute("tv", tv);
+			session.setAttribute("tv", tv);
 			//해당 과목 정보 가져오기
 			LecVO lv = ls.lecSelectOne(lidx);
 			session.setAttribute("lv", lv);
 			
-			return "/student/taskContent";
+			return "lecture/taskContent";
 		}
 
 		@RequestMapping(value="/taskList.do")
-		public String taskList(@RequestParam("lidx") int lidx, Model model) {
+		public String taskList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 			//교수 과제 목록
 			ArrayList<TaskVO> tlist = ts.taskSelectAll(lidx);
 			model.addAttribute("tlist", tlist);
 			
-			return "student/taskList";
+			return "lecture/taskList";
 		}
 		
 /*
