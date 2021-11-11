@@ -63,13 +63,8 @@ public class HomeController {
 	public String lecList() {
 		//강좌목록 페이지 
 		return "lecture/classList";
+
 	}
 
-	@RequestMapping(value="/lecUpload.do")
-	public String lecUpload() {
-		//동영상 업로드
-		return "lecture/lecUpload";
-	}
-	
 
 }

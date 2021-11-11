@@ -140,53 +140,52 @@
                                 	강의 업로드 작성
                             </div>
                             <div class="card-body">
+            <form name="upload">
 	                            <table class="table">
 								  <tbody>
 								    <tr>
-								      <th scope="row" class="table-secondary">작성일</th>
-								      <td><input type="date"></td>
+								      <th scope="row">강의주차</th>
+								      <td>
+								      	<select name="cweek">
+										  <option class="form-select" selected>-- 강의 주차 선택 --</option>
+										  <option value="1">1주차</option>
+										  <option value="2">2주차</option>
+										  <option value="3">3주차</option>
+										</select>
+									  </td>		
 								    </tr>
 								    <tr>
-								      <th scope ="row">업로드 종류</th>
-								      <td>
-								      	<select name='fruits'>
-										  <option value='' selected>-- 업로드 종류 --</option>
-										  <option value='자료 업로드'>자료</option>
-										  <option value='강의 업로드'>강의</option>
-										  <option value='과제 업로드'>과제</option>
-										</select>
-									  </td>					      
-								      <td><a href="<%=request.getContextPath()%>/displayFile.do"></a></td>					      
+								      <th scope="row">출석 인정일</th>
+								      <td><input type="date" name="csta" ></td>
+								    </tr>
+								    <tr>
+								      <th scope="row">출석 마감일</th>
+								      <td><input type="date" name="cfin"></td>
+								    </tr>
+								    <tr>
+								      <th scope="row">알림사용</th>
+								      <td><input class="form-check-input" type="checkbox" value="use" name="cnotyn"> 사용</td>
+								    </tr>
+								    <tr>
+								    	<th scope="row">강의명</th>
+								    	<td><input type="text" name ="cname"></td>
+								    </tr>
+								    <tr>
+									    <th scope="row">파일 업로드</th>
+									    <td><input type="file"></td>
 								    </tr>
 								    <tr>
 								    	<th scope="row">내용</th>
-								    	<td><textarea name="content" cols="80" rows=""></textarea></td>
-								    </tr>
-								    <tr>
-								    <th scope="row">파일 업로드</th>
-								      <div class="fileDrop"></div>
-									  <div class="uploadedList"></div>
+								    	<td><textarea name="ccontents" cols="80" rows="10"></textarea></td>
 								    </tr>
 								  </tbody>
 								</table>
-                            
-                            	<div class="input-group mb-3">
-								  <label class="input-group-text">강의 주차</label>
-								  <select class="form-select" id="inputGroupSelect01">
-								    <option selected>1주차</option>
-								    <option value="1">2주차</option>
-								    <option value="2">3주차</option>
-								    <option value="3">4주차</option>
-								  </select>
-								</div>
-                            
-								<div class="row mb-3">
-								  <label class="col-sm-2 col-form-label col-form-label-sm">강의주차</label>
-								  <div class="col-sm-10">
-								    <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
-								  </div>
-								</div>
-								
+								<nav style="float: right">
+									<button class="btn btn-primary" onclick="check();return false;">확인</button>
+									<button class="btn btn-secondary" type= "reset">취소</button>								
+								</nav>
+                            </form>
+
                             </div>
                         </div>
                     </div>
@@ -212,5 +211,39 @@
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        //강의 업로드 작성시 유효성검사
+        function check() {
+			var fm= document.upload;
+			
+			if(fm.csta.value == ""){
+				fm.csta.focus();
+				alert("시작일을 입력하세요");
+				return false;
+			}else if(fm.cfin.value == ""){
+				fm.cfin.focus();
+				alert("마감일을 입력하세요");
+				return false;
+			}else if(fm.cweek.value == ""){
+				fm.cweek.focus();
+				alert("강의주차를 입력하세요");
+				return false;
+			}else if(fm.cname.value == ""){
+				fm.cname.focus();
+				alert("강의명을 입력하세요");
+				return false;
+			}else if(fm.ccontents.value == ""){
+				fm.ccontents.focus();
+				alert("강의 내용을 입력하세요");
+				return false;
+			}
+				fm.action="<%=request.getContextPath()%>/lecUploadAction.do";
+				fm.method = "post";
+				//fm.enctype="multipart/form-data"; 
+				fm.submit();
+				return;
+		}
+		
+        </script>
     </body>
 </html>

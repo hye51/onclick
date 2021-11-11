@@ -1,5 +1,7 @@
 Manifest-Version: 1.0
-Built-By: GIGI
-Build-Jdk: 1.8.0_301
+
+Built-By: Administrator
+Build-Jdk: 1.8.0_291
+
 Created-By: Maven Integration for Eclipse
 

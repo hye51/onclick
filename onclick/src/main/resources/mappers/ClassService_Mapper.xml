@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
+
+<insert id="classInsert" parameterType="HashMap">
+INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx)
+VALUES(ONCLICK_CIDX_SEQ.nextval, #{cname},#{ccontents},sysdate,#{csta},#{cfin},'N',#{cweek},1,1)
+</insert>
+	
+</mapper>
