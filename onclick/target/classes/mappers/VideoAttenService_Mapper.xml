@@ -10,4 +10,13 @@ WHERE sidx=#{sidx}
 AND cidx=#{cidx}
 </update>
 
+
+<select id="videoSelectOne" parameterType="HashMap" resultType="vd">
+SELECT * 
+FROM onclick_videoattendence
+WHERE sidx=#{sidx} 
+AND cidx=#{cidx}
+</select>
+
+
 </mapper> 
