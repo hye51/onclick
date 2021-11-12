@@ -11,7 +11,7 @@ public class VideoAttenDto {
 	private String vattendence;  /* 동영상수강여부/출석 */
 	private String vlast; /* 마지막접속일 */
 	private int vstart; /* 재생시작시간 */
-	private int yend; /* 재생종료시간 */
+	private int vend; /* 재생종료시간 */
 	private int sidx; /* 학번 */
 	private int cidx; /* 강좌별 고유번호 */
 	
@@ -57,11 +57,11 @@ public class VideoAttenDto {
 	public void setVstart(int vstart) {
 		this.vstart = vstart;
 	}
-	public int getYend() {
-		return yend;
+	public int getVend() {
+		return vend;
 	}
-	public void setYend(int yend) {
-		this.yend = yend;
+	public void setVend(int vend) {
+		this.vend = vend;
 	}
 	public int getSidx() {
 		return sidx;

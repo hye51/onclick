@@ -132,9 +132,13 @@
 					    This is some text within a card body.
 					</div>
 				</div>
-				<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do" role="button">업로드</a>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
-               	<div class="accordion accordion-flush" id="accordionFlushExample" style="width:100%">
+               	</br>
+				<nav style="float: right">
+					<button class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</button>							
+				</nav>
+				</br>
+               	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
 				    <h2 class="accordion-header " id="flush-headingOne">
 				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
