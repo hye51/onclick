@@ -8,4 +8,18 @@ INSERT INTO onclick_stutask (TIDX,TSUBYN,TSUBJECT,TDATE,TCONTENTS,TFILE,SIDX,TUI
 VALUES(tidx_seq.nextval,'y',#{tsubject},sysdate,#{tcontents},#{tfile},#{sidx},#{tuidx})
 </insert>
 
+<select id="s_taskSelectOne" parameterType="Integer" resultType="std">
+SELECT *
+FROM onclick_stutask
+WHERE tdelyn = 'N'
+AND tuidx=#{0}
+AND sidx=#{1}
+</select>
+
+<update id="s_taskUpdate" parameterType="HashMap">
+UPDATE onclick_stutask
+SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, TFILE=#{tfile}
+WHERE tidx=#{tidx}
+</update>
+
 </mapper> 
