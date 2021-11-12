@@ -1,6 +1,7 @@
 package com.onclick.app.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ public class TaskServiceImpl implements TaskService{
 	SqlSession sqlSession;
 
 	@Override
-	public TaskVO taskContent(int tuidx) {
+	public TaskVO taskSelectOne(int tuidx) {
 		//과제 내용보기
 		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		TaskVO tv = tsm.taskContent(tuidx);
+		TaskVO tv = tsm.taskSelectOne(tuidx);
 
 		return tv;
 	}
@@ -31,6 +32,12 @@ public class TaskServiceImpl implements TaskService{
 		ArrayList<TaskVO> tlist = tsm.taskSelectAll(lidx);
 		
 		return tlist;
+	}
+
+	@Override
+	public int taskInsert(HashMap<String, Object> hm) {
+		//과제 업로드
+		return 0;
 	}
 
 }

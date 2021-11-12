@@ -155,7 +155,7 @@
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
 							      	<td style="width:40%">
-							      	
+							      		
 							      	</td>
 							    </tr>
 							    <tr>
@@ -173,7 +173,7 @@
 						</table>
 						<div class="form-row text-center mb-2">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmit.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
                     	</div>
                 	</div>
                 	<!-- 교수 과제 내용보기 -->
@@ -191,8 +191,8 @@
 												</svg>
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
+												    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/taskModify.do?tuidx=<%=tv.getTuidx()%>">수정하기</a></li>
+												    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/taskDelete.do?tuidx=<%=tv.getTuidx()%>">삭제하기</a></li>
 											  	</ul>
 										</div>
 									</td>
