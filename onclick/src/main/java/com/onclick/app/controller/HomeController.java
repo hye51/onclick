@@ -66,6 +66,12 @@ public class HomeController {
 
 	}
 
+	@RequestMapping(value="/test.do")
+	public String test() {
+		//강좌목록 페이지 
+		return "lecture/lecContent_p2";
+
+	}
 
 
 }

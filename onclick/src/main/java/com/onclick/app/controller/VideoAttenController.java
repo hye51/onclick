@@ -3,6 +3,7 @@ package com.onclick.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,12 +37,7 @@ public class VideoAttenController {
 	public int videoEnd(VideoAttenDto vd) {
 		//시청중 멈춘경우(창을 닫은 경우, 로그아웃된 경우, 정지버튼을 누른경우)
 		//전체시간,시작시간,종료시간 받아옴
-		int vpercent = vd.getVend()-vd.getVstart();
-		System.out.println(vpercent + "," + vd.getCidx());
-
-		
 		int result=vs.videoUpdate(vd);
-		System.out.println("controller : " + result);
 		
 		return 1;
 	}
@@ -57,8 +53,11 @@ public class VideoAttenController {
 
 	
 	@RequestMapping(value="/lecContent.do")
-	public String lecContent() {
+	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
 		//학생 동영상 출석 화면
+		VideoAttenDto vd = vs.videoSelectOne(sidx, cidx);
+		model.addAttribute("vd", vd);
+		
 		return "lecture/lecContent_p";
 	}
 	

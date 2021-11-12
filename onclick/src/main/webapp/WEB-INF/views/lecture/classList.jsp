@@ -147,7 +147,7 @@
 				    </h2>
 				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
-						<a href="<%=request.getContextPath()%>/lecContent.do">강의보기 </a>
+						<a href="<%=request.getContextPath()%>/lecContent.do?sidx=1&cidx=2">강의보기 </a>
 				      </div>
 				    </div>
 				  </div>
