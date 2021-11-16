@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
+<% int sidx =(Integer)session.getAttribute("sidx"); 
+//int pidx =(Integer)session.getAttribute("pidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -134,47 +138,32 @@
 				</div>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
+               	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
 				<nav style="float: right">
-					<button class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</button>							
+					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
 				</nav>
 				</br>
+				<%} %>
                	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
+				    <% for(ClassVo cv : alist){ %>
+				     <% if(cv.getCseq()==1){ %>
 				    <h2 class="accordion-header " id="flush-headingOne">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-				        1주차 강의 
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=cv.getCweek()%>" aria-expanded="false" aria-controls="flush-collapseOne">
+				        <%=cv.getCweek()%>주차 강의 
 				      </button>
 				    </h2>
-				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				    <% } %>
+				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
-						<a href="<%=request.getContextPath()%>/lecContent.do?sidx=1&cidx=2">강의보기 </a>
+				      <!-- 교수인지 학생인지 구분 필요 -->
+						<a href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 				      </div>
 				    </div>
-				  </div>
-				  <div class="accordion-item">
-				    <h2 class="accordion-header" id="flush-headingTwo">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-				        2주차 강의 
-				      </button>
-				    </h2>
-				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-				      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
-				    </div>
-				  </div>
-				  <div class="accordion-item">
-				    <h2 class="accordion-header" id="flush-headingThree">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-				        3주차 강의 
-				      </button>
-				    </h2>
-				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-				      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-				    </div>
-				  </div>
+				  <% } %>
 				</div>	
                	</div>  
                 </main>
-                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
