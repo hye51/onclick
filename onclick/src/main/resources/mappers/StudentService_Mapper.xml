@@ -47,11 +47,16 @@ AND sidx=#{sidx}
 </select>	
 
 <select id="stuTaskSelectAll" parameterType="Integer" resultType="tv">
-SELECT a.lidx, b.tuname, b.tuidx
-FROM onclick_enroll a
-INNER JOIN onclick_taskupload b
-ON a.lidx = b.lidx
-WHERE a.sidx=#{id}
+<![CDATA[SELECT *
+FROM(
+	SELECT a.lidx, b.tuname, b.tuidx
+	FROM onclick_enroll a
+	INNER JOIN onclick_taskupload b
+	ON a.lidx = b.lidx
+	WHERE a.sidx=#{id}
+	AND b.tudelyn='N'
+     )
+WHERE ROWNUM <= 5 ]]>
 </select>
 
 <select id="stuTaskContent" parameterType="String" resultType="tv">

@@ -209,6 +209,12 @@
 		    <version>05Nov2002</version>
 		</dependency>
 		
+		<!-- 트랜잭션 관련 -->
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-tx</artifactId>
+		  <version>${org.springframework-version}</version>
+		</dependency>
         
 	</dependencies>
     <build>

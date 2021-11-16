@@ -7,13 +7,18 @@ public class TaskVO { //교수님 과제 업로드
 	private String tustart; //제출 시작일
 	private String tufin; //제출 종료일
 	private String tudate; //작성일
-	private String tuing; //진행상태(진행 or 종료)
-	private int tufile; //첨부파일 번호
 	private String tunotyn; //알림 여부
 	private String tudelyn;
 	private int lidx; //강의고유번호
 	private String tucontents; //과제 내용
+	private int fidx; //첨부파일 번호
 	
+	public int getFidx() {
+		return fidx;
+	}
+	public void setFidx(int fidx) {
+		this.fidx = fidx;
+	}
 	public String getTucontents() {
 		return tucontents;
 	}
@@ -49,18 +54,6 @@ public class TaskVO { //교수님 과제 업로드
 	}
 	public void setTudate(String tudate) {
 		this.tudate = tudate;
-	}
-	public String getTuing() {
-		return tuing;
-	}
-	public void setTuing(String tuing) {
-		this.tuing = tuing;
-	}
-	public int getTufile() {
-		return tufile;
-	}
-	public void setTufile(int tufile) {
-		this.tufile = tufile;
 	}
 	public String getTunotyn() {
 		return tunotyn;

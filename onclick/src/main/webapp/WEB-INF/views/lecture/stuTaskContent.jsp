@@ -4,6 +4,7 @@
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
 <%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
+<%FileVO fv = (FileVO)session.getAttribute("fv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -133,6 +134,8 @@
                     	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
                 	</ol>              	
             	<main>
+            		<!-- 학생 과제 내용보기 -->
+					<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>
 					<div class="container-fluid px-4 ">
 						<table class="table mx-auto bg-light" style="width:80%">   
 							<thead>
@@ -147,7 +150,7 @@
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 												    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/stuTaskModify.do?tidx=<%=std.getTidx()%>">수정하기</a></li>
-												    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/stuTaskDelete.do?tidx=<%=std.getTidx()%>">삭제하기</a></li>
+												    <li><a class="dropdown-item" onclick="del(${std.tidx})">삭제하기</a></li>
 											  	</ul>
 										</div>
 									</td>
@@ -163,19 +166,19 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
 							      	<td style="width:90%">
-							      		<%=std.getTdate() %>
+							      		<%=std.getTdate().substring(0, 10) %>
 							      	</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
-							      	<% if(std.getTfile() != null) {%>
-							      		<td colspan="3" style="width:90%"><%=std.getTfile()%></td>
+							      	<% if(std.getFidx()==0) {%>
+						    			<td colspan="3" style="border-bottom:0; width:90%">-</td>
 							    	<%} else {%>
-							    		<td colspan="3" style="width:90%"></td>
+							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=std.getTcontents() %>"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid;" value="<%=std.getTcontents() %>" readonly></td>
 							    </tr>
 							</tbody>
 						</table>
@@ -183,6 +186,46 @@
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
                     	</div>
                 	</div>
+                	<!-- 교수 과제 내용보기 -->
+					<%} else {%>
+					<div class="container-fluid px-4 ">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<thead>
+								<tr>   
+			      					<td colspan="4" scope="row" style="border:0; font-weight: 700;"><strong><%=std.getTsubject() %></strong></td>
+			      				</tr>
+							</thead>
+							<tbody>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
+							      	<td colspan="3" style="width:45%">
+							      		<%=tv.getTustart().substring(0, 10) %> - <%=tv.getTufin().substring(0, 10) %>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
+							      	<td style="width:90%">
+							      		<%=std.getTdate().substring(0, 10) %>
+							      	</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
+							      	<% if(std.getFidx()==0) {%>
+						    			<td colspan="3" style="border-bottom:0; width:90%">-</td>
+							    	<%} else {%>
+							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    	<%} %>
+							    </tr>
+							    <tr>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid;" value="<%=std.getTcontents() %>" readonly></td>
+							    </tr>
+							</tbody>
+						</table>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmitList.do?tuidx=<%=tv.getTuidx()%>">목록</a></button>
+                    	</div>
+                	</div>
+					<%} %>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -205,5 +248,15 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        	
+			function del(tidx) {
+				var value = confirm("삭제하시겠습니까?");
+				if (value == true) {
+					location = '${pageContext.request.contextPath}/stuTaskDeleteAction.do?tidx='+tidx;
+				}
+			}	
+			
+		</script>
     </body>
 </html>

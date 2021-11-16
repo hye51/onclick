@@ -3,12 +3,25 @@ package com.onclick.app.domain;
 public class FileVO { //첨부파일
 	
 	private int fidx; //첨부파일인덱스
-	private String fsubject; //첨부파일제목
 	private String ftype; //확장자명
 	private String froute; //경로
 	private String fdelyn; //삭제여부
-	private int tuidx; //과제인덱스
-	private int ridx; //자료인덱스
+	private String fsavedname; //저장된 이름
+	private String foriginname; //파일 원래 이름
+	
+	
+	public String getFsavedname() {
+		return fsavedname;
+	}
+	public void setFsavedname(String fsavedname) {
+		this.fsavedname = fsavedname;
+	}
+	public String getForiginname() {
+		return foriginname;
+	}
+	public void setForiginname(String foriginname) {
+		this.foriginname = foriginname;
+	}
 	
 	public int getFidx() {
 		return fidx;
@@ -16,12 +29,7 @@ public class FileVO { //첨부파일
 	public void setFidx(int fidx) {
 		this.fidx = fidx;
 	}
-	public String getFsubject() {
-		return fsubject;
-	}
-	public void setFsubject(String fsubject) {
-		this.fsubject = fsubject;
-	}
+
 	public String getFtype() {
 		return ftype;
 	}
@@ -40,16 +48,5 @@ public class FileVO { //첨부파일
 	public void setFdelyn(String fdelyn) {
 		this.fdelyn = fdelyn;
 	}
-	public int getTuidx() {
-		return tuidx;
-	}
-	public void setTuidx(int tuidx) {
-		this.tuidx = tuidx;
-	}
-	public int getRidx() {
-		return ridx;
-	}
-	public void setRidx(int ridx) {
-		this.ridx = ridx;
-	}
+
 }

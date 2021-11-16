@@ -3,7 +3,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.onclick.app.domain.*" %>
-
 <%ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList"); %>
 <%ArrayList<TaskVO> stuTaskList = (ArrayList<TaskVO>)request.getAttribute("stuTaskList"); %>
 <!DOCTYPE html>
@@ -154,7 +153,7 @@
                                         <table class="text-center">
                                         <% for(TaskVO tv : stuTaskList) { %>
 											<tr>
-											<td><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
+											<td><a style="color:white; text-decoration:none; text-align:left" href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
 											</tr>
 										<% } %>
                                         </table>

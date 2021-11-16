@@ -8,11 +8,18 @@ public class S_taskDTO { //학생 과제 제출
 	private String tsubject; //제목
 	private String tdate; //작성일
 	private String tcontents; //내용
-	private String tfile; //첨부파일
 	private String tdelyn; //삭제여부
 	private int sidx; //학번
 	private int tuidx; //과제인덱스
+	private int fidx; //첨부파일 인덱스
 	
+	
+	public int getFidx() {
+		return fidx;
+	}
+	public void setFidx(int fidx) {
+		this.fidx = fidx;
+	}
 	public int getTidx() {
 		return tidx;
 	}
@@ -42,12 +49,6 @@ public class S_taskDTO { //학생 과제 제출
 	}
 	public void setTcontents(String tcontents) {
 		this.tcontents = tcontents;
-	}
-	public String getTfile() {
-		return tfile;
-	}
-	public void setTfile(String tfile) {
-		this.tfile = tfile;
 	}
 	public String getTdelyn() {
 		return tdelyn;

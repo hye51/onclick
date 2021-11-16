@@ -1,14 +1,14 @@
-package com.onclick.app.service;
+package com.onclick.app.persistence;
 
 import java.util.HashMap;
 
 import com.onclick.app.domain.FileVO;
 
-public interface FileService {
+public interface FileService_Mapper {
 
 	//과제 첨부파일 가져오기
 	public FileVO taskFileSelectAll(int fidx);
-	
+
 	//과제 첨부파일 다운로드
 	public HashMap<String, Object> taskFileDownload(int fidx);
 	

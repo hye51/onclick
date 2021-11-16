@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
-<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv"); %> <!-- 세션값에 있는 강의 정보 받기 -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -138,7 +138,7 @@
 								<tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">제목</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" name="taskSubject" type="text" placeholder="제목을 입력하세요" /> 
+							      		<input class="form-control" name="taskSubject" type="text" /> 
 									</td>
 							    </tr>
 							    <tr>
@@ -154,7 +154,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" name="taskFile" type="file" placeholder="" /> 
+							      		<input class="form-control" name="taskFile" type="file" multiple/> 
 							      	</td>
 							    </tr>
 							    <tr>
@@ -163,12 +163,12 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="flexRadioDefault" name="taskNotY" value="Y" checked>
-											<label class="form-check-label" for="taskNotY" >
+							      		<input class="form-check-input" type="radio" name="taskNotice" value="Y" checked>
+											<label class="form-check-label" for="taskNotice" >
 											발송
 											</label>
-										<input class="form-check-input" type="radio" name="flexRadioDefault" name="taskNotN" value="N">
-											<label class="form-check-label" for="taskNotN">
+										<input class="form-check-input" type="radio" name="taskNotice" value="N">
+											<label class="form-check-label" for="taskNotice">
 											미발송
 											</label>
 									</td>
@@ -214,22 +214,21 @@
 				alert("내용을 입력하세요");
 				fm.taskContents.focus();
 				return false;
-			}else if(fm.taskStart.value == "") {
-				alert("제출 시작일을 선택하세요");
+			}else if(fm.taskStart.value == ""){
+				alert("시작일을 선택하세요");
 				fm.taskStart.focus();
 				return false;
-			}else if(fm.taskFin.value == "") {
-				alert("제출 종료일을 선택하세요");
+			}else if(fm.taskFin.value == ""){
+				alert("종료일을 선택하세요");
 				fm.taskFin.focus();
 				return false;
 			}
 			
-				fm.action="<%=request.getContextPath()%>/taskWriteAction.do";
+				fm.action="<%=request.getContextPath()%>/taskWriteAction.do?lidx=<%=lv.getLidx()%>";
 				fm.method = "post";
-				fm.submit();
 				fm.enctype="multipart/form-data";
+				fm.submit();
 				
-				return;
 			};
 		</script>
     </body>
