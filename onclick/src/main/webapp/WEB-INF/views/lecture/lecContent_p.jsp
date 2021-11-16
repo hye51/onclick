@@ -213,6 +213,9 @@
    	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
     	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
 		video1.addEventListener('loadedmetadata', function() {
+			//이전 시청종료시점부터 
+			video1.currentTime=startTime;
+			
 			//전체 재생 시간 (초 단위 절삭)
 		    videoFulltime = Math.floor(video1.duration);
 		    console.log(videoFulltime);
@@ -246,7 +249,7 @@
         		data:{"vend" : endTime, 
         			"vstart": startTime,
         			"vfull":videoFulltime,
-        			"cidx":2},
+        			"cidx":1},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},

@@ -163,8 +163,12 @@
 								      <td><input type="date" name="cfin"></td>
 								    </tr>
 								    <tr>
-								      <th scope="row">알림사용</th>
-								      <td><input class="form-check-input" type="checkbox" value="use" name="cnotyn"> 사용</td>
+								      <th scope="row">알림 사용</th>
+								      <td><input class="form-check-input" type="checkbox" name="cnotyn" value="Y" checked> 사용</td>
+								    </tr>
+								     <tr>
+								      <th scope="row">다시보기 사용</th>
+								      <td><input class="form-check-input" type="checkbox" name="creyn" value="Y"> 사용</td>
 								    </tr>
 								    <tr>
 								    	<th scope="row">강의명</th>
@@ -237,13 +241,13 @@
 				alert("강의 내용을 입력하세요");
 				return false;
 			}
-				fm.action="<%=request.getContextPath()%>/lecUploadAction.do";
+				fm.action="<%=request.getContextPath()%>/lecUploadAction.do?lidx=<%=lv.getLidx()%>";
 				fm.method = "post";
 				//fm.enctype="multipart/form-data"; 
 				fm.submit();
 				return;
 		}
-		
+
         </script>
     </body>
 </html>

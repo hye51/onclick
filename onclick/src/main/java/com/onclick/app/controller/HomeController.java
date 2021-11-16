@@ -58,13 +58,6 @@ public class HomeController {
 		
 		return "lecture/stuList";
 	}
-	
-	@RequestMapping(value="/lecList.do")
-	public String lecList() {
-		//강좌목록 페이지 
-		return "lecture/classList";
-
-	}
 
 	@RequestMapping(value="/test.do")
 	public String test() {

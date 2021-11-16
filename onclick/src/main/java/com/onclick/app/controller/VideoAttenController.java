@@ -39,7 +39,7 @@ public class VideoAttenController {
 		//전체시간,시작시간,종료시간 받아옴
 		int result=vs.videoUpdate(vd);
 		
-		return 1;
+		return result;
 	}
 	
 	/*
@@ -52,7 +52,7 @@ public class VideoAttenController {
 	 */
 
 	
-	@RequestMapping(value="/lecContent.do")
+	@RequestMapping(value="/stuLecContent.do")
 	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
 		//학생 동영상 출석 화면
 		VideoAttenDto vd = vs.videoSelectOne(sidx, cidx);
@@ -61,11 +61,12 @@ public class VideoAttenController {
 		return "lecture/lecContent_p";
 	}
 	
-/*	
-	@RequestMapping(value="/.do")
-	public String videoProAtten() {
+	
+	@RequestMapping(value="/proLecContent.do")
+	public String videoProAtten(@RequestParam("pidx") int pidx, @RequestParam("cidx") int cidx, Model model) {
 		//교수 동영상 출석 화면
+		System.out.println();
 		return null;
 	}
-*/	
+	
 }
