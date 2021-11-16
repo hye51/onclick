@@ -151,7 +151,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부파일</td>
 					            	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" name="s_taskFile" type="file" <%=std.getTfile() %>/> 
+							      		
 							      	</td>
 							    </tr>
 							    <tr>

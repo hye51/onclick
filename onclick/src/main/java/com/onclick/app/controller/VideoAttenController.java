@@ -1,6 +1,7 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,11 +35,12 @@ public class VideoAttenController {
 
 	@ResponseBody
 	@RequestMapping(value="/videoEnd.do")
-	public int videoEnd(VideoAttenDto vd) {
+	public int videoEnd(VideoAttenDto vd, HttpSession session) {
 		//시청중 멈춘경우(창을 닫은 경우, 로그아웃된 경우, 정지버튼을 누른경우)
 		//전체시간,시작시간,종료시간 받아옴
+		vd.setSidx((Integer)session.getAttribute("sidx"));
 		int result=vs.videoUpdate(vd);
-		
+
 		return result;
 	}
 	
