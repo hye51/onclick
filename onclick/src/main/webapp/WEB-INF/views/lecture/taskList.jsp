@@ -2,8 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
+<%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
+<%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	Date today = new Date(); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +19,7 @@
         <meta name="author" content="" />
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
+        <link href="../app/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -48,7 +53,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="../app/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -77,7 +82,7 @@
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
 						<%=lv.getLname() %>
-						<img alt="" src="../resources/assets/img/home.png">
+						<img alt="" src="../app/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -144,21 +149,21 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<% 	int i = 1;
-											for(TaskVO tv : tlist) {%>
+									<% 	int i = 1;
+										for(TaskVO tv : tlist) {%>
+										<tr>
 											<th scope="row"><%=i++%></th>
 										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
 										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
 										    <td></td>
-										    <td><a href="<%=request.getContextPath()%>/stuTaskContent.do?sidx=<%=session.getAttribute("sidx")%>&tuidx=<%=tv.getTuidx()%>">제출완료</a></td>
-										    <% if(tv.getTuing().equals("진행")) { %>
-										    	<td style="color:blue"><%=tv.getTuing() %></td>
-										    <%} else { %>
-										    	<td style="color:red"><%=tv.getTuing() %></td>
-										    <%} %>
-									    <%} %>
-									</tr>
+										    <td></td>
+										    <%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
+										    	<td style="color:blue">진행</td>
+										    	<%} else { %>
+										    	<td style="color:red">종료</td>
+										    	<%} %>
+									    </tr>
+								    <%} %>
 								</tbody>
 							</table>
                         </div>
@@ -177,21 +182,23 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<% 	int i = 1;
-											for(TaskVO tv : tlist) {%>
+									<% 	int i = 1;
+										for(TaskVO tv : tlist) {%>
+										<tr>
 											<th scope="row"><%=i++%></th>
 										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
 										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
 										    <td><%=tv.getTudate().substring(0, 10) %></td>
-										    <% if(tv.getTuing().equals("진행")) { %>
-										    	<td style="color:blue"><%=tv.getTuing() %></td>
-										    <%} else { %>
-										    	<td style="color:red"><%=tv.getTuing() %></td>
-										    <%} %>
-										    <td><a href="">제출현황</a></td>
-									    <%} %>
-									</tr>
+										    <%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
+										    	<td style="color:blue">진행</td>
+										    	<%} else if(tv.getTustart().compareTo(dateFormat.format(today))> 0){ %>
+										    	<td>-</td>
+										    	<%} else {%>
+										    	<td style="color:red">종료</td>
+										    	<%} %>
+										    <td><a href="<%=request.getContextPath()%>/taskSubmitList.do?tuidx=<%=tv.getTuidx()%>">제출현황</a></td>
+									    </tr>
+								    <%} %>
 								</tbody>
 							</table>
                         </div>
@@ -213,11 +220,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
+        <script src="../app/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script src="../app/resources/js/datatables-simple-demo.js"></script>
     </body>
 </html>

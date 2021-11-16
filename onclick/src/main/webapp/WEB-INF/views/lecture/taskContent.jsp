@@ -3,6 +3,8 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
+<%FileVO fv = (FileVO)session.getAttribute("fv"); %>
+<%int tuidx = tv.getTuidx(); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -145,7 +147,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
 							      	<td colspan="3" style="width:45%">
-							      		<%=tv.getTustart().substring(0, 10) %> - <%=tv.getTufin().substring(0, 10) %>
+							      		<%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %>
 									</td>
 							    </tr>
 							    <tr>
@@ -154,20 +156,20 @@
 							      		<%=tv.getTudate().substring(0, 10) %>
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
-							      	<td style="width:40%">
-							      		
-							      	</td>
+							      	
+								      	<td></td>
+								     
 							    </tr>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
-							      	<% if(tv.getTufile() != 0) {%>
-							      		<td colspan="3" style="width:90%"><%=tv.getTufile()%></td>
-							    	<%} else {%>
-							    		<td colspan="3" style="width:90%"></td>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부파일</td>
+							    	<% if(tv.getFidx() == 0) {%>
+							    		<td colspan="3" style="border-bottom:0;"></td>
+							    	<%} else { %>
+							    		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=tv.getTucontents()%>"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=tv.getTucontents()%>" readonly></td>
 							    </tr>
 							</tbody>
 						</table>
@@ -192,7 +194,7 @@
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 												    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/taskModify.do?tuidx=<%=tv.getTuidx()%>">수정하기</a></li>
-												    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/taskDelete.do?tuidx=<%=tv.getTuidx()%>">삭제하기</a></li>
+												    <li><a class="dropdown-item" onclick="del(${tv.tuidx})">삭제하기</a></li>
 											  	</ul>
 										</div>
 									</td>
@@ -201,30 +203,26 @@
 							<tbody>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
-							      	<td colspan="3" style="width:45%">
-							      		<%=tv.getTustart().substring(0, 10) %> - <%=tv.getTufin().substring(0, 10) %>
+							      	<td colspan="3" >
+							      		<%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %>
 									</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
-							      	<td style="width:40%">
+							      	<td colspan="3">
 							      		<%=tv.getTudate().substring(0, 10) %>
-							      	</td>
-							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
-							      	<td style="width:40%">
-							      	
-							      	</td>
+							      	</td>	
 							    </tr>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
-							      	<% if(tv.getTufile() != 0) {%>
-							      		<td colspan="3" style="width:90%"><%=tv.getTufile()%></td>
-							    	<%} else {%>
-							    		<td colspan="3" style="width:90%"></td>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부파일</td>
+							    	<% if(tv.getFidx() == 0) {%>
+							    		<td colspan="3" style="border-bottom:0;"></td>
+							    	<%} else { %>
+							    		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" value="<%=tv.getTucontents()%>"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid;" value="<%=tv.getTucontents()%>" readonly></td>
 							    </tr>
 							</tbody>
 						</table>
@@ -255,5 +253,15 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        	
+			function del(tuidx) {
+				var value = confirm("삭제하시겠습니까?");
+				if (value == true) {
+					location = '${pageContext.request.contextPath}/taskDeleteAction.do?tuidx='+tuidx;
+				}
+			}	
+			
+		</script>
     </body>
 </html>

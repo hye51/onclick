@@ -10,7 +10,9 @@
  <typeAlias alias="tv" type="com.onclick.app.domain.TaskVO"/>
  <typeAlias alias="lnv" type="com.onclick.app.domain.LecNoticeVO"/>
  <typeAlias alias="std" type="com.onclick.app.domain.S_taskDTO"/>
+ <typeAlias alias="fv" type="com.onclick.app.domain.FileVO"/>
  <typeAlias alias="vd" type="com.onclick.app.domain.VideoAttenDto"/>
  <typeAlias alias="cv" type="com.onclick.app.domain.ClassVo"/>
+
  </typeAliases>  
  </configuration>

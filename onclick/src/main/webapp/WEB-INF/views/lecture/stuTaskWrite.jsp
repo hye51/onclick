@@ -137,7 +137,9 @@
 						<table class="table mx-auto bg-light" style="width:80%">   
 							<thead>    
 								<tr>			      
-							      	<td colspan="4" scope="row" style="border:0;"><input class="form-control" type="text" name="s_taskSubject" style="border:0; black; width:100%" placeholder="제목을 입력하세요"></td>
+							      	<td colspan="4" scope="row" style="border:0;">
+							      		<input class="form-control" type="text" name="s_taskSubject" style="border:0; black; width:100%" placeholder="제목을 입력하세요">
+							      	</td>
 							    </tr>
 							</thead>
 							<tbody>
@@ -150,7 +152,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부파일</td>
 					            	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" name="s_taskFile" type="file" /> 
+							      		<input class="form-control" name="s_taskFile" type="file" multiple/> 
 							      	</td>
 							    </tr>
 							    <tr>
@@ -200,10 +202,9 @@
 			}
 				fm.action="<%=request.getContextPath()%>/stuTaskWriteAction.do";
 				fm.method = "post";
-				fm.submit();
 				fm.enctype="multipart/form-data";
-				
-				return;
+				fm.submit();
+
 			};
 		</script>
     </body>
