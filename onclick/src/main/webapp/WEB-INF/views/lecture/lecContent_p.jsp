@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%int sidx =(Integer)session.getAttribute("sidx");%>
+
 <%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
 <!DOCTYPE html>
 <html>
@@ -141,7 +141,7 @@
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
-								<video  id="myVideo" style="width:100%; height:450px" controlsList="nodownload" controls>
+								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
 								  <source src="https://cdn.jbnu.khub.kr/data/28358/%EC%98%A8%EB%9D%BC%EC%9D%B82020_10_27%EB%94%94%ED%86%B516(1).mp4" type="video/mp4">
 
 								</video>
@@ -244,12 +244,12 @@
 			console.log("endTime :" + endTime);	
 		
 			$.ajax({
-        		url:"<%=request.getContextPath()%>/videoEnd.do?sidx=<%=sidx%>",
+        		url:"<%=request.getContextPath()%>/videoEnd.do",
         		type:'post',
         		data:{"vend" : endTime, 
         			"vstart": startTime,
         			"vfull":videoFulltime,
-        			"cidx":1},
+        			"cidx":2},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},
@@ -268,6 +268,12 @@
 
 
         </script>
+		<style>
+		/*영상 조각 방지*/ 
+		 video::-webkit-media-controls-timeline {
+		 display : none;
+		 } 
+		</style>
 
     </body>
 </html>
