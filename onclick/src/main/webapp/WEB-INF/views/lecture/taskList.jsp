@@ -151,7 +151,7 @@
 										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
 										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
 										    <td></td>
-										    <td></td>
+										    <td><a href="<%=request.getContextPath()%>/stuTaskContent.do?sidx=<%=session.getAttribute("sidx")%>&tuidx=<%=tv.getTuidx()%>">제출완료</a></td>
 										    <% if(tv.getTuing().equals("진행")) { %>
 										    	<td style="color:blue"><%=tv.getTuing() %></td>
 										    <%} else { %>
@@ -164,7 +164,7 @@
                         </div>
 					<%} else { %> <!-- 교수 -->
 						<div class="card-body mx-auto d-block " style="width:80%">
-							<button type="button" class="btn btn-secondary mb-2" style="float:right">과제 업로드</button>
+							<button type="button" class="btn btn-secondary mb-2" style="float:right" onclick="location.href='<%=request.getContextPath()%>/taskWrite.do?lidx=<%=lv.getLidx()%>'">과제 업로드</button>
 							<table class="table text-center">
 								<thead>
 									<tr class="table-secondary">

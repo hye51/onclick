@@ -21,11 +21,24 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" />
+	</beans:bean>	
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:/java exercise/dev_html/workspace/onclick/onclick/onclick/src/main/webapp/uploadFiles" />
 	</beans:bean>
+	
+	<beans:bean id = "loginInterceptor" class = "com.onclick.app.Interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.onclick.app.Interceptor.AuthInterceptor"></beans:bean>
+	
+	   <interceptors>
+	    <interceptor>
+		    <mapping path="/student/stuLogin.do"/>
+		    <beans:ref bean="loginInterceptor"/>
+	     </interceptor>
+   
+       </interceptors>
 	
 	<context:component-scan base-package="com.onclick.app" />
 

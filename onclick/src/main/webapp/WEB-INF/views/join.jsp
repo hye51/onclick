@@ -277,7 +277,7 @@
 	            data:{"pidx":pidx},
 	            success:function(cnt){
 	            	idCheck2=cnt;
-	            	alert(idCheck2);
+	            	//alert(idCheck2);
 	            	if(cnt == 1){ //cnt가 1인 경우 -> 사용 가능한 아이디 
 	                    $('.pidUseOk').css("display","inline-block"); 
 	                    $('.pidUseNok').css("display", "none");

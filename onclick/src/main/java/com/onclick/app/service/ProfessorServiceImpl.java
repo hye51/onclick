@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onclick.app.domain.ProfessorVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.persistence.ProfessorService_Mapper;
 import com.onclick.app.persistence.StudentService_Mapper;
 
@@ -70,11 +71,31 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 	
 	@Override
-	public ProfessorVO proInfo(int pidx) {
-		//교수 정보 보기 
+	public int professorModifyAction(int pidx, String ppwd) {
+		//교수 정보 수정(학교 계정 수정)
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("pidx", pidx);
+		hm.put("ppwd", ppwd);
+		
 		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
-		ProfessorVO pv  = psm.proInfo(pidx);
+		int cnt = psm.professorModifyAction(hm);
+		
+		return cnt;
+	}
+	
+	@Override
+	public ProfessorVO professorSelectOne(int pidx) {
+		//교수 정보 가져오기
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		ProfessorVO pv = psm.professorSelectOne(pidx);
 		
 		return pv;
 	}
+
+	@Override
+	public ProfessorVO proInfo(int pidx) {
+		//교수 정보 보기(강의실 확인)		
+		return null;
+	}
+
 }

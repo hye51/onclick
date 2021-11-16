@@ -37,6 +37,18 @@ public class HomeController {
 		return "join";
 	}
 	
+	@RequestMapping(value="/find.do")
+	public String find() {
+		// 회원찾기
+		return "find";
+	}
+	
+	@RequestMapping(value="/siteMap.do")
+	public String siteMap() {
+		
+		return "siteMap";
+	}
+	
 	@RequestMapping(value="/lecHome.do")
 	public String LecHome(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 
@@ -65,6 +77,7 @@ public class HomeController {
 		return "lecture/classList";
 
 	}
+
 
 
 }

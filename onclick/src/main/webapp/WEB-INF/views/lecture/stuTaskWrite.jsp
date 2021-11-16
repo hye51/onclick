@@ -60,13 +60,16 @@
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">Mypage</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">English</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="<%=request.getContextPath()%>/student/stuLogout.do">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>
@@ -198,13 +201,13 @@
 				fm.s_taskContents.focus();
 				return false;
 			}
-				fm.action="<%=request.getContextPath()%>/taskWriteAction.do";
+				fm.action="<%=request.getContextPath()%>/stuTaskWriteAction.do";
 				fm.method = "post";
-				//fm.submit();
-				enctype="multipart/form-data"
+				fm.submit();
+				fm.enctype="multipart/form-data";
 				
 				return;
-		};
+			};
 		</script>
     </body>
 </html>

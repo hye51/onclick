@@ -1,13 +1,21 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.onclick.app.domain.VideoAttenDto;
+import com.onclick.app.service.VideoAttenService;
+
 @Controller
 public class VideoAttenController {
+	
+	@Autowired
+	VideoAttenService vs;
+	
 	/*
 	
 	@RequestMapping(value="/.do")
@@ -25,12 +33,15 @@ public class VideoAttenController {
 
 	@ResponseBody
 	@RequestMapping(value="/videoEnd.do")
-	public int videoEnd(@RequestParam("videoFulltime") String vfull, 
-							@RequestParam("startTime") String vstart,
-							@RequestParam("endTime") String vend,
-							@RequestParam("sidx") int sidx) {
+	public int videoEnd(VideoAttenDto vd) {
 		//시청중 멈춘경우(창을 닫은 경우, 로그아웃된 경우, 정지버튼을 누른경우)
 		//전체시간,시작시간,종료시간 받아옴
+		int vpercent = vd.getVend()-vd.getVstart();
+		System.out.println(vpercent + "," + vd.getCidx());
+
+		
+		int result=vs.videoUpdate(vd);
+		System.out.println("controller : " + result);
 		
 		return 1;
 	}
@@ -41,7 +52,6 @@ public class VideoAttenController {
 		//시청시작 버튼 누른 경우
 		return null;
 	}
-<<<<<<< HEAD
 
 	 */
 

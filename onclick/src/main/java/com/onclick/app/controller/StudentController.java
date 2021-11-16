@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,17 +58,20 @@ public class StudentController {
 	public String studentLogin( @RequestParam("stuId") int sidx,
 								@RequestParam("stuPwd") String spwd,
 								RedirectAttributes rttr, 
-								HttpSession session) {
+								HttpSession session
+								) {
 		//학생 로그인 후 대시보드 이동
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
 		
 		//학번 세션에 저장 
 		session.setAttribute("sidx", sidx);
+		System.out.println("컨트롤러 세션값?"+sidx);
 		
 		if(sv != null) { 
 			//로그인 성공 시
 			rttr.addAttribute("sidx", sidx);
+			System.out.println(sidx);
 			str = "redirect:/student/stuDashBoard.do";	
 		} else{
 			//로그인 실패 시 
@@ -76,6 +80,27 @@ public class StudentController {
 		}
 		
 		return str;
+	}
+	
+	@RequestMapping(value="/student/stuLogout.do", method=RequestMethod.GET)
+    public String studentLogout(
+    									@RequestParam("stuId") int sidx,
+    									@RequestParam("stuPwd") String spwd,
+    								   HttpServletRequest request,
+    								   RedirectAttributes rttr,
+    								   HttpSession session) throws Exception{
+    
+		//학생 로그아웃
+		
+		StudentVO sv = ss.studentLogin(sidx, spwd);
+		session.getAttribute("sidx");
+
+		 // 세션에 저장된 값을 삭제
+		 session.invalidate();
+		 
+		 System.out.println("삭제됐나요?"+session);
+
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/student/stuDashBoard.do")

@@ -3,6 +3,7 @@ package com.onclick.app.persistence;
 import java.util.HashMap;
 
 import com.onclick.app.domain.ProfessorVO;
+import com.onclick.app.domain.StudentVO;
 
 public interface ProfessorService_Mapper {
 
@@ -20,4 +21,12 @@ public interface ProfessorService_Mapper {
 	
 	//교수 정보 보기 
 	public ProfessorVO proInfo(int pidx);
+	
+	//교수 정보 수정 
+	public int professorModifyAction(HashMap<String, Object> hm);
+	
+	//교수 정보 가져오기
+	public ProfessorVO professorSelectOne(int pidx);
+
+
 }

@@ -59,14 +59,17 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
+		      	<li class="nav-item">
+		          <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">English</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="<%=request.getContextPath()%>/student/stuLogout.do">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>

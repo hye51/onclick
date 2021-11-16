@@ -18,4 +18,10 @@ public interface ProfessorService {
 
 	//교수 정보 보기 
 	public ProfessorVO proInfo(int pidx);
+	
+	//교수 정보 수정 
+	public int professorModifyAction(int pidx, String ppwd);
+	
+	//교수 정보 가져오기
+	public ProfessorVO professorSelectOne(int pidx);
 }
