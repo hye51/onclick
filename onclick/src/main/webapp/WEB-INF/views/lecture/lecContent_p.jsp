@@ -3,6 +3,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%int sidx =(Integer)session.getAttribute("sidx");%>
+<%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -141,7 +142,7 @@
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
 								<video  id="myVideo" style="width:100%; height:450px" controlsList="nodownload" controls>
-								  <source src="<%=request.getContextPath()%>/resources/assets/video/test.mp4" type="video/mp4">
+								  <source src="https://cdn.jbnu.khub.kr/data/28358/%EC%98%A8%EB%9D%BC%EC%9D%B82020_10_27%EB%94%94%ED%86%B516(1).mp4" type="video/mp4">
 
 								</video>
 
@@ -205,17 +206,19 @@
         <script type="text/javascript">
       //동영상 총 시간 출력 
 		var video1 = document.getElementById("myVideo");
-		var startTime;
+		var startTime=<%=vd.getVend()%>;
 		var endTime;
 		var videoFulltime;
 
    	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
     	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
 		video1.addEventListener('loadedmetadata', function() {
+			//이전 시청종료시점부터 
+			video1.currentTime=startTime;
+			
 			//전체 재생 시간 (초 단위 절삭)
 		    videoFulltime = Math.floor(video1.duration);
 		    console.log(videoFulltime);
-
 		});
 		
 		//동영상 재생 시간이 바뀌면 호출되는 이벤트
@@ -228,27 +231,16 @@
 		
 		//동영상 재생되면 호출되는 이벤트
 		video1.addEventListener('play', function(e){
-			video1.currentTime = 5;
 			//현재 재생 시간 (초 단위 절삭)
 			startTime = Math.floor(video1.currentTime);
-			if(!video1.seeking){ 
-
-				//video1.currentTime = 10;
-				console.log("***:" );
-		} 
 			console.log("startTime :" + startTime);
 		}, false);
-		
-		video1.addEventListener('seeking', function(e){
-			
-			console.log("dddddde :" +video1.currentTime );
-		}, false);
+
 		
 		//동영상 정지되면 호출되는 이벤트
 		video1.addEventListener('pause', function(e){
 			//현재 재생 시간 (초 단위 절삭)
 			endTime = Math.floor(video1.currentTime);
-			startTime = Math.floor(video1.currentTime);
 			console.log("endTime :" + endTime);	
 		
 			$.ajax({

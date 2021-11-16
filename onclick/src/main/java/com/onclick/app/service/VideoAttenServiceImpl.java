@@ -27,12 +27,23 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		hm.put("vend", vd.getVend());
 		hm.put("vpercent", vd.getVend()-vd.getVstart());
 		
-		System.out.println(vd.getVend()-vd.getVstart());
-		
 		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
 		int result = vsm.videoUpdate(hm);
-		System.out.println("result value : " + result);
+
 		return result;
+	}
+
+	@Override
+	public VideoAttenDto videoSelectOne(int sidx, int cidx) {
+		//이전 시청 기록 가져오기
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("sidx", sidx);
+		hm.put("cidx", cidx);
+		
+		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
+		VideoAttenDto vd = vsm.videoSelectOne(hm);
+		
+		return vd;
 	}
 	
 	
