@@ -4,8 +4,8 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<% int sidx =(Integer)session.getAttribute("sidx"); 
-//int pidx =(Integer)session.getAttribute("pidx"); %>
+<%//int sidx =(Integer)session.getAttribute("sidx"); 
+int pidx =(Integer)session.getAttribute("pidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -157,7 +157,7 @@
 				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
 				      <!-- 교수인지 학생인지 구분 필요 -->
-						<a href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
+						<a href="<%=request.getContextPath()%>/stuLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 				      </div>
 				    </div>
 				  <% } %>

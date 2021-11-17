@@ -136,22 +136,14 @@
 					<div class="container-fluid px-4" style="width:90%; height:700px;">
 						<div class="row m-0" style="width:100%; height:100%">
 						    <div class="col-md-8">
-						
-						      
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
 								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
 								  <source src="https://cdn.jbnu.khub.kr/data/28358/%EC%98%A8%EB%9D%BC%EC%9D%B82020_10_27%EB%94%94%ED%86%B516(1).mp4" type="video/mp4">
-
 								</video>
-
-
 								<!-- 재생 상태 -->
-								<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>
-
-								
-									
+								<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>	
 						      <div class="text-center mt-2">
 						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
 						      	 | 

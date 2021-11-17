@@ -33,9 +33,10 @@ public class ClassServiceImpl implements ClassService{
 		hm.put("lidx", cv.getLidx());
 		
 		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
-		int updateResult=csm.classUpdate(cv.getCweek());
 		int result = csm.classInsert(hm);
-
+		//insert 후 cidx 값 받아와야함 
+		int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
+		System.out.println("cidx  : " + cidx);
 		return result;
 	}
 

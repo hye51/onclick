@@ -4,15 +4,23 @@
 <mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
 
 <insert id="classInsert" parameterType="HashMap">
-INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn)
-VALUES(ONCLICK_CIDX_SEQ.nextval, #{cname},#{ccontents},sysdate,#{csta},#{cfin},#{creyn},#{cweek},1,#{lidx},#{cnotyn})
+	<selectKey keyProperty="cidx" resultType="Integer" order="AFTER"> 
+	SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM onclick_class
+	</selectKey>
+	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn)
+	VALUES(
+		ONCLICK_CIDX_SEQ.nextval, 
+		#{cname},
+		#{ccontents},
+		sysdate,
+		#{csta},
+		#{cfin},
+		#{creyn},
+		#{cweek},
+		(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
+		#{lidx},
+		#{cnotyn})
 </insert>
-
-<update  id="classUpdate" parameterType="Integer">
-UPDATE onclick_class
-SET cseq=cseq+1
-WHERE cweek=#{0}
-</update >
 	
 <select id="classSelect" parameterType="Integer" resultType="cv">
 SELECT *	
