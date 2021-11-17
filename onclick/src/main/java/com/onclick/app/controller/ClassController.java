@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.onclick.app.domain.ClassVo;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.service.ClassService;
+import com.onclick.app.service.EnrollService;
 
 @Controller
 public class ClassController {
 	
 	@Autowired
 	ClassService cs;
+	
+	@Autowired
+	EnrollService es;
 	
 	@RequestMapping(value="/lecUpload.do")
 	public String classWrite() {
@@ -28,13 +33,14 @@ public class ClassController {
 	public String classWriteAction(ClassVo cv) {
 		//교수만 가능한 기능으로 접속계정이 교수인지 확인 필요
 		//강좌업로드 실행
-		if(cv.getCnotyn() == null) {
-			cv.setCnotyn("N");
-		}else if(cv.getCreyn() == null) {
-			cv.setCreyn("N");
-		}
 		int result = cs.classInsert(cv);
-		
+		/*
+		 * if(result ==1 ) { //업로드 성공시 수강학생 전부 insert ArrayList<Integer> stuList =
+		 * es.enrollStuList(cv.getLidx()); System.out.println("=====" + stuList);
+		 * 
+		 * 
+		 * }
+		 */
 		return "redirect:/lecList.do?lidx="+cv.getLidx();
 	}
 	

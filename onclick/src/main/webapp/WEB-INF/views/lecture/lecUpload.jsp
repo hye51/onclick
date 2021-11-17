@@ -125,74 +125,85 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">강의 업로드</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">강의 업로드 </li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
-								  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
-								  <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"/>
-								</svg>
-                                	강의 업로드 작성
-                            </div>
-                            <div class="card-body">
-            <form name="upload">
-	                            <table class="table">
-								  <tbody>
-								    <tr>
-								      <th scope="row">강의주차</th>
-								      <td>
-								      	<select name="cweek">
-										  <option class="form-select" selected>-- 강의 주차 선택 --</option>
+                <h2 class="mt-4 ms-3">업로드</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active">자료 업로드</li>
+                	</ol>
+            	<main>
+					<div class="container-fluid px-4 ">
+					<form name="upload">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<tbody>
+								<tr>
+							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의주차</td>
+								      <td colspan="2" style="border-bottom:0; width:50%" >
+								      	<select class="form-select" name="cweek">
+								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
 										  <option value="1">1주차</option>
 										  <option value="2">2주차</option>
 										  <option value="3">3주차</option>
 										</select>
-									  </td>		
-								    </tr>
-								    <tr>
-								      <th scope="row">출석 인정일</th>
-								      <td><input type="date" name="csta" ></td>
-								    </tr>
-								    <tr>
-								      <th scope="row">출석 마감일</th>
-								      <td><input type="date" name="cfin"></td>
-								    </tr>
-								    <tr>
-								      <th scope="row">알림 사용</th>
-								      <td><input class="form-check-input" type="checkbox" name="cnotyn" value="Y" checked> 사용</td>
-								    </tr>
-								     <tr>
-								      <th scope="row">다시보기 사용</th>
-								      <td><input class="form-check-input" type="checkbox" name="creyn" value="Y"> 사용</td>
-								    </tr>
-								    <tr>
-								    	<th scope="row">강의명</th>
-								    	<td><input type="text" name ="cname"></td>
-								    </tr>
-								    <tr>
-									    <th scope="row">파일 업로드</th>
-									    <td><input type="file"></td>
-								    </tr>
-								    <tr>
-								    	<th scope="row">내용</th>
-								    	<td><textarea name="ccontents" cols="80" rows="10"></textarea></td>
-								    </tr>
-								  </tbody>
-								</table>
-								<nav style="float: right">
-									<button class="btn btn-primary" onclick="check();return false;">확인</button>
-									<button class="btn btn-secondary" type= "reset">취소</button>								
-								</nav>
-                            </form>
-
-                            </div>
-                        </div>
-                    </div>
+								  	</td>		
+							    </tr>
+							    <tr>
+							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 인정일</td>
+							      	<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="csta" style="border:0; width:100%" ></td>
+									</td>
+									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 마감일</td>
+									<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="cfin" style="border:0; width:100%" ></td>
+									</td>
+							    </tr>
+								<tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의명</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cname" type="text" /> 
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의 영상</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cfile" type="text" placeholder="업로드할 강의 영상의 링크를 입력해주세요." /> 
+									</td>
+							    </tr>
+							    <tr>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" name="ccontents" style="width:100%; height:300px; border:0; solid; black"></td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" checked>
+											<label class="form-check-label">
+											발송
+											</label>
+										<input class="form-check-input" type="radio" name="cnotyn" value="N">
+											<label class="form-check-label" >
+											미발송
+											</label>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">다시보기</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="creyn" value="Y" checked>
+											<label class="form-check-label">
+											사용
+											</label>
+										<input class="form-check-input" type="radio" name="creyn" value="N">
+											<label class="form-check-label">
+											미사용
+											</label>
+									</td>
+							    </tr>
+							</tbody>
+						</table>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">취소</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
+                    	</div>
+                   	</form>
+                	</div>	
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

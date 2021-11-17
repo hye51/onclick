@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-
 <%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
+<%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -98,17 +98,17 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecContent.do">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="#">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="#">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -140,7 +140,7 @@
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
 								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
-								  <source src="https://cdn.jbnu.khub.kr/data/28358/%EC%98%A8%EB%9D%BC%EC%9D%B82020_10_27%EB%94%94%ED%86%B516(1).mp4" type="video/mp4">
+								  <source src="<%=cv.getCfile()%>" type="video/mp4">
 								</video>
 								<!-- 재생 상태 -->
 								<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>	
@@ -241,7 +241,7 @@
         		data:{"vend" : endTime, 
         			"vstart": startTime,
         			"vfull":videoFulltime,
-        			"cidx":2},
+        			"cidx":<%=cv.getCidx()%>},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},

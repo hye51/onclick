@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.persistence.ClassService_Mapper;
+import com.onclick.app.persistence.EnrollService_Mapper;
 
 @Service("classServiceImpl")
 public class ClassServiceImpl implements ClassService{
@@ -31,12 +32,19 @@ public class ClassServiceImpl implements ClassService{
 		hm.put("creyn", cv.getCreyn());
 		hm.put("cnotyn", cv.getCnotyn());
 		hm.put("lidx", cv.getLidx());
+		hm.put("cfile", cv.getCfile());
+		
 		
 		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
 		int result = csm.classInsert(hm);
-		//insert 후 cidx 값 받아와야함 
+
+		//insert 후 cidx 값 받아옴
 		int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
-		System.out.println("cidx  : " + cidx);
+
+		//강의를 듣는 학생 모두 insert 필요
+		//강의에 대한 학생 리스트 
+		int cnt = csm.stuVdeio(cidx,cv.getLidx());
+		System.out.println("ddddddddd" + cnt);
 		return result;
 	}
 
@@ -47,6 +55,15 @@ public class ClassServiceImpl implements ClassService{
 		ArrayList<ClassVo> alist = csm.classSelect(lidx);
 		
 		return alist;
+	}
+
+	@Override
+	public ClassVo classSelectOne(int cidx) {
+		//강좌 내용 불러오기
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ClassVo cv = csm.classSelectOne(cidx);
+		
+		return cv;
 	}
 	
 

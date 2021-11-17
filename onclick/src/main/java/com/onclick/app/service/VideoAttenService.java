@@ -13,4 +13,5 @@ public interface VideoAttenService {
 	
 	//이전 시청 기록 가져오기
 	public VideoAttenDto videoSelectOne(int sidx, int cidx);
+	
 }

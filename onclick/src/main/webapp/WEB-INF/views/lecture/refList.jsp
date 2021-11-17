@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.ArrayList" %>
+
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>강의 자료 보기</title>
+        <title>강의 자료 목록</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../app/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -46,7 +48,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="../app/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -74,7 +76,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							<%=lv.getLname() %>
+						<%=lv.getLname() %>
 						<img alt="" src="../app/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
@@ -87,8 +89,8 @@
                             <div class="collapse" id="collapseLecInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="layout-static.html">강의계획서</a>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/professor/proInfo.do?pidx=<%=lv.getPidx()%>">담당 교수 정보</a>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/proInfo.do">담당 교수 정보</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/stuList.do">멤버 목록</a>
                                 </nav>
                             </div>
                           	<a class="nav-link" href="#" >
@@ -96,7 +98,7 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
@@ -111,7 +113,7 @@
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                             <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
+                            <a class="nav-link collapsed" href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		공지사항
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -124,59 +126,34 @@
                     </div>
                 </nav>
             </div>
-            <!--자료 내용보기 화면(교수)-->
             <div id="layoutSidenav_content">
-            	<h2 class="mt-4 ms-3">자료 목록</h2>
-	               	<ol class="breadcrumb mb-4 ms-4">
-	                   	<li class="breadcrumb-item active">자료 제목</li>
-	               	</ol>
-            	<main> 
-            		<div class="container-fluid px-4 ">
-						<table class="table mx-auto bg-light" style="width:80%">
-							<thead>    
-								<tr>			      
-							      	<td colspan="3" scope="row" style="border-bottom:0; width:90%;">제목</td>
-							      	<td style="border-bottom:0; width:10%; text-align:right">
-							      		<div class="dropdown">
-											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-												</svg>
-										  	</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
-											  	</ul>
-										</div>
-									</td>
-							    </tr>
-							</thead>    
-							<tbody>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" type="date" style="border:0; black; width:300px"></td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" id="inputLNfile" type="file" placeholder="" /></td>
-							    </tr>
-							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black"></td>
-							    </tr>
-							</tbody>
-						</table>
-						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">목록</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
-                    	</div>
-                	</div>
+               <main>
+					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">강의자료 목록</h4>
+						<nav style="float: right">
+							<a class="btn btn-primary" href="<%=request.getContextPath()%>/refUpload.do">자료 업로드</a>							
+						</nav>
+						<div class="card-body mx-auto d-block " style="width:80%">
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th style="width:10%">No</th>
+									    <th style="width:30%">제목</th>
+									    <th style="width:30%">작성일</th>
+									    <th style="width:10%">작성자</th>
+									    <th style="width:10%">첨부파일</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+                        </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div >
+                            <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>

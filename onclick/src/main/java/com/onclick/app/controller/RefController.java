@@ -5,24 +5,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class RefController { //자료 컨트롤러
-/*
-	@RequestMapping(value="*.do")
+	
+	@RequestMapping(value="/refUpload.do")
 	public String refWrite() {
 		//자료 작성 화면
-		return "";
+		return "lecture/refContent_p";
 	}
 	
+	/*
 	@RequestMapping(value="*.do")
 	public String refWriteAction() {
 		//자료 작성 완료
 		return "";
 	}
-	
-	@RequestMapping(value="*.do")
+	*/
+	@RequestMapping(value="/refList.do")
 	public String refList() {
 		//자료 목록
-		return "";
+		return "lecture/refList";
 	}
+	/*
 	
 	@RequestMapping(value="*.do")
 	public String refContents() {

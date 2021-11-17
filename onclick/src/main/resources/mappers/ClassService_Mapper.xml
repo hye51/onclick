@@ -4,28 +4,46 @@
 <mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
 
 <insert id="classInsert" parameterType="HashMap">
-	<selectKey keyProperty="cidx" resultType="Integer" order="AFTER"> 
-	SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM onclick_class
+	<selectKey keyProperty="cidx" resultType="int" order="AFTER"> 
+		SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM DUAL
 	</selectKey>
-	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn)
+	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile)
 	VALUES(
-		ONCLICK_CIDX_SEQ.nextval, 
-		#{cname},
-		#{ccontents},
-		sysdate,
-		#{csta},
-		#{cfin},
-		#{creyn},
-		#{cweek},
-		(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
-		#{lidx},
-		#{cnotyn})
+			ONCLICK_CIDX_SEQ.nextval, 
+			#{cname},
+			#{ccontents},
+			sysdate,
+			#{csta},
+			#{cfin},
+			#{creyn},
+			#{cweek},
+			(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
+			#{lidx},
+			#{cnotyn},
+			#{cfile}
+		)
 </insert>
-	
+
+<insert id="stuVdeio" parameterType="Integer">
+INSERT INTO onclick_videoattendence( 
+	SIDX,
+	CIDX
+)
+SELECT sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
+</insert>	
+
 <select id="classSelect" parameterType="Integer" resultType="cv">
 SELECT *	
 FROM onclick_class
 WHERE lidx=#{lidx}
 ORDER BY cweek, cseq
 </select>
+
+<select id="classSelectOne" parameterType="Integer" resultType="cv">
+SELECT *	
+FROM onclick_class
+WHERE cidx=#{0}
+</select>
+
+
 </mapper>
