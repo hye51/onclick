@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<%//int sidx =(Integer)session.getAttribute("sidx"); 
-int pidx =(Integer)session.getAttribute("pidx"); %>
+<%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +17,7 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-     	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
            	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
@@ -128,44 +125,86 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
                     </div>
                 </nav>
             </div>
-            
             <div id="layoutSidenav_content">
-               <main>
-               	<div class="card p-4 mt-4 ms-5" style="width:90%">
-					<div class="card-body" style="width:100%">
-               	<% if(alist.isEmpty()){ %>
-					    등록된 강의가 없습니다.
-				<%} %>
-					</div>
-				</div>
-				<div class="container-fluid p-4 ms-5" style="width:90%">
-               	</br>
-               	<!-- 학생/교수 계정에 따른 버튼 표시 유무-->
-               	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
-				<nav style="float: right">
-					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
-				</nav>
-				</br>
-				<%} %>
-               	<div class="accordion accordion-flush" style="width:100%">
-				  <div class="accordion-item" style="width:100%">
-				    <% for(ClassVo cv : alist){ %>
-				     <% if(cv.getCseq()==1){ %>
-				    <h2 class="accordion-header " id="flush-headingOne">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=cv.getCweek()%>" aria-expanded="false" aria-controls="flush-collapseOne">
-				        <%=cv.getCweek()%>주차 강의 
-				      </button>
-				    </h2>
-				    <% } %>
-				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-				      <div class="accordion-body">
-				      <!-- 교수인지 학생인지 구분 필요 -->
-						<a href="<%=request.getContextPath()%>/proLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
-				      </div>
-				    </div>
-				  <% } %>
-				</div>	
-               	</div>  
+                <h2 class="mt-4 ms-3">강의 수정</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active">강의 수정</li>
+                	</ol>
+            	<main>
+					<div class="container-fluid px-4 ">
+					<form name="upload">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<tbody>
+								<tr>
+							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의주차</td>
+								      <td colspan="2" style="border-bottom:0; width:50%" >
+								      	<select class="form-select" name="cweek">
+								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
+										  <option value="1">1주차</option>
+										  <option value="2">2주차</option>
+										  <option value="3">3주차</option>
+										</select>
+								  	</td>		
+							    </tr>
+							    <tr>
+							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 인정일</td>
+							      	<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="csta" value="<%=cv.getCsta() %>" style="border:0; width:100%" ></td>
+									</td>
+									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 마감일</td>
+									<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="cfin" value="<%=cv.getCfin() %>" style="border:0; width:100%" ></td>
+									</td>
+							    </tr>
+								<tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의명</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cname" type="text" value="<%=cv.getCname()%>"/> 
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의 영상</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cfile" type="text" value="<% if(cv.getCfile() != null ){ out.print(cv.getCfile());}%>" placeholder="업로드할 강의 영상의 링크를 입력해주세요." /> 
+									</td>
+							    </tr>
+							    <tr>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" name="ccontents" value="<%=cv.getCcontents()%>" style="width:100%; height:300px; border:0; solid; black"></td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" checked>
+											<label class="form-check-label">
+											발송
+											</label>
+										<input class="form-check-input" type="radio" name="cnotyn" value="N">
+											<label class="form-check-label" >
+											미발송
+											</label>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">다시보기</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="creyn" value="Y" checked>
+											<label class="form-check-label">
+											사용
+											</label>
+										<input class="form-check-input" type="radio" name="creyn" value="N">
+											<label class="form-check-label">
+											미사용
+											</label>
+									</td>
+							    </tr>
+							</tbody>
+						</table>
+						<div class="form-row text-center mb-2">
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">취소</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
+                    	</div>
+                   	</form>
+                	</div>	
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -188,5 +227,39 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        //강의 업로드 작성시 유효성검사
+        function check() {
+			var fm= document.upload;
+			
+			if(fm.csta.value == ""){
+				fm.csta.focus();
+				alert("시작일을 입력하세요");
+				return false;
+			}else if(fm.cfin.value == ""){
+				fm.cfin.focus();
+				alert("마감일을 입력하세요");
+				return false;
+			}else if(fm.cweek.value == ""){
+				fm.cweek.focus();
+				alert("강의주차를 입력하세요");
+				return false;
+			}else if(fm.cname.value == ""){
+				fm.cname.focus();
+				alert("강의명을 입력하세요");
+				return false;
+			}else if(fm.ccontents.value == ""){
+				fm.ccontents.focus();
+				alert("강의 내용을 입력하세요");
+				return false;
+			}
+				fm.action="<%=request.getContextPath()%>/lecUploadAction.do?lidx=<%=lv.getLidx()%>";
+				fm.method = "post";
+				//fm.enctype="multipart/form-data"; 
+				fm.submit();
+				return;
+		}
+
+        </script>
     </body>
 </html>

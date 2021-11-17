@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
 <%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <!DOCTYPE html>
 <html>
@@ -128,9 +127,9 @@
             </div>
             <!-- 강의 내용보기(교수님) -->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">강의명</h2>
+	            <h2 class="mt-4 ms-3">강의보기</h2>
                 	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active">강의 제목</li>
+                    	<li class="breadcrumb-item active"><%=cv.getCname()%></li>
                 	</ol>
             	<main>
 					<div class="container-fluid px-4" style="width:90%; height:700px;">
@@ -139,16 +138,23 @@
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
+						      <% if(cv.getCfile() != null){ %>
 								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
 								  <source src="<%=cv.getCfile()%>" type="video/mp4">
 								</video>
-								<!-- 재생 상태 -->
-								<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>	
-						      <div class="text-center mt-2">
-						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
-						      	 | 
-						      	<button type="button" class="btn" style="width:100px">시청 기록</button>
-						      </div>
+							  <% }%>
+								<br>
+								<div class="bd-callout bd-callout-info shadow ">
+								  <div class="card-body">
+								    <%=cv.getCcontents() %>
+								  </div>
+								</div>
+								<br>
+								<div class="btn-group" role="group" style="float:right;" >
+								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classUpdate.do?cidx=<%=cv.getCidx()%>">수정</a>
+								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classDelete.do?cidx=<%=cv.getCidx()%>">삭제</a>
+								  <button type="button" class="btn btn-primary" onclick="location.href='<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>'">목록</button>
+								</div>
 						    </div>
 						    <div class="col">
 						      	강의자료
@@ -196,76 +202,8 @@
          <!-- jquery 3.3.1 라이브러리 활용 -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
-      //동영상 총 시간 출력 
-		var video1 = document.getElementById("myVideo");
-		var startTime=<%=vd.getVend()%>;
-		var endTime;
-		var videoFulltime;
-
-   	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
-    	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
-		video1.addEventListener('loadedmetadata', function() {
-			//이전 시청종료시점부터 
-			video1.currentTime=startTime;
-			
-			//전체 재생 시간 (초 단위 절삭)
-		    videoFulltime = Math.floor(video1.duration);
-		    console.log(videoFulltime);
-		});
-		
-		//동영상 재생 시간이 바뀌면 호출되는 이벤트
-		video1.addEventListener('timeupdate', function(e){
-			//현재 재생 시간 (초 단위 절삭)
-			var playtime = Math.floor(video1.currentTime);
-		//상태 표시
-		$("#videoProgress").html(playtime + " / " + videoFulltime);
-		}, false);
-		
-		//동영상 재생되면 호출되는 이벤트
-		video1.addEventListener('play', function(e){
-			//현재 재생 시간 (초 단위 절삭)
-			startTime = Math.floor(video1.currentTime);
-			console.log("startTime :" + startTime);
-		}, false);
-
-		
-		//동영상 정지되면 호출되는 이벤트
-		video1.addEventListener('pause', function(e){
-			//현재 재생 시간 (초 단위 절삭)
-			endTime = Math.floor(video1.currentTime);
-			console.log("endTime :" + endTime);	
-		
-			$.ajax({
-        		url:"<%=request.getContextPath()%>/videoEnd.do",
-        		type:'post',
-        		data:{"vend" : endTime, 
-        			"vstart": startTime,
-        			"vfull":videoFulltime,
-        			"cidx":<%=cv.getCidx()%>},
-        		success:function(cnt){
-        			//alert("성공입니다.");
-        		},
-        		error:function(){
-        			alert("에러입니다.");
-        		}
-        	});
-			
-		}, false);
-		
-
-		 //재생이 종료되었을때 발생하는 이벤트
-		video1.addEventListener('ended', function(e){
-			alert("강의 수강이 완료되었습니다.");
-		}, false);
-
-
+     
         </script>
-		<style>
-		/*영상 조각 방지*/ 
-		 video::-webkit-media-controls-timeline {
-		 display : none;
-		 } 
-		</style>
 
     </body>
 </html>

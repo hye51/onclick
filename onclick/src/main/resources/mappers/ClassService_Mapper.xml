@@ -24,7 +24,7 @@
 		)
 </insert>
 
-<insert id="stuVdeio" parameterType="Integer">
+<insert id="stuVideoDefault" parameterType="Integer">
 INSERT INTO onclick_videoattendence( 
 	SIDX,
 	CIDX
@@ -36,11 +36,25 @@ SELECT sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
 SELECT *	
 FROM onclick_class
 WHERE lidx=#{lidx}
+AND cdelyn='N'
 ORDER BY cweek, cseq
 </select>
 
 <select id="classSelectOne" parameterType="Integer" resultType="cv">
-SELECT *	
+SELECT 
+	cidx,
+	cname,
+	ccontents,
+	cdate,
+	TO_CHAR(csta, 'YYYY/MM/DD') as csta,
+	TO_CHAR(cfin, 'YYYY/MM/DD') as cfin,
+	cweek,
+	cseq,
+	cfile,
+	cnotyn,
+	cdelyn,
+	lidx,
+	creyn	
 FROM onclick_class
 WHERE cidx=#{0}
 </select>
