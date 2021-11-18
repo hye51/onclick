@@ -69,6 +69,7 @@ public class StudentController {
 		if(sv != null) { 
 			//로그인 성공 시
 			rttr.addAttribute("sidx", sidx);
+			System.out.println("test");
 			str = "redirect:/student/stuDashBoard.do";	
 		} else{
 			//로그인 실패 시 

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.ProfessorVO;
-import com.onclick.app.domain.StudentVO;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.ProfessorService;
 

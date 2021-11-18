@@ -25,7 +25,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			Object pidx = modelAndView.getModel().get("pidx");
 //			System.out.println("모델에 담긴 값은?"+pidx);
 
-		/*
+		
 			if(sidx != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("sidx", sidx);
@@ -38,7 +38,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 				session.setAttribute("pidx", pidx);
 //				response.sendRedirect(request.getContextPath()+"/professor/proDashBoard.do");
 			}
-		*/
+		
 	}	
 
 

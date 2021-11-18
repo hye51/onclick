@@ -37,15 +37,18 @@
           <button type="button"><img alt="" src="../resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
-		        </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">English</a>
+				 </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
+				</li>
 		      </ul> 			     
         </nav>
         <div id="layoutSidenav">
@@ -65,7 +68,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                     <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">정보 수정</a>
+                                     <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -199,7 +202,7 @@
 				alert("연락처를 입력하세요");
 				return false;
 			}
-			fm.action="<%=request.getContextPath()%>/student/stuModifyAction.do";
+			fm.action="<%=request.getContextPath()%>/professor/proModifyAction.do";
 			fm.method = "post";
 			fm.submit();
 			return;

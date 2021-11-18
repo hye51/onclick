@@ -25,10 +25,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		if(session.getAttribute("sidx") == null) {
 			response.sendRedirect(request.getContextPath()+"/");
 			
-			//컨트롤러로 요청을 보내지 않기 위해서 false 리턴
-			
-			return false;
-			
+			//컨트롤러로 요청을 보내지 않기 위해서 false 리턴			
+			return false;			
 		}
 		
 		if(session.getAttribute("pidx") == null) {
