@@ -4,20 +4,62 @@
 <mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
 
 <insert id="classInsert" parameterType="HashMap">
-INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn)
-VALUES(ONCLICK_CIDX_SEQ.nextval, #{cname},#{ccontents},sysdate,#{csta},#{cfin},#{creyn},#{cweek},1,#{lidx},#{cnotyn})
+	<selectKey keyProperty="cidx" resultType="int" order="AFTER"> 
+		SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM DUAL
+	</selectKey>
+	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile)
+	VALUES(
+			ONCLICK_CIDX_SEQ.nextval, 
+			#{cname},
+			#{ccontents},
+			sysdate,
+			#{csta},
+			#{cfin},
+			#{creyn},
+			#{cweek},
+			(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
+			#{lidx},
+			#{cnotyn},
+			#{cfile}
+		)
 </insert>
 
-<update  id="classUpdate" parameterType="Integer">
-UPDATE onclick_class
-SET cseq=cseq+1
-WHERE cweek=#{0}
-</update >
-	
+<insert id="stuVideoDefault" parameterType="Integer">
+INSERT INTO onclick_videoattendence(vidx,sidx,cidx)
+SELECT vidx_seq.nextval,sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
+</insert>	
+
 <select id="classSelect" parameterType="Integer" resultType="cv">
 SELECT *	
 FROM onclick_class
 WHERE lidx=#{lidx}
+AND cdelyn='N'
 ORDER BY cweek, cseq
 </select>
+
+<select id="classSelectOne" parameterType="Integer" resultType="cv">
+SELECT 
+	cidx,
+	cname,
+	ccontents,
+	cdate,
+	TO_CHAR(csta, 'YYYY-MM-DD') as csta,
+	TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+	cweek,
+	cseq,
+	cfile,
+	cnotyn,
+	cdelyn,
+	lidx,
+	creyn	
+FROM onclick_class
+WHERE cidx=#{0}
+</select>
+
+<update id="classDelete" parameterType="Integer">
+UPDATE onclick_class
+SET cdelyn='Y' 
+WHERE cidx=#{0}
+</update>
+
 </mapper>

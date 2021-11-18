@@ -4,8 +4,8 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<% int sidx =(Integer)session.getAttribute("sidx"); 
-//int pidx =(Integer)session.getAttribute("pidx"); %>
+<%//int sidx =(Integer)session.getAttribute("sidx"); 
+int pidx =(Integer)session.getAttribute("pidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -133,11 +133,14 @@
                <main>
                	<div class="card p-4 mt-4 ms-5" style="width:90%">
 					<div class="card-body" style="width:100%">
-					    This is some text within a card body.
+               	<% if(alist.isEmpty()){ %>
+					    등록된 강의가 없습니다.
+				<%} %>
 					</div>
 				</div>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
+               	<!-- 학생/교수 계정에 따른 버튼 표시 유무-->
                	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
 				<nav style="float: right">
 					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
@@ -157,7 +160,7 @@
 				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
 				      <!-- 교수인지 학생인지 구분 필요 -->
-						<a href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
+						<a href="<%=request.getContextPath()%>/proLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 				      </div>
 				    </div>
 				  <% } %>

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
+<%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>강의 자료 보기</title>
+        <title>강의 내용 </title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../app/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -74,8 +76,8 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							<%=lv.getLname() %>
 						<img alt="" src="../app/resources/assets/img/home.png">
+							<%=lv.getLname() %>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -124,59 +126,81 @@
                     </div>
                 </nav>
             </div>
-            <!--자료 내용보기 화면(교수)-->
+            <!-- 강의 내용보기(학생) -->
             <div id="layoutSidenav_content">
-            	<h2 class="mt-4 ms-3">자료 목록</h2>
-	               	<ol class="breadcrumb mb-4 ms-4">
-	                   	<li class="breadcrumb-item active">자료 제목</li>
-	               	</ol>
-            	<main> 
-            		<div class="container-fluid px-4 ">
-						<table class="table mx-auto bg-light" style="width:80%">
-							<thead>    
-								<tr>			      
-							      	<td colspan="3" scope="row" style="border-bottom:0; width:90%;">제목</td>
-							      	<td style="border-bottom:0; width:10%; text-align:right">
-							      		<div class="dropdown">
-											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-												</svg>
-										  	</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
-											  	</ul>
-										</div>
-									</td>
-							    </tr>
-							</thead>    
-							<tbody>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" type="date" style="border:0; black; width:300px"></td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" id="inputLNfile" type="file" placeholder="" /></td>
-							    </tr>
-							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black"></td>
-							    </tr>
-							</tbody>
-						</table>
-						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">목록</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
-                    	</div>
+	            <h2 class="mt-4 ms-3">강의보기</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active"><%=cv.getCname()%></li>
+                	</ol>
+            	<main>
+					<div class="container-fluid px-4" style="width:90%; height:700px;">
+						<div class="row m-0" style="width:100%; height:100%">
+						    <div class="col-md-8">
+						      <div class="viewinfo" style="width:100%;">
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px;">
+		                    	<span style="padding-left:3px;"> 작성일 :</span> <%=cv.getCdate() %></div>
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px; margin-top:3px;line-height:160%;">
+			                    <span style="padding-left:3px;">출결 인정 기간 : </span> <%=cv.getCsta() %> ~ <%=cv.getCfin() %></div>
+			                    <div style="padding-right:10px;letter-spacing:-0.5px;">
+			                    <span style="padding-left:3px;">다시보기 여부 : </span> 
+			                    <span class="rely" style="display : none; color:black;">가능</span> 
+			                    <span class="reln" style="display : none; color:black; ">불가능</span> 
+			                    </div>	                    
+                    		</div>
+						      <!-- 동영상 -->
+						      <!-- 211110 동영상 넣기 수정중 jhr-->
+						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
+						      <% if(cv.getCfile() != null){ %>
+								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
+								  <source src="<%=cv.getCfile()%>" type="video/mp4">
+								</video>
+							 <% } %>
+								<br>
+								<div class="bd-callout bd-callout-info shadow ">
+								  <div class="card-body">
+								    <%=cv.getCcontents() %>
+								  </div>
+								</div>
+								<br>
+						      <div class="text-center mt-2">
+						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
+						      	 | 
+						      	<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#videorecord" aria-expanded="false" aria-controls="collapseExample" style="width:100px">시청 기록</button>
+								<div class="collapse" id="videorecord">
+								  <div class="card card-body">
+								    <!-- 재생 상태 -->
+									<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>	
+								  </div>
+								</div>
+						      </div>
+						    </div>
+						    <div class="col">
+						      	강의자료
+						    </div>
+						</div>
                 	</div>
+                	<div class="container-fluid px-4" style="width:80%; height:100px;">
+	                	<div class="row" >
+	                		<div class="col-md-1 text-center">
+	                			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gray" class="bi bi-person-circle" viewBox="0 0 16 16">
+								  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+								  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+								</svg>
+	                		</div>
+	                		<div class="col-md-9">
+	                			<input class="form-control" id="input" type="text" placeholder="댓글을 입력하세요" />
+	                		</div>
+	                		<div class="col-md-2">
+	                			<button type="button" class="btn btn-secondary btn-sm" style="width:50px">등록</button>
+	                		</div>
+		                </div>
+	                </div>	
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div >
+                            <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
@@ -193,5 +217,91 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+         <!-- jquery 3.3.1 라이브러리 활용 -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+      //동영상 총 시간 출력 
+		var video1 = document.getElementById("myVideo");
+		var startTime=<%=vd.getVend()%>;
+		var endTime;
+		var videoFulltime;
+
+   	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
+    	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
+		video1.addEventListener('loadedmetadata', function() {
+			//이전 시청종료시점부터 
+			video1.currentTime=startTime;
+			
+			//전체 재생 시간 (초 단위 절삭)
+		    videoFulltime = Math.floor(video1.duration);
+		    console.log(videoFulltime);
+		});
+		
+		//동영상 재생 시간이 바뀌면 호출되는 이벤트
+		video1.addEventListener('timeupdate', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			var playtime = Math.floor(video1.currentTime);
+		//상태 표시
+		$("#videoProgress").html(playtime + " / " + videoFulltime);
+		}, false);
+		
+		//동영상 재생되면 호출되는 이벤트
+		video1.addEventListener('play', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			startTime = Math.floor(video1.currentTime);
+			console.log("startTime :" + startTime);
+		}, false);
+
+		
+		//동영상 정지되면 호출되는 이벤트
+		video1.addEventListener('pause', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			endTime = Math.floor(video1.currentTime);
+			console.log("endTime :" + endTime);	
+		
+			$.ajax({
+        		url:"<%=request.getContextPath()%>/videoEnd.do",
+        		type:'post',
+        		data:{"vend" : endTime, 
+        			"vstart": startTime,
+        			"vfull":videoFulltime,
+        			"cidx":<%=cv.getCidx()%>},
+        		success:function(cnt){
+        			//alert("성공입니다.");
+        		},
+        		error:function(){
+        			alert("에러입니다.");
+        		}
+        	});
+			
+		}, false);
+		
+
+		 //재생이 종료되었을때 발생하는 이벤트
+		video1.addEventListener('ended', function(e){
+			alert("강의 수강이 완료되었습니다.");
+		}, false);
+
+		//다시보기 여부
+     	var rel = '<%=cv.getCreyn()%>';
+     	
+     	$(function(){
+     		
+	     	if(rel=='Y'){
+	     		$('.rely').css("display","inline-block");
+	     	}else{
+	     		$('.reln').css("display","inline-block");
+	     	}
+	     	 
+     	 });
+     	
+        </script>
+		<style>
+		/*영상 조각 방지*/ 
+		 video::-webkit-media-controls-timeline {
+		 display : none;
+		 } 
+		</style>
+
     </body>
 </html>

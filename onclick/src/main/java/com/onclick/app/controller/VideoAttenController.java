@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.VideoAttenDto;
+import com.onclick.app.service.ClassService;
 import com.onclick.app.service.VideoAttenService;
 
 @Controller
@@ -17,6 +19,9 @@ public class VideoAttenController {
 	
 	@Autowired
 	VideoAttenService vs;
+	
+	@Autowired
+	ClassService cs;
 	
 	/*
 	
@@ -57,18 +62,27 @@ public class VideoAttenController {
 	@RequestMapping(value="/stuLecContent.do")
 	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
 		//학생 동영상 출석 화면
+		//강의정보
+		ClassVo cv = cs.classSelectOne(cidx);
+		model.addAttribute("cv", cv);
+		
+		//이전 시청기록 
 		VideoAttenDto vd = vs.videoSelectOne(sidx, cidx);
 		model.addAttribute("vd", vd);
 		
-		return "lecture/lecContent_p";
+		return "lecture/stuLecContent";
 	}
 	
 	
 	@RequestMapping(value="/proLecContent.do")
 	public String videoProAtten(@RequestParam("pidx") int pidx, @RequestParam("cidx") int cidx, Model model) {
 		//교수 동영상 출석 화면
-		System.out.println();
-		return null;
+		//강의정보
+		ClassVo cv = cs.classSelectOne(cidx);
+		model.addAttribute("cv", cv);
+		
+		
+		return "lecture/proLecContent";
 	}
 	
 }

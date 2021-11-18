@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,9 +11,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>강의 자료 보기</title>
+        <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../app/resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -74,8 +75,8 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							<%=lv.getLname() %>
 						<img alt="" src="../app/resources/assets/img/home.png">
+							<%=lv.getLname() %>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -96,17 +97,17 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecContent.do">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link" href="#">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do">
+                           	<a class="nav-link " href="#">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -124,59 +125,92 @@
                     </div>
                 </nav>
             </div>
-            <!--자료 내용보기 화면(교수)-->
             <div id="layoutSidenav_content">
-            	<h2 class="mt-4 ms-3">자료 목록</h2>
-	               	<ol class="breadcrumb mb-4 ms-4">
-	                   	<li class="breadcrumb-item active">자료 제목</li>
-	               	</ol>
-            	<main> 
-            		<div class="container-fluid px-4 ">
-						<table class="table mx-auto bg-light" style="width:80%">
-							<thead>    
-								<tr>			      
-							      	<td colspan="3" scope="row" style="border-bottom:0; width:90%;">제목</td>
-							      	<td style="border-bottom:0; width:10%; text-align:right">
-							      		<div class="dropdown">
-											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-											    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-												  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-												</svg>
-										  	</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
-											  	</ul>
-										</div>
+                <h2 class="mt-4 ms-3">강의 수정</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active">강의 수정</li>
+                	</ol>
+            	<main>
+					<div class="container-fluid px-4 ">
+					<form name="upload">
+						<table class="table mx-auto bg-light" style="width:80%">   
+							<tbody>
+								<tr>
+							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의주차</td>
+								      <td colspan="2" style="border-bottom:0; width:50%" >
+								      	<select class="form-select" name="cweek">
+								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
+										  <option value="1">1주차</option>
+										  <option value="2">2주차</option>
+										  <option value="3">3주차</option>
+										</select>
+								  	</td>		
+							    </tr>
+							    <tr>
+							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 인정일</td>
+							      	<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="csta" value="<%=cv.getCsta() %>" style="border:0; width:100%" ></td>
+									</td>
+									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 마감일</td>
+									<td style="border-bottom:0; width:35%">
+							      		<input class="form-control" type="date" name="cfin" value="<%=cv.getCfin() %>" style="border:0; width:100%" ></td>
 									</td>
 							    </tr>
-							</thead>    
-							<tbody>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" type="date" style="border:0; black; width:300px"></td>
+								<tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의명</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cname" type="text" value="<%=cv.getCname()%>"/> 
+									</td>
 							    </tr>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" id="inputLNfile" type="file" placeholder="" /></td>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의 영상</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-control"  name ="cfile" type="text" value="<% if(cv.getCfile() != null ){ out.print(cv.getCfile());}%>" placeholder="업로드할 강의 영상의 링크를 입력해주세요." /> 
+									</td>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" name="ccontents" value="<%=cv.getCcontents()%>" style="width:100%; height:300px; border:0; solid; black"></td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" checked>
+											<label class="form-check-label">
+											발송
+											</label>
+										<input class="form-check-input" type="radio" name="cnotyn" value="N">
+											<label class="form-check-label" >
+											미발송
+											</label>
+									</td>
+							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">다시보기</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="creyn" value="Y" checked>
+											<label class="form-check-label">
+											사용
+											</label>
+										<input class="form-check-input" type="radio" name="creyn" value="N">
+											<label class="form-check-label">
+											미사용
+											</label>
+									</td>
 							    </tr>
 							</tbody>
 						</table>
 						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">목록</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">취소</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
                     	</div>
-                	</div>
+                   	</form>
+                	</div>	
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div >
+                            <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
@@ -187,11 +221,45 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        //강의 업로드 작성시 유효성검사
+        function check() {
+			var fm= document.upload;
+			
+			if(fm.csta.value == ""){
+				fm.csta.focus();
+				alert("시작일을 입력하세요");
+				return false;
+			}else if(fm.cfin.value == ""){
+				fm.cfin.focus();
+				alert("마감일을 입력하세요");
+				return false;
+			}else if(fm.cweek.value == ""){
+				fm.cweek.focus();
+				alert("강의주차를 입력하세요");
+				return false;
+			}else if(fm.cname.value == ""){
+				fm.cname.focus();
+				alert("강의명을 입력하세요");
+				return false;
+			}else if(fm.ccontents.value == ""){
+				fm.ccontents.focus();
+				alert("강의 내용을 입력하세요");
+				return false;
+			}
+				fm.action="<%=request.getContextPath()%>/lecUploadAction.do?lidx=<%=lv.getLidx()%>";
+				fm.method = "post";
+				//fm.enctype="multipart/form-data"; 
+				fm.submit();
+				return;
+		}
+
+        </script>
     </body>
 </html>

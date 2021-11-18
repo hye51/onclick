@@ -31,10 +31,16 @@ public class ClassServiceImpl implements ClassService{
 		hm.put("creyn", cv.getCreyn());
 		hm.put("cnotyn", cv.getCnotyn());
 		hm.put("lidx", cv.getLidx());
+		hm.put("cfile", cv.getCfile());
 		
 		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
-		int updateResult=csm.classUpdate(cv.getCweek());
 		int result = csm.classInsert(hm);
+
+		//insert후 cidx 값
+		int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
+
+		//강의를 듣는 모든학생 insert 
+		int cnt = csm.stuVideoDefault(cidx, cv.getLidx());
 
 		return result;
 	}
@@ -46,6 +52,24 @@ public class ClassServiceImpl implements ClassService{
 		ArrayList<ClassVo> alist = csm.classSelect(lidx);
 		
 		return alist;
+	}
+
+	@Override
+	public ClassVo classSelectOne(int cidx) {
+		//강좌 내용 불러오기
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ClassVo cv = csm.classSelectOne(cidx);
+		
+		return cv;
+	}
+
+	@Override
+	public int classDelete(int cidx) {
+		//강좌 삭제
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		int result = csm.classDelete(cidx);
+
+		return result;
 	}
 	
 
