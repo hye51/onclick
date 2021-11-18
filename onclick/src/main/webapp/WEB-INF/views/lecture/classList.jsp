@@ -149,21 +149,23 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
 				<%} %>
                	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
-				    <% for(ClassVo cv : alist){ %>
-				     <% if(cv.getCseq()==1){ %>
+				  <%for(int i =1;i<16;i++){ %>
 				    <h2 class="accordion-header " id="flush-headingOne">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=cv.getCweek()%>" aria-expanded="false" aria-controls="flush-collapseOne">
-				        <%=cv.getCweek()%>주차 강의 
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=i %>" aria-expanded="false" aria-controls="flush-collapseOne">
+				        <%=i %>주차 강의 
 				      </button>
 				    </h2>
-				    <% } %>
-				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				    <div id="flush-collapse<%=i %>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				    <%for(ClassVo cv : alist){%>
+				      <% if(cv.getCweek()==i){ %>
 				      <div class="accordion-body">
 				      <!-- 교수인지 학생인지 구분 필요 -->
 						<a href="<%=request.getContextPath()%>/proLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 				      </div>
+					  <%}%>
+				  	<%}%>
 				    </div>
-				  <% } %>
+				  <%}%>
 				</div>	
                	</div>  
                 </main>
