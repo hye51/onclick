@@ -4,9 +4,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%LecVO lv = (LecVO)session.getAttribute("lv");
+	session.setAttribute("lidx", lv.getLidx());%>
 <%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
-<%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
 <%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	Date today = new Date(); %>
 <!DOCTYPE html>
@@ -149,17 +149,25 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% 	int i = 1;
-										for(TaskVO tv : tlist) {%>
+									<% 	ArrayList<S_taskDTO> stlist = (ArrayList<S_taskDTO>)session.getAttribute("stlist");
+										int i = 1;
+										for(S_taskDTO std : stlist) {%>
 										<tr>
 											<th scope="row"><%=i++%></th>
-										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
-										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
-										    <td></td>
-										    <td></td>
-										    <%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
+										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=std.getTuidx()%>"><%=std.getTuname() %></a></td>
+										    <td><%=std.getTustart().substring(0, 10) %> ~ <%=std.getTufin().substring(0, 10) %></td>
+											<%if(std.getTsubyn().equals("Y")) {%> <!-- 제출했을경우 -->
+											   	<td><%=std.getTdate().substring(0, 10) %></td>
+											    <td style="color:blue"><a href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>">제출</a></td>
+											<%} else {%>
+											    	<td>-</td>
+											    	<td style="color:red">미제출</td>
+											<%} %>
+										    <%if(std.getTustart().compareTo(dateFormat.format(today))<=0 && std.getTufin().compareTo(dateFormat.format(today))>=0) {%>
 										    	<td style="color:blue">진행</td>
-										    	<%} else { %>
+										    	<%} else if(std.getTustart().compareTo(dateFormat.format(today))> 0){ %>
+										    	<td>-</td>
+										    	<%} else {%>
 										    	<td style="color:red">종료</td>
 										    	<%} %>
 									    </tr>
@@ -191,11 +199,11 @@
 										    <td><%=tv.getTudate().substring(0, 10) %></td>
 										    <%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
 										    	<td style="color:blue">진행</td>
-										    	<%} else if(tv.getTustart().compareTo(dateFormat.format(today))> 0){ %>
+										    <%} else if(tv.getTustart().compareTo(dateFormat.format(today))> 0){ %>
 										    	<td>-</td>
-										    	<%} else {%>
+										    <%} else {%>
 										    	<td style="color:red">종료</td>
-										    	<%} %>
+										    <%} %>
 										    <td><a href="<%=request.getContextPath()%>/taskSubmitList.do?tuidx=<%=tv.getTuidx()%>">제출현황</a></td>
 									    </tr>
 								    <%} %>

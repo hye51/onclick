@@ -12,8 +12,29 @@ public class S_taskDTO { //학생 과제 제출
 	private int sidx; //학번
 	private int tuidx; //과제인덱스
 	private int fidx; //첨부파일 인덱스
+	private String tuname; //조인 - 교수가 업로드 한 과제 제목
+	private String tustart; //조인-제출 시작일
+	private String tufin; //조인-제출 종료일
 	
 	
+	public String getTuname() {
+		return tuname;
+	}
+	public void setTuname(String tuname) {
+		this.tuname = tuname;
+	}
+	public String getTustart() {
+		return tustart;
+	}
+	public void setTustart(String tustart) {
+		this.tustart = tustart;
+	}
+	public String getTufin() {
+		return tufin;
+	}
+	public void setTufin(String tufin) {
+		this.tufin = tufin;
+	}
 	public int getFidx() {
 		return fidx;
 	}

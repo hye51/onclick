@@ -24,18 +24,27 @@ WHERE tdelyn = 'N'
 AND tidx=#{tidx}
 </select>
 
+<select id="s_taskCheck" parameterType="Integer" resultType="std">
+SELECT a.*, b.tuname, b.tustart, b.tufin
+FROM onclick_stutask a
+JOIN onclick_taskupload b
+ON a.tuidx =b.tuidx
+WHERE b.tudelyn = 'N'
+AND a.sidx=#{0}
+AND a.tuidx=#{1}
+</select>
+
 <update id="s_taskModify" parameterType="HashMap">
 UPDATE onclick_stutask
-SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, TFILE=#{tfile}
+SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}
 WHERE tidx=#{tidx}
 </update>
 
-<select id="taskSubmitList" parameterType="Integer" resultType="std">
-SELECT *
-FROM onclick_stutask
-WHERE tdelyn='N'
-AND tuidx=#{tuidx}
-</select>
+<update id="s_taskFileModify" parameterType="HashMap">
+UPDATE onclick_stutask
+SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, FIDX=#{fidx}
+WHERE tidx=#{tidx}
+</update>
 
 <select id="s_taskTidx" parameterType="Integer" resultType="Integer">
 SELECT tidx
@@ -46,15 +55,24 @@ AND tuidx=#{1}
 </select>
 
 <select id="stuTask" parameterType="Integer" resultType="std">
-SELECT *
-FROM onclick_stutask
-WHERE tdelyn='N'
-AND sidx=#{sidx}
+SELECT a.*, b.tuname, b.tustart, b.tufin
+FROM onclick_stutask a
+JOIN onclick_taskupload b
+ON a.tuidx = b.tuidx
+WHERE b.tudelyn='N'
+AND a.sidx=#{sidx}
+ORDER BY b.tudate DESC
 </select>
 
 <update id="s_taskDelete" parameterType="Integer">
 UPDATE onclick_stutask
 SET tdelyn='Y', tsubyn='N', tsubject='', tdate='', tcontents=''
+WHERE tidx=#{tidx}
+</update>
+
+<update id="stuExFileDelete" parameterType="Integer">
+UPDATE onclick_stutask
+SET FIDX=null
 WHERE tidx=#{tidx}
 </update>
 

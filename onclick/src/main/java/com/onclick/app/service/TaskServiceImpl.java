@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.persistence.FileService_Mapper;
+import com.onclick.app.persistence.S_taskService_Mapper;
 import com.onclick.app.persistence.TaskService_Mapper;
 
 @Service("taskServiceImpl")
@@ -64,7 +66,7 @@ public class TaskServiceImpl implements TaskService{
 	@Transactional
 	public int taskInsert(HashMap<String, Object> hm, int lidx) {
 		//과제만 업로드
-		hm.put("fidx", 0);
+		hm.put("fidx", "");
 		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
 		int value1 = tsm.taskInsert(hm);
 		
@@ -124,10 +126,11 @@ public class TaskServiceImpl implements TaskService{
 		
 		return result;
 	}
-
+	
+	@Transactional
 	@Override
 	public int tExFileDelete(int tuidx, int fidx) {
-		//과제 파일 인덱스 삭제
+		//과제 파일 인덱스 삭제(ajax)
 		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
 		int value1 = tsm.tExFileDelete(tuidx);
 		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
@@ -138,6 +141,14 @@ public class TaskServiceImpl implements TaskService{
 		return result;
 	}
 	
-	
+
+	@Override
+	public ArrayList<S_taskDTO> taskSubmitList(int tuidx) {
+		//학생들 과제 목록(교수 페이지 제출현황)
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
+		ArrayList<S_taskDTO> submitList = tsm.taskSubmitList(tuidx);
+		
+		return submitList;
+	}
 
 }

@@ -3,6 +3,7 @@ package com.onclick.app.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 
 public interface TaskService { //교수 과제
@@ -31,7 +32,9 @@ public interface TaskService { //교수 과제
 	//과제 & 파일 수정
 	public int taskAndFileModify(HashMap<String,Object> hm,HashMap<String, Object> hmFile);
 	
-	//과제 파일인덱스 삭제
+	//과제 파일인덱스 삭제(ajax)
 	public int tExFileDelete(int tuidx, int fidx);
 	
+	//학생들 과제 목록(교수 페이지 제출현황)
+	public ArrayList<S_taskDTO> taskSubmitList(int tuidx);
 }
