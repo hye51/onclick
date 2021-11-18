@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>    
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
+<%TaskVO tv = (TaskVO)session.getAttribute("tv");%>
 <%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
-<%FileVO fv = (FileVO)session.getAttribute("fv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -131,7 +130,7 @@
             <div id="layoutSidenav_content">
 	            <h2 class="mt-4 ms-3">과제 제출 완료</h2>  
 	            	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
+                    	<li class="breadcrumb-item active"></li>
                 	</ol>              	
             	<main>
             		<!-- 학생 과제 내용보기 -->
@@ -150,8 +149,7 @@
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 												    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/stuTaskModify.do?tidx=<%=std.getTidx()%>">수정하기</a></li>
-												    <li><a class="dropdown-item" onclick="del(${std.tidx})">삭제하기</a></li>
-											  	</ul>
+												</ul>
 										</div>
 									</td>
 			      				</tr>
@@ -171,10 +169,11 @@
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
-							      	<% if(std.getFidx()==0) {%>
+							      	<% if(session.getAttribute("fv") == null) {%>
 						    			<td colspan="3" style="border-bottom:0; width:90%">-</td>
-							    	<%} else {%>
-							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    	<%} else {
+							    		FileVO fv = (FileVO)session.getAttribute("fv");%>
+							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=std.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
@@ -210,10 +209,11 @@
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부 파일</td>
-							      	<% if(std.getFidx()==0) {%>
+							      	<% if(session.getAttribute("fv") == null) {%>
 						    			<td colspan="3" style="border-bottom:0; width:90%">-</td>
-							    	<%} else {%>
-							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    	<%} else {
+							    		FileVO fv = (FileVO)session.getAttribute("fv");%>
+							    		<td colspan="3" style="border-bottom:0; width:90%"><a href="<%=request.getContextPath()%>/stuTaskFileDownload.do?fidx=<%=std.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
@@ -222,7 +222,7 @@
 							</tbody>
 						</table>
 						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmitList.do?tuidx=<%=tv.getTuidx()%>">목록</a></button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskSubmitList.do?tuidx=<%=std.getTuidx()%>">목록</a></button>
                     	</div>
                 	</div>
 					<%} %>
@@ -249,13 +249,6 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
         <script type="text/javascript">
-        	
-			function del(tidx) {
-				var value = confirm("삭제하시겠습니까?");
-				if (value == true) {
-					location = '${pageContext.request.contextPath}/stuTaskDeleteAction.do?tidx='+tidx;
-				}
-			}	
 			
 		</script>
     </body>

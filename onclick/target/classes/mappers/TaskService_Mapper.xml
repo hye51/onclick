@@ -42,10 +42,8 @@ VALUES (tuidx_seq.nextval,#{tusubject},#{tustart},#{tufin},sysdate,#{tunotyn},#{
 </insert>
 
 <insert id="stuTaskDefault" parameterType="Integer">
-INSERT INTO onclick_stutask(SIDX, TUIDX)
-VALUES ((SELECT SIDX
-		 FROM onclick_enroll
-		 WHERE lidx=#{0}) , #{1})
+INSERT INTO onclick_stutask(TIDX, SIDX, TUIDX)
+SELECT tidx_seq.nextval, SIDX, #{1}  FROM onclick_enroll WHERE lidx=#{0}
 </insert>
 
 <update id="taskDelete" parameterType="Integer">
@@ -56,13 +54,13 @@ WHERE tuidx=#{tuidx}
 
 <update id="taskModify" parameterType="HashMap">
 UPDATE onclick_taskupload
-SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUDATE=sysdate, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}
 WHERE tuidx=#{tuidx}
 </update>
 
 <update id="taskFileModify" parameterType="HashMap">
 UPDATE onclick_taskupload
-SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUDATE=sysdate, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}, FIDX=#{fidx}
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}, FIDX=#{fidx}
 WHERE tuidx=#{tuidx}
 </update>
 
@@ -71,5 +69,12 @@ UPDATE onclick_taskupload
 SET FIDX=null
 WHERE tuidx=#{tuidx}
 </update>
+
+<select id="taskSubmitList" parameterType="Integer" resultType="std">
+SELECT *
+FROM onclick_stutask
+WHERE tdelyn='N'
+AND tuidx=#{tuidx}
+</select>
 
 </mapper> 

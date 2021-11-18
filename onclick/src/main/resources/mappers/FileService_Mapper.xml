@@ -3,14 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.FileService_Mapper">
 
-<select id="taskFileSelectAll" parameterType="Integer" resultType="fv">
+<select id="fileSelectAll" parameterType="Integer" resultType="fv">
 SELECT *
 FROM onclick_file
 WHERE fdelyn='N'
 AND fidx=#{fidx}
 </select>
 
-<select id="taskFileDownload" parameterType="Integer" resultType="HashMap">
+<select id="fileDownload" parameterType="Integer" resultType="HashMap">
 SELECT FSAVEDNAME, FORIGINNAME
 FROM onclick_file
 WHERE fdelyn='N'

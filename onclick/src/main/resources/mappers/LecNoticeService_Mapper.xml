@@ -29,5 +29,39 @@ FROM onclick_lecnotice
 WHERE lndelyn='N'
 AND lnidx=#{lnidx}
 </select>
-	
+
+<insert id="lecNoticeFileInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
+		SELECT fidx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
+VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
+</insert>
+
+<insert id="lecNoticeInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="lnidx" order="AFTER">
+		SELECT lnidx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_lecnotice (LNIDX,LNSUBJECT,LNCONTENTS,LNDATE,LIDX,FIDX)
+VALUES(lnidx_seq.nextval,#{lnsubject},#{lncontents},sysdate,#{lidx},#{fidx})
+</insert>
+
+<update id="lecNotModify" parameterType="HashMap">
+UPDATE onclick_lecnotice
+SET LNSUBJECT=#{lnsubject},LNCONTENTS=#{lncontents},LNDATE=sysdate ,FIDX=#{fidx}
+WHERE lnidx=#{lnidx}
+</update>
+
+<update id="lnExFileDelete" parameterType="Integer">
+UPDATE onclick_lecnotice
+SET FIDX=null
+WHERE lnidx=#{lnidx}
+</update>
+
+<update id="lecNoticeDelete" parameterType="Integer">
+UPDATE onclick_lecnotice
+SET lndelyn='Y'
+WHERE lnidx=#{lnidx}
+</update>
+
 </mapper>

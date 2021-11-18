@@ -20,14 +20,20 @@ public interface S_taskService {
 	//제출한 과제 내용보기
 	public S_taskDTO s_taskSelectOne(int tidx);
 	
-	//과제 수정
+	//제출 여부 확인
+	public S_taskDTO s_taskCheck(int sidx, int tuidx);
+	
+	//과제 수정 (파일 수정 X)
 	public int s_taskModify(HashMap<String,Object> hm);
 	
-	//학생들 과제 목록(교수 페이지 제출현황)
-	public ArrayList<S_taskDTO> taskSubmitList(int tuidx);
+	//과제 수정(파일 수정O)
+	public int s_taskAndFileModify(HashMap<String,Object> hm, HashMap<String,Object> stuTaskFile);
 	
-	//학생 과제 정보 가져가기
-	public S_taskDTO stuTask(int sidx);
+	//과제 파일인덱스 삭제
+	public int stuExFileDelete(int tidx, int fidx);
+	
+	//학생 과제 정보 가져가기(학생 과제 목록)
+	public ArrayList<S_taskDTO> stuTask(int sidx);
 	
 	//학생 제출한 과제 삭제
 	public int s_taskDelete(int tidx);

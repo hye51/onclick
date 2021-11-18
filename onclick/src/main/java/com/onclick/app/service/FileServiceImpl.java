@@ -17,19 +17,19 @@ public class FileServiceImpl implements FileService{
 	SqlSession sqlSession;
 	
 	@Override
-	public FileVO taskFileSelectAll(int fidx) {
+	public FileVO fileSelectAll(int fidx) {
 		//과제 파일 목록
 		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
-		FileVO fv = fsm.taskFileSelectAll(fidx);
+		FileVO fv = fsm.fileSelectAll(fidx);
 		
 		return fv;
 	}
 
 	@Override
-	public HashMap<String, Object> taskFileDownload(int fidx) {
+	public HashMap<String, Object> fileDownload(int fidx) {
 		//과제 파일 다운로드
 		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
-		HashMap<String, Object> hm = fsm.taskFileDownload(fidx);
+		HashMap<String, Object> hm = fsm.fileDownload(fidx);
 		return hm;
 	}
 
