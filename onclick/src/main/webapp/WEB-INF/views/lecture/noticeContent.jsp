@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv"); %>
+<%LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv");
+	int lnidx = lnv.getLnidx();%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -148,8 +150,8 @@
 												</svg>
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
+												    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/lecNotModify.do?lnidx=<%=lnv.getLnidx()%>">수정하기</a></li>
+												    <li><a class="dropdown-item" onclick="del(${lnidx})">삭제하기</a></li>
 											  	</ul>
 										</div>
 										</td>
@@ -163,14 +165,15 @@
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							    	<% if(lnv.getLnfile() != null) {%>
-							      		<td colspan="3" style="width:90%"><%=lnv.getLnfile()%></td>
+							    	<% if(session.getAttribute("fv") != null) {
+							    		FileVO fv = (FileVO)session.getAttribute("fv"); %>
+							      		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} else {%>
-							    		<td colspan="3" style="width:90%"></td>
+							    		<td colspan="3" style="border-bottom:0; width:90%"></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input class="form-control" style="width:100%; height:300px; border:0; solid; black" value="<%=lnv.getLncontents()%>"></td>
+							    	<td colspan="4" style="border-bottom:0"><input class="form-control" style="width:100%; height:300px; border:0; solid; black" value="<%=lnv.getLncontents()%>" readonly></td>
 							    </tr>
 							</tbody>
 						</table>
@@ -202,5 +205,15 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        	
+			function del(lnidx) {
+				var value = confirm("삭제하시겠습니까?");
+				if (value == true) {
+					location = '${pageContext.request.contextPath}/lecNotDeleteAction.do?lnidx='+lnidx;
+				}
+			}	
+			
+		</script>
     </body>
 </html>

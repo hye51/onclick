@@ -128,7 +128,7 @@
             </div>
             <!-- 과제 제출 화면-->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">제출하기</h2>
+	            <h2 class="mt-4 ms-3">수정하기</h2>
                 	<ol class="breadcrumb mb-4 ms-4">
                     	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
                 	</ol>
@@ -149,11 +149,24 @@
 									</td>
 							    </tr>
 							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부파일</td>
-					            	<td colspan="3" style="border-bottom:0; width:90%">
-							      		
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      	<%if(session.getAttribute("fv") == null){ %>
+							      		<input class="form-control" id="file" name="s_taskFile" type="file" multiple/> 
+							      		<%} else { 
+							      			FileVO fv = (FileVO)session.getAttribute("fv"); %>
+							      		<input class="form-control" name="s_taskFile" type="file" placeholder="<%=fv.getForiginname () %>" multiple/>
+							      		<%} %>
 							      	</td>
 							    </tr>
+							    <%if(session.getAttribute("fv") != null) {
+							    	FileVO fv = (FileVO)session.getAttribute("fv"); %>
+								    <tr class="exFile">
+								    	<td scope="row" style="border-bottom:0; text-align:left; width:10%"></td>
+								    	<td colspan="2" style="border-bottom:0; width:80%;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+								    	<td style="border-bottom:0; text-align:right; width:10%"><button type="button" id="stuTaskFileDel" class="btn btn-sm">X</button></td>
+								    </tr>
+							    <%} %>
 							    <tr>
 							    	<td colspan="4" style="border-bottom:0"><input type="text" name="s_taskContents" style="width:100%; height:300px; border:0; solid; black" value="<%=std.getTcontents()%>"></td>
 							    </tr>
@@ -187,16 +200,58 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
-        <script type="text/javascript">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+        $(function(){
+        	
+        		<%if(session.getAttribute("fv") != null) {%>
+        			$('#file').prop('disabled');
+        		<%}%>
+        		
+        	
+	        $('#stuTaskFileDel').click(function(){
+				alert("!");
+				
+				<% int fidx = 0;
+					if(session.getAttribute("fv") != null){
+	        		FileVO fv = (FileVO)session.getAttribute("fv"); 
+	        		fidx = fv.getFidx();
+	        	}%>
+	        	
+				var fidx = <%=fidx%>;
+				var tidx = <%=std.getTidx()%>;
+				
+					$.ajax({
+						url:'<%=request.getContextPath()%>/stuExFileDelete.do',
+						data: {"fidx":fidx,
+							   "tidx":tidx},
+						dataType:'JSON',
+						type:'POST',
+						error: function(){
+							alert("에러입니다."); },
+						success:function(data){
+							if(data.value == 2) {
+								$('.exFile').css("display", "none");
+								alert("삭제되었습니다.");
+							} else {
+								alert("파일이 삭제되지 않았습니다.");
+							}
+						}
+					});
+	        	});
+	    });
+        
 			function check() {
 			
+				var fm= document.frm;
+				
+				
 				fm.action="<%=request.getContextPath()%>/stuTaskModifyAction.do?tidx=<%=std.getTidx()%>";
 				fm.method = "post";
-				fm.submit();
 				fm.enctype="multipart/form-data";
+				fm.submit();
 				
-				return;
-		};
+			}
 		</script>
     </body>
 </html>

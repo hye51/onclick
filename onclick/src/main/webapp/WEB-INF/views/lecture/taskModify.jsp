@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
-<%SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -147,11 +145,11 @@
 							    <tr>
 							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">제출 시작일</td>
 							      	<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="taskStart" style="border:0; width:100%" value="<%=tv.getTustart() %>"></td>
+							      		<input class="form-control" type="date" name="taskStart" style="border:0; width:100%"></td>
 									</td>
 									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">제출 종료일</td>
 									<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="taskFin" style="border:0; width:100%" value="<%=tv.getTufin()%>"></td>
+							      		<input class="form-control" type="date" name="taskFin" style="border:0; width:100%"></td>
 									</td>
 							    </tr>
 							    <tr>
@@ -169,7 +167,7 @@
 							    	FileVO fv = (FileVO)session.getAttribute("fv"); %>
 								    <tr class="exFile">
 								    	<td scope="row" style="border-bottom:0; text-align:left; width:10%"></td>
-								    	<td colspan="2" style="border-bottom:0; width:80%;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+								    	<td colspan="2" style="border-bottom:0; width:80%;"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 								    	<td style="border-bottom:0; text-align:right; width:10%"><button type="button" id="taskFileDel" class="btn btn-sm">X</button></td>
 								    </tr>
 							    <%} %>
@@ -223,32 +221,34 @@
         <script type="text/javascript">
         $(document).ready(function(){
 	        $('#taskFileDel').click(function(){
-				alert("!");
-	        	
-				var fidx = null;
-				if(session.getAttribute("fv") != null){
+				
+				<%int fidx = 0;
+					if(session.getAttribute("fv") != null){
 	        		FileVO fv = (FileVO)session.getAttribute("fv"); 
 	        		fidx = fv.getFidx();
-	        	}
-				var tuidx = '<%=tv.getTuidx()%>';
+	        	}%>
+	        
+	        	var fidx = <%=fidx%>;
+				var tuidx = <%=tv.getTuidx()%>;
 				
-					$.ajax({
-						url:'<%=request.getContextPath()%>/tExFileDelete.do',
-						data: {"fidx":fidx,
-							   "tuidx":tuidx},
-						dataType:'JSON',
-						type:'POST',
-						error: function(){
-							alert("에러입니다."); },
-						success:function(data){
-							if(data.value == 2) {
-								$('.exFile').css("display", "none");
-								alert("삭제되었습니다.");
-							} else {
-								alert("파일이 삭제되지 않았습니다.");
-							}
+				$.ajax({
+					url:'<%=request.getContextPath()%>/tExFileDelete.do',
+					data: {"fidx":fidx,
+						   "tuidx":tuidx},
+					dataType:'JSON',
+					type:'POST',
+					error: function(){
+						alert("에러입니다."); },
+					success:function(data){
+						if(data.value == 2) {
+							$('.exFile').css("display", "none");
+							alert("삭제되었습니다.");
+						} else {
+							alert("파일이 삭제되지 않았습니다.");
 						}
-					});
+					}
+				});
+					
 	        	});
 	    });   
         

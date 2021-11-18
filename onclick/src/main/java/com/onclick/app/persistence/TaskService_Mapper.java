@@ -3,6 +3,7 @@ package com.onclick.app.persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 
 public interface TaskService_Mapper {
@@ -36,5 +37,7 @@ public interface TaskService_Mapper {
 	
 	//과제 파일인덱스 삭제
 	public int tExFileDelete(int tuidx);
-	
+
+	//학생들 과제 목록(교수 페이지 제출현황)
+	public ArrayList<S_taskDTO> taskSubmitList(int tuidx);
 }

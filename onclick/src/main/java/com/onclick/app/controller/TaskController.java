@@ -46,20 +46,30 @@ public class TaskController { //교수 과제 컨트롤러
 	private String uploadPath;
 
 	@RequestMapping(value="/taskContent.do")
-	public String taskContent(@RequestParam("tuidx") int tuidx, 
-							@RequestParam("lidx") int lidx, Model model, HttpSession session) {
-		
+	public String taskContent(@RequestParam("tuidx") int tuidx, Model model, HttpSession session) {
+		System.out.println("수정완료 후 과제 내용보기");
 		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
 		//해당 과목 정보 가져오기
+		int lidx = (Integer)session.getAttribute("lidx");
 		LecVO lv = ls.lecSelectOne(lidx);
 		session.setAttribute("lv", lv);
+		
 		//첨부파일 가져오기
-		FileVO fv = fs.taskFileSelectAll(tv.getFidx());
+		FileVO fv = fs.fileSelectAll(tv.getFidx());
 		if(fv != null) {
 			session.setAttribute("fv", fv);
+			System.out.println("fv:"+fv);
 		}
+		
+		if(session.getAttribute("sidx") != null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			S_taskDTO std = sts.s_taskCheck(sidx, tuidx);
+			session.setAttribute("std", std);
+			System.out.println("std:"+std);
+		}
+		
 		return "lecture/taskContent";
 	}
 
@@ -72,20 +82,15 @@ public class TaskController { //교수 과제 컨트롤러
 		LecVO lv = ls.lecSelectOne(lidx);
 		session.setAttribute("lv", lv);
 		
-		TaskVO tv = ts.taskAll(lidx);
-//		session.setAttribute("tv", tv);
-//		int tuidx = tv.getTuidx();
 		
-//		int sidx = (Integer)session.getAttribute("sidx");
-//		
-//		if(sidx != 0) {
-//			
-//			S_taskDTO std = sts.stuTask(sidx);
-//			//학생 과제 정보 세션에 담기
-//			session.setAttribute("std", std);
-//			
-//			System.out.println("std"+std);
-//		}
+		if(session.getAttribute("sidx") != null) { //학생이 로그인 했을 경우 목록으로 넘어갈 때
+			int sidx = (Integer)session.getAttribute("sidx");
+			
+			ArrayList<S_taskDTO> stlist = sts.stuTask(sidx);
+			//학생 과제 정보 세션에 담기
+			session.setAttribute("stlist", stlist);
+			
+		}
 	
 		return "lecture/taskList";
 	}
@@ -122,10 +127,12 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskInsert(hm, lidx);
 			int tuidx = Integer.parseInt(String.valueOf(hm.get("tuidx")));
 			
-			if(value == 2) {
-				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
-			} else {
+			System.out.println("value:"+value);
+			
+			if(value == 0) {
 				str = "redirect:/taskWrite.do";
+			} else {
+				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 			
 		} else {//첨부파일 있는 경우
@@ -162,10 +169,10 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskAndFileInsert(hm, taskFile, lidx);
 			int tuidx = Integer.parseInt(String.valueOf(hm.get("tuidx")));
 			
-			if(value == 3) {
-				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
-			} else {
+			if(value == 0) {
 				str = "redirect:/taskWrite.do";
+			} else {
+				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 		}
 		
@@ -173,10 +180,10 @@ public class TaskController { //교수 과제 컨트롤러
 	}
 	
 	
-	@RequestMapping(value="/taskFileDownload.do")
+	@RequestMapping(value="/fileDownload.do")
 	public void taskFileDownload(@RequestParam("fidx") int fidx,HttpServletResponse response) throws Exception{
-		//과제 파일 다운로드
-		HashMap<String,Object> fileDown = fs.taskFileDownload(fidx);
+		//파일 다운로드
+		HashMap<String,Object> fileDown = fs.fileDownload(fidx);
 		String savedName = (String)fileDown.get("FSAVEDNAME");
 		String originName = (String)fileDown.get("FORIGINNAME");
 		
@@ -201,15 +208,17 @@ public class TaskController { //교수 과제 컨트롤러
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
 		
-//		System.out.println("tv:"+session.getAttribute("tv"));
+		if((Integer)tv.getFidx() != null) {
+			FileVO fv = fs.fileSelectAll(tv.getFidx());	
+			session.setAttribute("fv", fv);
+		}
 		
 		return "lecture/taskModify";
 	}
 	
 	
 	@RequestMapping(value="/taskModifyAction.do")
-	public String taskModifyAction(@RequestParam("lidx") int lidx,
-			@RequestParam("taskSubject") String tusubject,
+	public String taskModifyAction(@RequestParam("taskSubject") String tusubject,
 			@RequestParam("taskStart") String tustart,
 			@RequestParam("taskFin") String tufin,
 			@RequestParam("taskContents") String tucontents,
@@ -217,7 +226,6 @@ public class TaskController { //교수 과제 컨트롤러
 			@RequestParam("taskFile") MultipartFile tufile,
 			@RequestParam("tuidx") int tuidx) throws Exception{
 		//교수 과제 수정 완료
-		
 		String str = null;
 		
 		if(tufile.isEmpty()) { //첨부파일 수정 X
@@ -233,7 +241,7 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskModify(hm);
 			
 			if(value == 1) {
-				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
+				str = "redirect:/taskContent.do?tuidx="+tuidx;
 			} else {
 				str = "redirect:/taskModify.do?tuidx="+tuidx;
 			}
@@ -268,13 +276,13 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskAndFileModify(hm, taskFile);
 			
 			if(value == 2) {
-				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
+				str = "redirect:/taskContent.do?tuidx="+tuidx;
 			} else {
 				str = "redirect:/taskModify.do?tuidx="+tuidx;
 			}
 		}
 		
-		return "";
+		return str;
 	}
 	
 	
@@ -300,15 +308,6 @@ public class TaskController { //교수 과제 컨트롤러
 	}
 	
 	
-	@RequestMapping(value="/taskSubmitList.do")
-	public String taskSubmitList(@RequestParam("tuidx") int tuidx, Model model) {
-		//과제에 대한 학생 제출 리스트
-		ArrayList<S_taskDTO> submitList = sts.taskSubmitList(tuidx);
-		model.addAttribute("submitList", submitList);
-		
-		return "lecture/taskSubmitList";
-	}
-
 	@ResponseBody
 	@RequestMapping(value="/tExFileDelete.do")
 	public HashMap<String,Object> fileDelete(@RequestParam("fidx") int fidx,
@@ -319,5 +318,15 @@ public class TaskController { //교수 과제 컨트롤러
 		hm.put("value",value);
 		
 		return hm;
+	}
+	
+	
+	@RequestMapping(value="/taskSubmitList.do")
+	public String taskSubmitList(@RequestParam("tuidx") int tuidx, Model model) {
+		//과제에 대한 학생 제출 리스트
+		ArrayList<S_taskDTO> submitList = ts.taskSubmitList(tuidx);
+		model.addAttribute("submitList", submitList);
+		
+		return "lecture/taskSubmitList";
 	}
 }

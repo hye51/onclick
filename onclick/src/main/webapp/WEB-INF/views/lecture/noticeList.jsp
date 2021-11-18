@@ -129,6 +129,7 @@
             <div id="layoutSidenav_content">
  				<main>
                     <h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">공지사항 목록</h4>
+                    <%if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) { %> <!-- 학생 -->
                     	<div class="card-body mx-auto d-block " style="width:80%">
 							<table class="table text-center">
 								<thead>
@@ -150,6 +151,30 @@
  								</tbody>
                             </table>
                         </div>
+                    <%} else { %> <!-- 교수 -->
+                        <div class="card-body mx-auto d-block " style="width:80%">
+                    	<button type="button" class="btn btn-secondary mb-2" style="float:right" onclick="location.href='<%=request.getContextPath()%>/lecNoticeWrite.do?lidx=<%=lv.getLidx()%>'">공지사항 업로드</button>
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th style="width:10%">No</th>
+									    <th style="width:60%">제목</th>
+									    <th style="width:30%">작성일</th>
+									</tr>
+								</thead>
+                                <tbody>
+	                                <% 	int i = 1;
+	                                	for(LecNoticeVO lnv : lnList) { %>
+										<tr>
+										<th scope="row"><%=i++ %></th>
+										<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject()%></a></td>
+										<td><%=lnv.getLndate().substring(0, 10)%></td>
+										</tr>
+									<% }%>
+ 								</tbody>
+                            </table>
+                        </div>
+                    <%} %>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

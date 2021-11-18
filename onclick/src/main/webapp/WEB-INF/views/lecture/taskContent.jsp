@@ -3,7 +3,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
-<%FileVO fv = (FileVO)session.getAttribute("fv"); %>
+<%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
 <%int tuidx = tv.getTuidx(); %>
 <!DOCTYPE html>
 <html>
@@ -156,15 +156,19 @@
 							      		<%=tv.getTudate().substring(0, 10) %>
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
-							      	
-								      	<td></td>
-								     
+							      	<%
+							      		if(std.getTsubyn().equals("Y")){ %>
+								      		<td style="color:blue">제출완료</td>
+								    	<%} else { %>
+								    		<td style="color:red">미제출</td>
+								   		<%} %>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부파일</td>
-							    	<% if(tv.getFidx() == 0) {%>
+							    	<% if(session.getAttribute("fv") == null) {%>
 							    		<td colspan="3" style="border-bottom:0;"></td>
-							    	<%} else { %>
+							    	<%} else { 
+							    		FileVO fv = (FileVO)session.getAttribute("fv");%>
 							    		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
@@ -175,7 +179,12 @@
 						</table>
 						<div class="form-row text-center mb-2">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+							<%if(std.getTsubyn().equals("Y")){ %>
+						      		<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>">제출보기</a></button>
+						    	<%} else { %>
+						    		<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+						   		<%} %>
+							
                     	</div>
                 	</div>
                 	<!-- 교수 과제 내용보기 -->
@@ -194,7 +203,7 @@
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 												    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/taskModify.do?tuidx=<%=tv.getTuidx()%>">수정하기</a></li>
-												    <li><a class="dropdown-item" onclick="del(${tv.tuidx})">삭제하기</a></li>
+												    <li><a class="dropdown-item" onclick="del(${tuidx})">삭제하기</a></li>
 											  	</ul>
 										</div>
 									</td>
@@ -215,10 +224,11 @@
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">첨부파일</td>
-							    	<% if(tv.getFidx() == 0) {%>
+							    	<% if(session.getAttribute("fv") == null) {%>
 							    		<td colspan="3" style="border-bottom:0;"></td>
-							    	<%} else { %>
-							    		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    	<%} else { 
+							    		FileVO fv = (FileVO)session.getAttribute("fv");%>
+							    		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
@@ -227,7 +237,7 @@
 							</tbody>
 						</table>
 						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>">목록</a></button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="<%=request.getContextPath()%>/taskList.do?lidx=<%=tv.getLidx()%>"><a style="color:white; text-decoration:none;" >목록</a></button>
                     	</div>
                 	</div>
 			      	<%} %>		    
@@ -260,7 +270,7 @@
 				if (value == true) {
 					location = '${pageContext.request.contextPath}/taskDeleteAction.do?tuidx='+tuidx;
 				}
-			}	
+			};	
 			
 		</script>
     </body>

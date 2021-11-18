@@ -153,7 +153,7 @@
                                         <table class="text-center">
                                         <% for(TaskVO tv : stuTaskList) { %>
 											<tr>
-											<td><a style="color:white; text-decoration:none; text-align:left" href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
+											<td style=" text-align:left"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname()%></td>
 											</tr>
 										<% } %>
                                         </table>

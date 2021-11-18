@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.onclick.app.domain.S_taskDTO;
+import com.onclick.app.persistence.FileService_Mapper;
 import com.onclick.app.persistence.S_taskService_Mapper;
+import com.onclick.app.persistence.TaskService_Mapper;
 
 @Service("s_taskServiceImpl")
 public class S_taskServiceImpl implements S_taskService{
@@ -22,7 +24,7 @@ public class S_taskServiceImpl implements S_taskService{
 	public int s_taskUpdate(HashMap<String,Object> hm) {
 		//학생 과제 제출
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		hm.put("fidx", 0);
+		hm.put("fidx", "");
 		int value = stsm.s_taskUpdate(hm);
 		
 		return value;
@@ -59,23 +61,30 @@ public class S_taskServiceImpl implements S_taskService{
 	
 	@Override
 	public int s_taskModify(HashMap<String, Object> hm) {
-		//학생 과제 수정
+		//학생 과제 수정(파일 수정 X)
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		int value = stsm.s_taskUpdate(hm);
+		int value = stsm.s_taskModify(hm);
 		
 		return value;
 	}
-
-
+	
+	
 	@Override
-	public ArrayList<S_taskDTO> taskSubmitList(int tuidx) {
-		//학생들 과제 목록(교수 페이지 제출현황)
+	@Transactional
+	public int s_taskAndFileModify(HashMap<String,Object> hm, HashMap<String,Object> stuTaskFile) {
+		//학생 과제 수정(파일 수정 O)
+		//새로운 파일 업로드
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		ArrayList<S_taskDTO> submitList = stsm.taskSubmitList(tuidx);
+		int value1 =stsm.s_taskFileInsert(stuTaskFile);
+		int key = Integer.parseInt(String.valueOf(stuTaskFile.get("fidx")));
 		
-		return submitList;
+		hm.put("fidx", key);
+		int value2 = stsm.s_taskFileModify(hm);
+		
+		int result = value1+value2;
+		
+		return result;
 	}
-
 
 	@Override
 	public int s_taskTidx(int sidx, int tuidx) {
@@ -88,12 +97,12 @@ public class S_taskServiceImpl implements S_taskService{
 
 
 	@Override
-	public S_taskDTO stuTask(int sidx) {
-		//학생 과제정보 가져가기
+	public ArrayList<S_taskDTO> stuTask(int sidx) {
+		//학생 과제정보 가져가기(학생 과제 목록)
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		S_taskDTO std = stsm.stuTask(sidx);
+		ArrayList<S_taskDTO> stlist = stsm.stuTask(sidx);
 		
-		return std;
+		return stlist;
 	}
 
 
@@ -105,5 +114,31 @@ public class S_taskServiceImpl implements S_taskService{
 		
 		return value;
 	}
+	
+	
+	@Transactional
+	@Override
+	public int stuExFileDelete(int tidx, int fidx) {
+		//학생 과제 파일 인덱스 삭제
+		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
+		int value1 = stsm.stuExFileDelete(tidx);
+		
+		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
+		int value2 = fsm.fileDelete(fidx);
+		
+		int result = value1 + value2;
+		
+		return result;
+	}
+
+
+	@Override
+	public S_taskDTO s_taskCheck(int sidx, int tuidx) {
+		//과제 내용보기 페이지에서 제출 여부 확인
+		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
+		S_taskDTO std = stsm.s_taskCheck(sidx, tuidx);
+		return std;
+	}
+	
 
 }
