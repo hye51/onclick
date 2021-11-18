@@ -37,6 +37,12 @@ public class HomeController {
 		return "join";
 	}
 	
+	@RequestMapping(value="/siteMap.do")
+	public String siteMap() {
+		//사이트맵 이동
+		return "siteMap";
+	}
+	
 	@RequestMapping(value="/lecHome.do")
 	public String LecHome(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 

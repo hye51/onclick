@@ -70,6 +70,19 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 	
 	@Override
+	public int professorModifyAction(int pidx, String ppwd) {
+		//교수 정보 수정 
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("pidx", pidx);
+		hm.put("ppwd", ppwd);
+		
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		int cnt = psm.professorModifyAction(hm);
+		
+		return cnt;
+	}
+	
+	@Override
 	public ProfessorVO proInfo(int pidx) {
 		//교수 정보 보기 
 		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);

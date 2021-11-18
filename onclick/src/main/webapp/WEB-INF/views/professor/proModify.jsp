@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ page import="com.onclick.app.domain.*" %>    
-<% StudentVO sv = (StudentVO)request.getAttribute("sv"); %>
+<% ProfessorVO pv = (ProfessorVO)request.getAttribute("pv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,16 +38,13 @@
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
-		          <a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">Mypage</a>
+		          <a class="nav-link" href="#">Mypage</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+		          <a class="nav-link" href="#">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">English</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="<%=request.getContextPath()%>/student/stuLogout.do">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>
@@ -116,37 +113,37 @@
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">비밀번호 변경</label>
 								  <div class="col-sm-6">
-								    <input type="password" class="form-control" name="spwd" value="<%=sv.getSpwd()%>">
+								    <input type="password" class="form-control" name="ppwd" value="<%=pv.getPpwd()%>">
 								  </div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">비밀번호 확인</label>
 								  <div class="col-sm-6">
-								    <input type="password" class="form-control" name="spwd2">
+								    <input type="password" class="form-control" name="ppwd2">
 								  </div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">이메일</label>
 									<div class="col-sm-6">
 										<div class="input-group mb-3">
-										  <input type="text" class="form-control" value="" name="semail1">
+										  <input type="text" class="form-control" value="" name="pemail1">
 										  <span class="input-group-text">@</span>
-										  <input type="text" class="form-control" value="" name="semail2" >
+										  <input type="text" class="form-control" value="" name="pemail2" >
 										</div>
 									</div>
 								</div>
 								<div class="row mb-3">
 								  <label class="col-sm-2 col-form-label">연락처</label>
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control" value="" name="sphone1">
+								    <input type="text" class="form-control" value="" name="pphone1">
 								  </div>
 								  -
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control" value="" name="sphone2" >
+								    <input type="text" class="form-control" value="" name="pphone2" >
 								  </div>
 								  -
 								  <div class="col-sm-2">
-								    <input type="text" class="form-control" value="" name="sphone3">
+								    <input type="text" class="form-control" value="" name="pphone3">
 								  </div>
 								</div>
 							</div>
@@ -179,25 +176,25 @@
     	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
         //emil split
-        var beforeEmail= "<%=sv.getSemail()%>";
+        var beforeEmail= "<%=pv.getPemail()%>";
         var afterEmail = beforeEmail.split('@');
-        $('input[name=semail1]').attr('value',afterEmail[0]);
-        $('input[name=semail2]').attr('value',afterEmail[1]);
+        $('input[name=pemail1]').attr('value',afterEmail[0]);
+        $('input[name=pemail2]').attr('value',afterEmail[1]);
         
         //phone split
-        var beforePhone= "<%=sv.getSphone()%>";
+        var beforePhone= "<%=pv.getPphone()%>";
         var afterPhone = beforePhone.split('-');
-        $('input[name=sphone1]').attr('value',afterPhone[0]);
-        $('input[name=sphone2]').attr('value',afterPhone[1]);
-        $('input[name=sphone3]').attr('value',afterPhone[2]);
+        $('input[name=pphone1]').attr('value',afterPhone[0]);
+        $('input[name=pphone2]').attr('value',afterPhone[1]);
+        $('input[name=pphone3]').attr('value',afterPhone[2]);
         
         function modify(){
         	var fm = document.frm;
-        	 if(fm.semail1.value == "" || fm.semail2.value == "" ){
- 				fm.semail1.focus();
+        	 if(fm.pemail1.value == "" || fm.pemail2.value == "" ){
+ 				fm.pemail1.focus();
  				alert("이메일을 입력하세요");
  				return false;
-        	 }else if(fm.sphone1.value == "" || fm.sphone2.value == ""){
+        	 }else if(fm.pphone1.value == "" || fm.pphone2.value == ""){
 				fm.pphone1.focus();
 				alert("연락처를 입력하세요");
 				return false;

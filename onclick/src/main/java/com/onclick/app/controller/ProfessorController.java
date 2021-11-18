@@ -2,18 +2,21 @@ package com.onclick.app.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.ProfessorVO;
+import com.onclick.app.domain.StudentVO;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.ProfessorService;
 
@@ -71,6 +74,19 @@ public class ProfessorController {
 		return location;
 	}
 	
+	@RequestMapping(value="/professor/proLogout.do", method=RequestMethod.GET)
+    public String professorLogout(RedirectAttributes rttr,
+    								   HttpSession session) throws Exception{
+    
+		//교수 로그아웃
+		 //세션에 저장된 값을 삭제
+		 session.invalidate();
+		 
+		 rttr.addFlashAttribute("logout", "로그아웃 하였습니다.");
+
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value="/professor/proDashBoard.do")
 	public String professorLecList(HttpSession session, Model model) {
 		//대시보드 이동
@@ -85,7 +101,7 @@ public class ProfessorController {
 	}
 	@RequestMapping(value="/professor/pwdCheck.do")
 	public String professorpwdCheck() {
-		//학생 정보수정 - 비밀번호 확인 페이지
+		//교수 정보수정 - 비밀번호 확인 페이지
 		return "/professor/pwdCheck";
 	}
 	
@@ -96,6 +112,31 @@ public class ProfessorController {
 		int cnt = ps.proPwdCheck(ppwd);
 		
 		return cnt;
+	}
+	
+	@RequestMapping(value="/professor/proModify.do")
+	public String professorModifyAction(HttpSession session, HttpServletRequest request) {
+		//교수 정보 수정화면 이동
+		int pidx = (Integer)session.getAttribute("pidx");
+		ProfessorVO pv = ps.proInfo(pidx);
+		request.setAttribute("pv", pv);
+
+		return "/professor/proModify";
+	}
+	
+	@RequestMapping(value="/professor/proModifyAction.do")
+	public String professorModifyAction(@RequestParam("ppwd") String ppwd,
+									  @RequestParam("pemail1") String pemail1,
+									  @RequestParam("pemail2") String pemail2,
+									  @RequestParam("pphone1") String pphone1,
+									  @RequestParam("pphone2") String pphone2,
+									  @RequestParam("pphone3") String pphone3
+									) {
+		//교수 정보 수정실행
+		String pemail = pemail1+"@"+pemail2;
+		String pphone = pphone1 + "-" + pphone2 + "-" +pphone3;
+		
+		return "redirect:/professor/pwdCheck.do";
 	}
 	
 
