@@ -5,7 +5,12 @@
 
 <update id="videoUpdate" parameterType="HashMap">
 UPDATE onclick_videoattendence
-SET vfull=#{vfull},vstart=#{vstart},vend=#{vend},vpercent=vpercent+#{vpercent}
+SET vfull=#{vfull},
+	vstart=#{vstart},
+	vend=#{vend},
+	vpercent=vpercent+#{vpercent},
+	vlast=sysdate,
+	vattendence=#{vattendence}
 WHERE sidx=#{sidx} 
 AND cidx=#{cidx}
 </update>

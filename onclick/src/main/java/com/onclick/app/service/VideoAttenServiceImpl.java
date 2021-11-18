@@ -27,6 +27,17 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		hm.put("vend", vd.getVend());
 		hm.put("vpercent", vd.getVend()-vd.getVstart());
 		
+		//동영상 출석 기록 
+		int percent= vd.getVpercent();
+		int full = vd.getVfull();
+		System.out.println("getVpercent  : "  + vd.getVpercent());
+		System.out.println("percent  : "  + (double) percent / (double) full * 100.0);
+		if(((double) percent / (double) full * 100.0) > 80.0) {
+			hm.put("vattendence", "Y");
+		}else {
+			hm.put("vattendence", "N");
+		}
+			
 		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
 		int result = vsm.videoUpdate(hm);
 

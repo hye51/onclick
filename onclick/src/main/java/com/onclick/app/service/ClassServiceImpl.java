@@ -71,6 +71,35 @@ public class ClassServiceImpl implements ClassService{
 
 		return result;
 	}
+
+	@Override
+	public int classUpdate(ClassVo cv) {
+		//강좌 내용 수정 
+		HashMap<String,Object> hm = new HashMap<String,Object>();		
+		hm.put("cidx", cv.getCidx());
+		hm.put("cname", cv.getCname());
+		hm.put("ccontents", cv.getCcontents());
+		hm.put("csta", cv.getCsta());
+		hm.put("cfin", cv.getCfin());
+		hm.put("cweek", cv.getCweek());
+		hm.put("creyn", cv.getCreyn());
+		hm.put("cnotyn", cv.getCnotyn());
+		hm.put("cfile", cv.getCfile());
+		
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		int result=csm.classUpdate(hm);
+		
+		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> stuClassList(int sidx) {
+		////학생 강좌 리스트
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		HashMap<String, Object> hm = csm.stuClassList(sidx);
+		
+		return hm;
+	}
 	
 
 }

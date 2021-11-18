@@ -265,7 +265,8 @@
         		data:{"vend" : endTime, 
         			"vstart": startTime,
         			"vfull":videoFulltime,
-        			"cidx":<%=cv.getCidx()%>},
+        			"cidx":<%=cv.getCidx()%>,
+        			"vpercent":<%=vd.getVpercent()%>},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},
@@ -276,7 +277,6 @@
 			
 		}, false);
 		
-
 		 //재생이 종료되었을때 발생하는 이벤트
 		video1.addEventListener('ended', function(e){
 			alert("강의 수강이 완료되었습니다.");
@@ -284,17 +284,13 @@
 
 		//다시보기 여부
      	var rel = '<%=cv.getCreyn()%>';
-     	
      	$(function(){
-     		
 	     	if(rel=='Y'){
 	     		$('.rely').css("display","inline-block");
 	     	}else{
 	     		$('.reln').css("display","inline-block");
 	     	}
-	     	 
      	 });
-     	
         </script>
 		<style>
 		/*영상 조각 방지*/ 

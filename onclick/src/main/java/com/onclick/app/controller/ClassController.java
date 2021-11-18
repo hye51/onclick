@@ -2,17 +2,23 @@
 package com.onclick.app.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.domain.VideoAttenDto;
 import com.onclick.app.service.ClassService;
 import com.onclick.app.service.EnrollService;
+import com.onclick.app.service.VideoAttenService;
 
 @Controller
 public class ClassController {
@@ -31,16 +37,29 @@ public class ClassController {
 	public String classWriteAction(ClassVo cv) {
 		//강좌업로드 실행
 		int result = cs.classInsert(cv);
-		System.out.println("--------------------333-----"+cv.getCsta());
+	
 		return "redirect:/lecList.do?lidx="+cv.getLidx();
 	}
 
-	@RequestMapping(value="/lecList.do")
-	public String classList(@RequestParam("lidx") int lidx, Model model) {
-		//강좌리스트 보기
+	@RequestMapping(value="/proLecList.do")
+	public String proClassList(@RequestParam("lidx") int lidx, Model model) {
+		//교수 강좌리스트 보기
 		ArrayList<ClassVo> alist = cs.classSelect(lidx);
 		model.addAttribute("alist", alist);
 
+		return "lecture/classList";
+	}
+	
+	@RequestMapping(value="/stuLecList.do")
+	public String stuClassList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
+		//학생 강좌리스트 보기
+		ArrayList<ClassVo> alist = cs.classSelect(lidx);
+		model.addAttribute("alist", alist);
+		int sidx = (Integer)session.getAttribute("sidx");
+		//강좌 수강 현황
+		HashMap<String, Object> hm = cs.stuClassList(sidx);
+		System.out.println("강좌 수강 현황  : " + hm);
+				
 		return "lecture/classList";
 	}
 	
@@ -64,18 +83,27 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="/classUpdateAction.do")
-	public String classUpdateAction() {
+	public String classUpdateAction(ClassVo cv) {
 		//강좌내용 수정 실행
-		return null;
+		int result = cs.classUpdate(cv);
+
+		return "redirect:/lecList.do?lidx="+cv.getLidx();
 	}
 	
 	@RequestMapping(value="/classDelete.do")
-	public String classDelete(@RequestParam("cidx") int cidx,@RequestParam("lidx") int lidx) {
+	public String classDelete(@RequestParam("cidx") int cidx,
+							  @RequestParam("lidx") int lidx,
+							  RedirectAttributes rttr,
+							  HttpSession session) {
 		//강좌 삭제
 		int result = cs.classDelete(cidx);
 		String location = "";
 		if(result == 1) {
+			rttr.addFlashAttribute("deleteOk", "삭제하였습니다.");
 			location="redirect:/lecList.do?lidx="+lidx;
+		}else {
+			rttr.addFlashAttribute("deleteNok", "삭제에 실패하였습니다.");
+			location="redirect:/proLecContent.do?cidx="+cidx+"&pidx="+session.getAttribute("pidx");
 		}
 		return location;
 	}
