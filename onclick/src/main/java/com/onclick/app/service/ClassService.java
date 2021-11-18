@@ -17,4 +17,7 @@ public interface ClassService {
 	//강좌 내용 불러오기
 	public ClassVo classSelectOne(int cidx);
 	
+	//강좌 삭제 
+	public int classDelete(int cidx);
+	
 }

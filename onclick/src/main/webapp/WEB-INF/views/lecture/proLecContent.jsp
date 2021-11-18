@@ -135,6 +135,17 @@
 					<div class="container-fluid px-4" style="width:90%; height:700px;">
 						<div class="row m-0" style="width:100%; height:100%">
 						    <div class="col-md-8">
+						    <div class="viewinfo" style="width:100%;">
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px;">
+		                    	<span style="padding-left:3px;"> 작성일 :</span> <%=cv.getCdate() %></div>
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px; margin-top:3px;line-height:160%;">
+			                    <span style="padding-left:3px;">출결 인정 기간 : </span> <%=cv.getCsta() %> ~ <%=cv.getCfin() %></div>
+			                    <div style="padding-right:10px;letter-spacing:-0.5px;">
+			                    <span style="padding-left:3px;">다시보기 여부 : </span> 
+			                    <span class="rely" style="display : none; color:black;">가능</span> 
+			                    <span class="reln" style="display : none; color:black; ">불가능</span> 
+			                    </div>	                    
+                    		</div>
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
@@ -152,7 +163,7 @@
 								<br>
 								<div class="btn-group" role="group" style="float:right;" >
 								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classUpdate.do?cidx=<%=cv.getCidx()%>">수정</a>
-								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classDelete.do?cidx=<%=cv.getCidx()%>">삭제</a>
+								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classDelete.do?cidx=<%=cv.getCidx()%>&lidx=<%=cv.getLidx()%>">삭제</a>
 								  <button type="button" class="btn btn-primary" onclick="location.href='<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>'">목록</button>
 								</div>
 						    </div>
@@ -202,7 +213,18 @@
          <!-- jquery 3.3.1 라이브러리 활용 -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
-     
+     	//다시보기 여부
+     	var rel = '<%=cv.getCreyn()%>';
+     	
+     	$(function(){
+     		
+	     	if(rel=='Y'){
+	     		$('.rely').css("display","inline-block");
+	     	}else{
+	     		$('.reln').css("display","inline-block");
+	     	}
+	     	 
+     	 });
         </script>
 
     </body>

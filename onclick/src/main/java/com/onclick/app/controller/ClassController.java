@@ -49,7 +49,7 @@ public class ClassController {
 		//강좌내용 수정화면
 		ClassVo cv = cs.classSelectOne(cidx);
 		
-		String csta = cv.getCsta();	
+	/*	String csta = cv.getCsta();	
 		//replace([기존문자],[바꿀문자])
 		csta= csta.replace("/", "-");	
 		cv.setCsta(csta);
@@ -57,7 +57,7 @@ public class ClassController {
 		String cfin = cv.getCfin();	
 		cfin= cfin.replace("/", "-");	
 		cv.setCfin(cfin);
-		
+	*/	
 		model.addAttribute("cv", cv);
 		
 		return "lecture/lecModify";
@@ -70,9 +70,14 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="/classDelete.do")
-	public String classDelete(@RequestParam("cidx") int cidx) {
+	public String classDelete(@RequestParam("cidx") int cidx,@RequestParam("lidx") int lidx) {
 		//강좌 삭제
-		return null;
+		int result = cs.classDelete(cidx);
+		String location = "";
+		if(result == 1) {
+			location="redirect:/lecList.do?lidx="+lidx;
+		}
+		return location;
 	}
 	
 	

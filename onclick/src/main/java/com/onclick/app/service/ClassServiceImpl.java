@@ -62,6 +62,15 @@ public class ClassServiceImpl implements ClassService{
 		
 		return cv;
 	}
+
+	@Override
+	public int classDelete(int cidx) {
+		//°­ÁÂ »èÁ¦
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		int result = csm.classDelete(cidx);
+
+		return result;
+	}
 	
 
 }

@@ -25,11 +25,8 @@
 </insert>
 
 <insert id="stuVideoDefault" parameterType="Integer">
-INSERT INTO onclick_videoattendence( 
-	SIDX,
-	CIDX
-)
-SELECT sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
+INSERT INTO onclick_videoattendence(vidx,sidx,cidx)
+SELECT vidx_seq.nextval,sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>	
 
 <select id="classSelect" parameterType="Integer" resultType="cv">
@@ -46,8 +43,8 @@ SELECT
 	cname,
 	ccontents,
 	cdate,
-	TO_CHAR(csta, 'YYYY/MM/DD') as csta,
-	TO_CHAR(cfin, 'YYYY/MM/DD') as cfin,
+	TO_CHAR(csta, 'YYYY-MM-DD') as csta,
+	TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
 	cweek,
 	cseq,
 	cfile,
@@ -59,5 +56,10 @@ FROM onclick_class
 WHERE cidx=#{0}
 </select>
 
+<update id="classDelete" parameterType="Integer">
+UPDATE onclick_class
+SET cdelyn='Y' 
+WHERE cidx=#{0}
+</update>
 
 </mapper>

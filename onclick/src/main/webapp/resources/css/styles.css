@@ -11803,3 +11803,15 @@ body {
 	color : red;
 	display : none;
 }
+
+/*proLecContent,stuLecContent page 조회수 등*/
+.viewinfo{
+    float: left;
+    position: relative;
+    text-align: right;
+    width: 50%;
+}
+
+.viewinfo span {
+    color: #00008b;
+}

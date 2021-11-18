@@ -136,6 +136,17 @@
 					<div class="container-fluid px-4" style="width:90%; height:700px;">
 						<div class="row m-0" style="width:100%; height:100%">
 						    <div class="col-md-8">
+						      <div class="viewinfo" style="width:100%;">
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px;">
+		                    	<span style="padding-left:3px;"> 작성일 :</span> <%=cv.getCdate() %></div>
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px; margin-top:3px;line-height:160%;">
+			                    <span style="padding-left:3px;">출결 인정 기간 : </span> <%=cv.getCsta() %> ~ <%=cv.getCfin() %></div>
+			                    <div style="padding-right:10px;letter-spacing:-0.5px;">
+			                    <span style="padding-left:3px;">다시보기 여부 : </span> 
+			                    <span class="rely" style="display : none; color:black;">가능</span> 
+			                    <span class="reln" style="display : none; color:black; ">불가능</span> 
+			                    </div>	                    
+                    		</div>
 						      <!-- 동영상 -->
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
@@ -271,7 +282,19 @@
 			alert("강의 수강이 완료되었습니다.");
 		}, false);
 
-
+		//다시보기 여부
+     	var rel = '<%=cv.getCreyn()%>';
+     	
+     	$(function(){
+     		
+	     	if(rel=='Y'){
+	     		$('.rely').css("display","inline-block");
+	     	}else{
+	     		$('.reln').css("display","inline-block");
+	     	}
+	     	 
+     	 });
+     	
         </script>
 		<style>
 		/*영상 조각 방지*/ 
