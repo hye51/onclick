@@ -59,7 +59,6 @@ public class VideoAttenController {
 
 	 */
 
-	
 	@RequestMapping(value="/stuLecContent.do")
 	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
 		//학생 동영상 출석 화면

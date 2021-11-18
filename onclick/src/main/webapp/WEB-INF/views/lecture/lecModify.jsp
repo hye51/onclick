@@ -268,6 +268,7 @@
         	  if( dbCweek == cweek.options[cnt].value)
         		  cweek.options[cnt].selected = 1;
         	}
+        	
         //notyn checked value
         	var dbNotyn='<%=cv.getCnotyn()%>';
         	var notyn = document.getElementsByName("cnotyn");

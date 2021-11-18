@@ -98,11 +98,19 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+							<% if(session.getAttribute("sidx") != null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                           	<% } else{ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<% }%>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
@@ -208,5 +216,11 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <!-- jquery 3.3.1 라이브러리 활용 -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+        var sidx = <%=session.getAttribute("sidx")%>;
+        var pidx = <%=session.getAttribute("pidx")%>;
+        </script>
     </body>
 </html>

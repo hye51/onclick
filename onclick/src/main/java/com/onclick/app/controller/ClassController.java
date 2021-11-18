@@ -38,7 +38,7 @@ public class ClassController {
 		//강좌업로드 실행
 		int result = cs.classInsert(cv);
 	
-		return "redirect:/lecList.do?lidx="+cv.getLidx();
+		return "redirect:/proLecList.do?lidx="+cv.getLidx();
 	}
 
 	@RequestMapping(value="/proLecList.do")
@@ -46,21 +46,23 @@ public class ClassController {
 		//교수 강좌리스트 보기
 		ArrayList<ClassVo> alist = cs.classSelect(lidx);
 		model.addAttribute("alist", alist);
-
-		return "lecture/classList";
+System.out.println("교수 강좌리스트 보기");
+		return "lecture/proClassList";
 	}
 	
 	@RequestMapping(value="/stuLecList.do")
 	public String stuClassList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 		//학생 강좌리스트 보기
+		System.out.println("학생 강좌리스트 보기");
 		ArrayList<ClassVo> alist = cs.classSelect(lidx);
 		model.addAttribute("alist", alist);
 		int sidx = (Integer)session.getAttribute("sidx");
+		
 		//강좌 수강 현황
 		HashMap<String, Object> hm = cs.stuClassList(sidx);
 		System.out.println("강좌 수강 현황  : " + hm);
 				
-		return "lecture/classList";
+		return "lecture/stuClassList";
 	}
 	
 	@RequestMapping(value="/classUpdate.do")
