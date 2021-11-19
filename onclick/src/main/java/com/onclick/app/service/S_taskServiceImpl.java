@@ -105,16 +105,6 @@ public class S_taskServiceImpl implements S_taskService{
 		return stlist;
 	}
 
-
-	@Override
-	public int s_taskDelete(int tidx) {
-		//학생 제출한 과제 삭제
-		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		int value = stsm.s_taskDelete(tidx);
-		
-		return value;
-	}
-	
 	
 	@Transactional
 	@Override

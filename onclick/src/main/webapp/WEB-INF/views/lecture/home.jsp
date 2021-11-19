@@ -4,6 +4,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<LecNoticeVO> lndList = (ArrayList<LecNoticeVO>)request.getAttribute("lndList"); %>
+<%ArrayList<TaskVO> tList = (ArrayList<TaskVO>)request.getAttribute("tlist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -108,7 +109,7 @@
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -141,7 +142,7 @@
                                        	<table>
                                        	<% for(LecNoticeVO lnv : lndList) { %>
 	                                       	<tr>
-		                                    <td><a style="color:white; text-decoration:none; text-align:left" href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject() %></a></td>
+		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject() %></a></td>
 	                                    	</tr>
                                     	<% } %>
                                     	</table>
@@ -152,8 +153,13 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">과제</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                    	<a class="small text-black stretched-link" href="#">View Details</a>
-                                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                                    	<table>
+                                       	<% for(TaskVO tv : tList) { %>
+	                                       	<tr>
+		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
+	                                    	</tr>
+                                    	<% } %>
+                                    	</table>
                                     </div>
                                 </div>
                             </div>

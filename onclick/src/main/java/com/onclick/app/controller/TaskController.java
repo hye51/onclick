@@ -1,12 +1,9 @@
  package com.onclick.app.controller;
 
-import java.io.File;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecVO;
@@ -86,10 +84,9 @@ public class TaskController { //교수 과제 컨트롤러
 		if(session.getAttribute("sidx") != null) { //학생이 로그인 했을 경우 목록으로 넘어갈 때
 			int sidx = (Integer)session.getAttribute("sidx");
 			
-			ArrayList<S_taskDTO> stlist = sts.stuTask(sidx);
 			//학생 과제 정보 세션에 담기
+			ArrayList<S_taskDTO> stlist = sts.stuTask(sidx);
 			session.setAttribute("stlist", stlist);
-			
 		}
 	
 		return "lecture/taskList";
@@ -144,7 +141,7 @@ public class TaskController { //교수 과제 컨트롤러
 			String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 			//파일경로
 			String route = uploadPath;
-			
+			//저장된 이름
 			String savedName = UploadFileUtiles.uploadFile(uploadPath, originalFileName, tufile.getBytes());
 			
 			HashMap<String, Object> taskFile = new HashMap<String, Object>();
@@ -152,9 +149,6 @@ public class TaskController { //교수 과제 컨트롤러
 			taskFile.put("savedName", savedName);
 			taskFile.put("originalFileExtension", originalFileExtension);
 			taskFile.put("route", route);
-			
-	//		int value1 = fs.taskFileInsert(hmFile);
-	//		int key = Integer.parseInt(String.valueOf(hmFile.get("fidx")));
 			
 			//교수 과제 작성 완료
 			HashMap<String,Object> hm = new HashMap<String,Object>();
@@ -164,7 +158,6 @@ public class TaskController { //교수 과제 컨트롤러
 			hm.put("tunotyn", tunotyn);
 			hm.put("lidx", lidx);
 			hm.put("tucontents", tucontents);
-	//		hm.put("fidx", key);
 			
 			int value = ts.taskAndFileInsert(hm, taskFile, lidx);
 			int tuidx = Integer.parseInt(String.valueOf(hm.get("tuidx")));
@@ -177,27 +170,6 @@ public class TaskController { //교수 과제 컨트롤러
 		}
 		
 		return str;
-	}
-	
-	
-	@RequestMapping(value="/fileDownload.do")
-	public void taskFileDownload(@RequestParam("fidx") int fidx,HttpServletResponse response) throws Exception{
-		//파일 다운로드
-		HashMap<String,Object> fileDown = fs.fileDownload(fidx);
-		String savedName = (String)fileDown.get("FSAVEDNAME");
-		String originName = (String)fileDown.get("FORIGINNAME");
-		
-		//파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:/java exercise/dev_html/workspace/onclick/onclick/onclick/uploadFiles/"+savedName));
-		
-		response.setContentType("application/octet-stream");
-		response.setContentLength(fileByte.length);
-		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originName, "UTF-8")+"\";");
-		response.getOutputStream().write(fileByte);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-		
-		return;
 	}
 	
 	
@@ -238,6 +210,7 @@ public class TaskController { //교수 과제 컨트롤러
 			hm.put("tucontents", tucontents);
 			hm.put("tuidx", tuidx);
 			
+			//fidx 값 없이 수정
 			int value = ts.taskModify(hm);
 			
 			if(value == 1) {
@@ -255,7 +228,7 @@ public class TaskController { //교수 과제 컨트롤러
 			String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 			//파일경로
 			String route = uploadPath;
-			
+			//저장된 이름
 			String savedName = UploadFileUtiles.uploadFile(uploadPath, originalFileName, tufile.getBytes());
 			
 			HashMap<String, Object> taskFile = new HashMap<String, Object>();
@@ -275,7 +248,7 @@ public class TaskController { //교수 과제 컨트롤러
 			
 			int value = ts.taskAndFileModify(hm, taskFile);
 			
-			if(value == 2) {
+			if(value == 2) { //파일 insert + 과제 수정
 				str = "redirect:/taskContent.do?tuidx="+tuidx;
 			} else {
 				str = "redirect:/taskModify.do?tuidx="+tuidx;
@@ -287,8 +260,8 @@ public class TaskController { //교수 과제 컨트롤러
 	
 	
 	@RequestMapping(value="/taskDeleteAction.do")
-	public String taskDelete(HttpSession session) {
-		//교수 과제 삭제
+	public String taskDelete(HttpSession session, RedirectAttributes rttr) {
+		//교수 과제 삭제 -> 학생 과제 같이 삭제
 		LecVO lv = (LecVO)session.getAttribute("lv");
 		int lidx = lv.getLidx(); 
 		TaskVO tv = (TaskVO)session.getAttribute("tv");
@@ -301,6 +274,7 @@ public class TaskController { //교수 과제 컨트롤러
 		if(value == 0) {
 			str="redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 		} else {
+			rttr.addFlashAttribute("msg", "삭제되었습니다.");
 			str="redirect:/taskList.do?lidx="+lidx;
 		}
 		
@@ -323,7 +297,7 @@ public class TaskController { //교수 과제 컨트롤러
 	
 	@RequestMapping(value="/taskSubmitList.do")
 	public String taskSubmitList(@RequestParam("tuidx") int tuidx, Model model) {
-		//과제에 대한 학생 제출 리스트
+		//과제에 대한 학생 제출 리스트(제출 현황)
 		ArrayList<S_taskDTO> submitList = ts.taskSubmitList(tuidx);
 		model.addAttribute("submitList", submitList);
 		

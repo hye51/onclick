@@ -34,6 +34,4 @@ public interface S_taskService_Mapper {
 	//학생 과제 정보 가져가기(학생 과제 목록)
 	public ArrayList<S_taskDTO> stuTask(int sidx);
 	
-	//학생 제출한 과제 삭제
-	public int s_taskDelete(int tidx);
 }

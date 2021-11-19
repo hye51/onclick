@@ -205,13 +205,13 @@
         $(function(){
         	
         		<%if(session.getAttribute("fv") != null) {%>
-        			$('#file').prop('disabled');
+        			$('#file').prop('disabled', true);
+        		<%} else {%>
+        			$('#file').prop('disabled', false);
         		<%}%>
-        		
         	
 	        $('#stuTaskFileDel').click(function(){
-				alert("!");
-				
+	        	
 				<% int fidx = 0;
 					if(session.getAttribute("fv") != null){
 	        		FileVO fv = (FileVO)session.getAttribute("fv"); 

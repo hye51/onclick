@@ -19,6 +19,15 @@ public class TaskServiceImpl implements TaskService{
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Override
+	public ArrayList<TaskVO> taskDashSelectAll(int lidx) {
+		//강의 홈 대시보드 과제 목록
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
+		ArrayList<TaskVO> tlist = tsm.taskDashSelectAll(lidx);
+		return tlist;
+	}
+
 
 	@Override
 	public TaskVO taskSelectOne(int tuidx) {
@@ -79,23 +88,14 @@ public class TaskServiceImpl implements TaskService{
 		return result;
 	}
 
-	@Override
-	public int taskDelete(int tuidx) {
-		//과제 삭제
-		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		int value = tsm.taskDelete(tuidx);
-		
-		return value;
-	}
-
-	@Override
-	public TaskVO taskAll(int lidx) {
-		//과제 세션에 담기
-		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		TaskVO tv = tsm.taskAll(lidx);
-		
-		return tv;
-	}
+//	@Override
+//	public TaskVO taskAll(int lidx) {
+//		//과제 세션에 담기
+//		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
+//		TaskVO tv = tsm.taskAll(lidx);
+//		
+//		return tv;
+//	}
 
 	@Override
 	public int taskModify(HashMap<String, Object> hm) {
@@ -127,6 +127,7 @@ public class TaskServiceImpl implements TaskService{
 		return result;
 	}
 	
+	
 	@Transactional
 	@Override
 	public int tExFileDelete(int tuidx, int fidx) {
@@ -141,7 +142,21 @@ public class TaskServiceImpl implements TaskService{
 		return result;
 	}
 	
+	
+	@Transactional
+	@Override
+	public int taskDelete(int tuidx) {
+		//과제 삭제 - 학생 과제도 같이 삭제(파일 삭제 X)
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
+		int value1 = tsm.taskDelete(tuidx); //교수 과제 삭제
+		int value2 = tsm.stuTaskDelete(tuidx); //학생 과제 삭제
+		
+		int result = value1 + value2;
+		
+		return result;
+	}
 
+	
 	@Override
 	public ArrayList<S_taskDTO> taskSubmitList(int tuidx) {
 		//학생들 과제 목록(교수 페이지 제출현황)
@@ -150,5 +165,6 @@ public class TaskServiceImpl implements TaskService{
 		
 		return submitList;
 	}
+
 
 }
