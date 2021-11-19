@@ -4,8 +4,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<%//int sidx =(Integer)session.getAttribute("sidx"); 
-int pidx =(Integer)session.getAttribute("pidx"); %>
+<%int pidx =(Integer)session.getAttribute("pidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -140,30 +139,30 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
 				</div>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
-               	<!-- 학생/교수 계정에 따른 버튼 표시 유무-->
-               	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
 				<nav style="float: right">
 					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
 				</nav>
 				</br>
-				<%} %>
                	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
-				    <% for(ClassVo cv : alist){ %>
-				     <% if(cv.getCseq()==1){ %>
+				  <%for(int i =1;i<16;i++){ %>
 				    <h2 class="accordion-header " id="flush-headingOne">
-				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=cv.getCweek()%>" aria-expanded="false" aria-controls="flush-collapseOne">
-				        <%=cv.getCweek()%>주차 강의 
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=i %>" aria-expanded="false" aria-controls="flush-collapseOne">
+				        <%=i %>주차 강의 
 				      </button>
 				    </h2>
-				    <% } %>
-				    <div id="flush-collapse<%=cv.getCweek()%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				    <div id="flush-collapse<%=i %>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				    <%for(ClassVo cv : alist){%>
+				      <% if(cv.getCweek()==i){ %>
 				      <div class="accordion-body">
 				      <!-- 교수인지 학생인지 구분 필요 -->
 						<a href="<%=request.getContextPath()%>/proLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
+						<span> </span>
 				      </div>
+					  <%}%>
+				  	<%}%>
 				    </div>
-				  <% } %>
+				  <%}%>
 				</div>	
                	</div>  
                 </main>
@@ -188,5 +187,12 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        var msg = '${deleteOk}';
+        if(msg != ""){
+        	//강좌 삭제 성공시 알림 
+        	alert(msg);
+        }
+        </script>
     </body>
 </html>

@@ -138,11 +138,11 @@
 								<tr>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의주차</td>
 								      <td colspan="2" style="border-bottom:0; width:50%" >
-								      	<select class="form-select" name="cweek">
-								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
-										  <option value="1">1주차</option>
-										  <option value="2">2주차</option>
-										  <option value="3">3주차</option>
+								      	<select class="form-select" name="cweek" id="cweek">
+								      	 <option class="form-select">-- 강의 주차 선택 --</option>
+										  <% for(int i=1;i<16;i++) { %>
+										  <option value="<%=i %>"><%=i %>주차</option>
+										  <% } %>
 										</select>
 								  	</td>		
 							    </tr>
@@ -174,7 +174,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" checked>
+							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" >
 											<label class="form-check-label">
 											발송
 											</label>
@@ -187,7 +187,7 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">다시보기</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="creyn" value="Y" checked>
+							      		<input class="form-check-input" type="radio" name="creyn" value="Y" >
 											<label class="form-check-label">
 											사용
 											</label>
@@ -253,13 +253,41 @@
 				alert("강의 내용을 입력하세요");
 				return false;
 			}
-				fm.action="<%=request.getContextPath()%>/lecUploadAction.do?lidx=<%=lv.getLidx()%>";
+				fm.action="<%=request.getContextPath()%>/classUpdateAction.do?cidx=<%=cv.getCidx()%>&lidx=<%=cv.getLidx()%>";
 				fm.method = "post";
 				//fm.enctype="multipart/form-data"; 
 				fm.submit();
 				return;
 		}
+        
+        //selected value 
+        	var dbCweek= <%=cv.getCweek()%>;
+        	var cweek = document.getElementById("cweek");
 
+        	for(var cnt = 0 ; cnt < cweek.options.length; cnt++){
+        	  if( dbCweek == cweek.options[cnt].value)
+        		  cweek.options[cnt].selected = 1;
+        	}
+        	
+        //notyn checked value
+        	var dbNotyn='<%=cv.getCnotyn()%>';
+        	var notyn = document.getElementsByName("cnotyn");
+
+        	for(var i=0; i < notyn.length; i++) { 
+        		if( notyn[i].value == dbNotyn)
+        			notyn[i].checked = true;
+        	}
+
+		//reyn checked value
+        	var dbReyn='<%=cv.getCnotyn()%>';
+        	var reyn = document.getElementsByName("creyn");
+
+        	for(var i=0; i < reyn.length; i++) { 
+        		if( reyn[i].value == dbReyn)
+        			reyn[i].checked = true;
+        	}
+     
+        
         </script>
     </body>
 </html>

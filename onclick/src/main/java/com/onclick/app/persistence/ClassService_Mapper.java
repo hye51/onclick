@@ -23,4 +23,9 @@ public interface ClassService_Mapper {
 	//강좌 삭제 
 	public int classDelete(int cidx);
 	
+	//강좌 내용 수정 
+	public int classUpdate(HashMap<String,Object> hm);
+	
+	//학생 강좌 리스트 
+	public HashMap<String,Object> stuClassList(int sidx);
 }

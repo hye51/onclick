@@ -44,8 +44,9 @@ public class VideoAttenController {
 		//시청중 멈춘경우(창을 닫은 경우, 로그아웃된 경우, 정지버튼을 누른경우)
 		//전체시간,시작시간,종료시간 받아옴
 		vd.setSidx((Integer)session.getAttribute("sidx"));
+		System.out.println("시청업데이트vd.getVpercent()  : " +vd.getVpercent() );
 		int result=vs.videoUpdate(vd);
-
+		System.out.println("시청업데이트 시  : " +result );
 		return result;
 	}
 	
@@ -58,7 +59,6 @@ public class VideoAttenController {
 
 	 */
 
-	
 	@RequestMapping(value="/stuLecContent.do")
 	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
 		//학생 동영상 출석 화면
@@ -69,7 +69,7 @@ public class VideoAttenController {
 		//이전 시청기록 
 		VideoAttenDto vd = vs.videoSelectOne(sidx, cidx);
 		model.addAttribute("vd", vd);
-		
+
 		return "lecture/stuLecContent";
 	}
 	

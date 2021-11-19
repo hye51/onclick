@@ -38,20 +38,19 @@ ORDER BY cweek, cseq
 </select>
 
 <select id="classSelectOne" parameterType="Integer" resultType="cv">
-SELECT 
-	cidx,
-	cname,
-	ccontents,
-	cdate,
-	TO_CHAR(csta, 'YYYY-MM-DD') as csta,
-	TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
-	cweek,
-	cseq,
-	cfile,
-	cnotyn,
-	cdelyn,
-	lidx,
-	creyn	
+SELECT  cidx,
+		cname,
+		ccontents,
+		cdate,
+		TO_CHAR(csta, 'YYYY-MM-DD') as csta,
+		TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+		cweek,
+		cseq,
+		cfile,
+		cnotyn,
+		cdelyn,
+		lidx,
+		creyn	
 FROM onclick_class
 WHERE cidx=#{0}
 </select>
@@ -60,6 +59,20 @@ WHERE cidx=#{0}
 UPDATE onclick_class
 SET cdelyn='Y' 
 WHERE cidx=#{0}
+</update>
+
+<update id="classUpdate"  parameterType="HashMap">
+UPDATE onclick_class
+SET cname=#{cname},
+	ccontents=#{ccontents},
+	cdate=sysdate,
+	csta=#{csta},
+	cfin=#{cfin},
+	creyn=#{creyn},
+	cweek=#{cweek},
+	cnotyn=#{cnotyn},
+	cfile=#{cfile}
+WHERE cidx=#{cidx}
 </update>
 
 </mapper>

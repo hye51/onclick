@@ -139,9 +139,9 @@
 								      <td colspan="2" style="border-bottom:0; width:50%" >
 								      	<select class="form-select" name="cweek">
 								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
-										  <option value="1">1주차</option>
-										  <option value="2">2주차</option>
-										  <option value="3">3주차</option>
+										  <% for(int i=1;i<16;i++) { %>
+										  <option value="<%=i %>"><%=i %>주차</option>
+										  <% } %>
 										</select>
 								  	</td>		
 							    </tr>

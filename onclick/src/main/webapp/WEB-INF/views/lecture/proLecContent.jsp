@@ -213,17 +213,20 @@
          <!-- jquery 3.3.1 라이브러리 활용 -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
+        var msg = '${deleteNok}';
+        if(msg != ""){
+        	//강좌 삭제 실패시 알림 
+        	alert(msg);
+        }
+        
      	//다시보기 여부
      	var rel = '<%=cv.getCreyn()%>';
-     	
      	$(function(){
-     		
 	     	if(rel=='Y'){
 	     		$('.rely').css("display","inline-block");
 	     	}else{
 	     		$('.reln').css("display","inline-block");
 	     	}
-	     	 
      	 });
         </script>
 
