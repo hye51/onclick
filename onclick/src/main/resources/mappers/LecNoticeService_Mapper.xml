@@ -30,13 +30,6 @@ WHERE lndelyn='N'
 AND lnidx=#{lnidx}
 </select>
 
-<insert id="lecNoticeFileInsert" parameterType="HashMap">
-	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
-		SELECT fidx_seq.CURRVAL FROM DUAL
-	</selectKey>
-INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
-VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
-</insert>
 
 <insert id="lecNoticeInsert" parameterType="HashMap">
 	<selectKey resultType="Integer" keyProperty="lnidx" order="AFTER">

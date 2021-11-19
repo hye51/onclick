@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
+import com.onclick.app.service.TaskService;
 
 @Controller
 public class HomeController {
@@ -24,6 +26,9 @@ public class HomeController {
 	
 	@Autowired
 	LecNoticeService lns;
+	
+	@Autowired
+	TaskService ts;
 	
 	@RequestMapping(value="/")
 	public String main() {
@@ -46,6 +51,9 @@ public class HomeController {
 		
 		ArrayList<LecNoticeVO> lndList = lns.lecNoticeSelectDash(lidx);
 		model.addAttribute("lndList", lndList);
+		
+		ArrayList<TaskVO> tlist = ts.taskDashSelectAll(lidx);
+		model.addAttribute("tlist", tlist);
 		
 		return "lecture/home";
 	}

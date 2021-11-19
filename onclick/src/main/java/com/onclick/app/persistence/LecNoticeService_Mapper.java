@@ -19,9 +19,6 @@ public interface LecNoticeService_Mapper {
 	//강의 공지사항 업로드
 	public int lecNoticeInsert(HashMap<String, Object> hm);
 	
-	//강의 공지사항 파일 업로드
-	public int lecNoticeFileInsert(HashMap<String, Object> lecNoticeFile);
-	
 	//강의 공지사항 수정 (파일 X)
 	public int lecNotModify(HashMap<String, Object> hm);
 	

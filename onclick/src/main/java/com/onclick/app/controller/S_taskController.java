@@ -69,9 +69,6 @@ public class S_taskController {
 			
 			int value = sts.s_taskUpdate(hm);
 			
-//			S_taskDTO std = sts.stuTask(tidx);
-//			session.setAttribute("std", std);
-			
 			if(value == 0) {
 				str = "redirect:/stuTaskWrite.do?tuidx="+tuidx;
 			} else {
@@ -101,9 +98,6 @@ public class S_taskController {
 			hm.put("tidx",tidx);
 			
 			int value = sts.s_taskAndFileUpdate(hm, stuTaskFile);
-			
-//			S_taskDTO std = sts.stuTask(tidx);
-//			session.setAttribute("std", std);
 			
 			if(value == 2) {
 				str ="redirect:/stuTaskContent.do?tidx="+tidx;
@@ -201,25 +195,6 @@ public class S_taskController {
 		return str;
 	}
 	
-	
-	@RequestMapping(value="/stuTaskDeleteAction.do")
-	public String stuTaskDelete(@RequestParam("tidx") int tidx, HttpSession session) {
-		//학생 과제삭제
-		LecVO lv = (LecVO)session.getAttribute("lv");
-		int lidx = lv.getLidx(); 
-		
-		String str = null;
-		int value = sts.s_taskDelete(tidx);
-		
-		if(value == 1) {
-			str="redirect:/taskList.do?lidx="+lidx;
-		} else {
-			str="redirect:/stuTaskContent.do?tidx="+tidx;
-		}
-		
-		return str;
-	}
-
 	
 	@ResponseBody
 	@RequestMapping(value="/stuExFileDelete.do")

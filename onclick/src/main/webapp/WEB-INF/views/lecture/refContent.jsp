@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%RefVO rv = (RefVO)session.getAttribute("rv"); 
+	int ridx = rv.getRidx();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -124,18 +126,21 @@
                     </div>
                 </nav>
             </div>
-            <!--자료 내용보기 화면(교수)-->
+            <!--자료 내용보기 화면-->
             <div id="layoutSidenav_content">
             	<h2 class="mt-4 ms-3">자료 목록</h2>
 	               	<ol class="breadcrumb mb-4 ms-4">
-	                   	<li class="breadcrumb-item active">자료 제목</li>
+	                   	<li class="breadcrumb-item active"><%=rv.getRname() %></li>
 	               	</ol>
             	<main> 
             		<div class="container-fluid px-4 ">
 						<table class="table mx-auto bg-light" style="width:80%">
 							<thead>    
-								<tr>			      
-							      	<td colspan="3" scope="row" style="border-bottom:0; width:90%;">제목</td>
+								<tr>
+								<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null) {%>				      
+							      	<td colspan="3" scope="row" style="border-bottom:0; width:100%;"><%=rv.getRname() %></td>
+							    <%} else { %>
+							    	<td colspan="3" scope="row" style="border-bottom:0; width:90%;"><%=rv.getRname() %></td>
 							      	<td style="border-bottom:0; width:10%; text-align:right">
 							      		<div class="dropdown">
 											<button class="btn btn-secondary bg-light" style="border: none; background: none; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -144,30 +149,36 @@
 												</svg>
 										  	</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-												    <li><a class="dropdown-item" href="#">수정하기</a></li>
-												    <li><a class="dropdown-item" href="#">삭제하기</a></li>
+												    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/refModify.do?ridx=<%=rv.getRidx()%>">수정하기</a></li>
+												    <li><a class="dropdown-item" onclick="del(${ridx})">삭제하기</a></li>
 											  	</ul>
 										</div>
 									</td>
+								<%} %>
 							    </tr>
 							</thead>    
 							<tbody>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" type="date" style="border:0; black; width:300px"></td>
+							    	<td colspan="3" style="border-bottom:0; width:90%"><%=rv.getRdate() %></td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%"><input class="form-control" id="inputLNfile" type="file" placeholder="" /></td>
+							      	<% if(session.getAttribute("fv") != null) {
+							    		FileVO fv = (FileVO)session.getAttribute("fv"); %>
+							      		<td colspan="3" style="border-bottom:0;"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    	<%} else {%>
+							    		<td colspan="3" style="border-bottom:0; width:90%"></td>
+							    	<%} %>
 							    </tr>
 							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black"></td>
+							    	<td colspan="4" style="border-bottom:0"><input type="text" style="width:100%; height:300px; border:0; solid; black" readonly value="<%=rv.getRcontents() %>"></td>
 							    </tr>
 							</tbody>
 						</table>
 						<div class="form-row text-center mb-2">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">이전</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">목록</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="<%=request.getContextPath()%>/refList.do?lidx=<%=rv.getLidx()%>">목록</button>
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">다음</button>
                     	</div>
                 	</div>
@@ -193,5 +204,15 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+        	
+			function del(ridx) {
+				var value = confirm("삭제하시겠습니까?");
+				if (value == true) {
+					location = '${pageContext.request.contextPath}/refDeleteAction.do?ridx='+ridx;
+				}
+			};	
+			
+		</script>
     </body>
 </html>

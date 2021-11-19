@@ -22,9 +22,6 @@ public interface LecNoticeService {
 	//강의 공지사항 업로드 (파일 O)
 	public int lecNoticeAndFileInsert(HashMap<String, Object> hm, HashMap<String, Object> lecNoticeFile);
 	
-	//강의 공지사항 & 파일 삭제
-	public int lecNotAndFileDelete(int lnidx, int fidx);
-	
 	//강의 공지사항 수정 (파일 X)
 	public int lecNotModify(HashMap<String, Object> hm);
 	
