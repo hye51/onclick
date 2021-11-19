@@ -18,24 +18,23 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession();
 		
-		System.out.println("현재 세션에 담아있는 값은?" +session.getAttribute("sidx"));
+//		System.out.println("현재 세션에 담아있는 값은?" +session.getAttribute("sidx"));
 //		System.out.println("현재 세션에 담아있는 값은?" +session.getAttribute("pidx"));
 		
 		
-		if(session.getAttribute("sidx") == null) {
-			response.sendRedirect(request.getContextPath()+"/");
+		if(session.getAttribute("sidx") == null) {			
 			
-			//컨트롤러로 요청을 보내지 않기 위해서 false 리턴			
-			return false;			
+			//학생로그인 했을 때
+			if(session.getAttribute("pidx") == null) {
+				//로그인 실패 시
+				response.sendRedirect(request.getContextPath()+"/");
+						
+				return false;
+			}				
+			
 		}
 		
-		if(session.getAttribute("pidx") == null) {
-			response.sendRedirect(request.getContextPath()+"/");
-			
-			return false;
-		}
-		
-		return true;
+	return true;
 	}
 
 }

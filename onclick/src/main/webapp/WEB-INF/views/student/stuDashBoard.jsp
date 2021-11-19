@@ -15,14 +15,14 @@
         <meta name="author" content="" />
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath()%>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>   
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="../resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -31,7 +31,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
              <div class="row">
-	            <div class="dropdown col-md-9 mb-3 p-4">
+	            <div class="dropdown col-md-9">
 				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
 				 강의 이동
 				 </button>
@@ -88,7 +88,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/user.png">
+						<img alt="" src="../resources/assets/img/user.png">
 							홍길동님
 						</div>
                         <div class="nav">
@@ -218,12 +218,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/datatables-simple-demo.js"></script>
         <script type="text/javascript">
         
         </script>

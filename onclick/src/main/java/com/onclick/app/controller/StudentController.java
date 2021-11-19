@@ -63,13 +63,15 @@ public class StudentController {
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
 		
-		//학번 세션에 저장 
-		session.setAttribute("sidx", sidx);
+		
+		System.out.println("sv"+sv);
+		
+		//학번 세션에 저장 ( 인터셉터에서 처리 )
+		//session.setAttribute("sidx", sidx);
 		
 		if(sv != null) { 
 			//로그인 성공 시
 			rttr.addAttribute("sidx", sidx);
-			System.out.println("test");
 			str = "redirect:/student/stuDashBoard.do";	
 		} else{
 			//로그인 실패 시 

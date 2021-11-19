@@ -25,21 +25,44 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			Object pidx = modelAndView.getModel().get("pidx");
 //			System.out.println("모델에 담긴 값은?"+pidx);
 
-		
-			if(sidx != null) {
-				HttpSession session = request.getSession();
+			HttpSession session = request.getSession();
+			
+			if(sidx != null) {			
 				session.setAttribute("sidx", sidx);
-//				//컨트롤러에서 Redirect를 해서 충돌 발생 Redirect 말고 jsp 파일로 보내면, 대시보드에서 강의 리스트를 받아올 수가 없음.
+
 //				response.sendRedirect(request.getContextPath()+"/student/stuDashBoard.do");
 			} 
 			
 			if(pidx != null) { 
-				HttpSession session = request.getSession();
 				session.setAttribute("pidx", pidx);
 //				response.sendRedirect(request.getContextPath()+"/professor/proDashBoard.do");
 			}
 		
-	}	
+	}
+	
+	public boolean preHandle(
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			Object handler) {
+		
+		// 메소드 동작 전에 세션값이 있으면 제거
+		
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("sidx") != null) {
+			session.removeAttribute("sidx");
+			session.invalidate();
+		}
+		
+		if(session.getAttribute("pidx") != null) {
+			session.removeAttribute("pidx");
+			session.invalidate();
+		}
+		
+		return true;
+	}
+	
+	
 
 
 }
