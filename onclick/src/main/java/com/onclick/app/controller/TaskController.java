@@ -106,7 +106,6 @@ public class TaskController { //교수 과제 컨트롤러
 			@RequestParam("taskStart") String tustart,
 			@RequestParam("taskFin") String tufin,
 			@RequestParam("taskContents") String tucontents,
-			@RequestParam("taskNotice") String tunotyn,
 			@RequestParam("taskFile") MultipartFile tufile) throws Exception{
 
 		String str = null;
@@ -117,7 +116,6 @@ public class TaskController { //교수 과제 컨트롤러
 			hm.put("tusubject", tusubject);
 			hm.put("tustart", tustart);
 			hm.put("tufin", tufin);
-			hm.put("tunotyn", tunotyn);
 			hm.put("lidx", lidx);
 			hm.put("tucontents", tucontents);
 			
@@ -155,7 +153,6 @@ public class TaskController { //교수 과제 컨트롤러
 			hm.put("tusubject", tusubject);
 			hm.put("tustart", tustart);
 			hm.put("tufin", tufin);
-			hm.put("tunotyn", tunotyn);
 			hm.put("lidx", lidx);
 			hm.put("tucontents", tucontents);
 			

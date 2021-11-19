@@ -52,14 +52,15 @@ public class TaskServiceImpl implements TaskService{
 	public int taskAndFileInsert(HashMap<String, Object> hm, HashMap<String, Object> hmFile, int lidx) {
 		//과제 & 파일 업로드
 		//파일 업로드
-		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		int value1 = tsm.taskFileInsert(hmFile);
+		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
+		int value1 = fsm.fileInsert(hmFile);
 		
 		//과제 업로드할 때 입력할 첨부파일 인덱스
 		int key = Integer.parseInt(String.valueOf(hmFile.get("fidx")));
 		
 		//과제 업로드
 		hm.put("fidx", key);
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
 		int value2 = tsm.taskInsert(hm);
 		
 		//학생 과제 업로드할 때 입력할 과제 인덱스
@@ -88,15 +89,6 @@ public class TaskServiceImpl implements TaskService{
 		return result;
 	}
 
-//	@Override
-//	public TaskVO taskAll(int lidx) {
-//		//과제 세션에 담기
-//		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-//		TaskVO tv = tsm.taskAll(lidx);
-//		
-//		return tv;
-//	}
-
 	@Override
 	public int taskModify(HashMap<String, Object> hm) {
 		//과제 수정 (첨부파일 수정 X)
@@ -112,14 +104,15 @@ public class TaskServiceImpl implements TaskService{
 	public int taskAndFileModify(HashMap<String, Object> hm, HashMap<String, Object> hmFile) {
 		//과제 수정 (첨부파일 수정 O)
 		//파일 업로드
-		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		int value1 = tsm.taskFileInsert(hmFile);
+		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
+		int value1 = fsm.fileInsert(hmFile);
 		
 		//과제 업로드할 때 입력할 첨부파일 인덱스
 		int key = Integer.parseInt(String.valueOf(hmFile.get("fidx")));
 		hm.put("fidx", key);
 		
 		//과제&파일 수정
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
 		int value2 = tsm.taskFileModify(hm);
 		
 		int result = value1 + value2;

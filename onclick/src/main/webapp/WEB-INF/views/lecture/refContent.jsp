@@ -160,7 +160,7 @@
 							<tbody>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">작성일</td>
-							    	<td colspan="3" style="border-bottom:0; width:90%"><%=rv.getRdate() %></td>
+							    	<td colspan="3" style="width:90%"><%=rv.getRdate() %></td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>

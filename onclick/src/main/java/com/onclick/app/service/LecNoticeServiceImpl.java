@@ -100,7 +100,7 @@ public class LecNoticeServiceImpl implements LecNoticeService{
 		
 		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
 		hm.put("fidx", fidx);
-		int value2 = lnsm.lecNotModify(hm);
+		int value2 = lnsm.lecNotAndFileModify(hm);
 		
 		int result = value1 + value2;
 		

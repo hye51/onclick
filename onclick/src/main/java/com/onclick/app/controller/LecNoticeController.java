@@ -159,7 +159,6 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			hm.put("lnsubject", lnsubject);
 			hm.put("lncontents", lncontents);
 			hm.put("lnidx", lnidx);
-			hm.put("fidx", "");
 			
 			int value = lns.lecNotModify(hm);
 			

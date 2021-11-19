@@ -11,7 +11,6 @@ FROM(
 			TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
 			TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
 			TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
-			tunotyn,
 			tudelyn,
 			lidx,
 			tucontents,
@@ -30,7 +29,6 @@ SELECT tuidx,
 		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
 		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
 		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
-		tunotyn,
 		tudelyn,
 		lidx,
 		tucontents,
@@ -46,7 +44,6 @@ SELECT tuidx,
 		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
 		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
 		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
-		tunotyn,
 		tudelyn,
 		lidx,
 		tucontents,
@@ -57,20 +54,12 @@ AND lidx=#{lidx}
 ORDER BY tudate DESC
 </select>
 
-<insert id="taskFileInsert" parameterType="HashMap">
-	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
-		SELECT fidx_seq.CURRVAL FROM DUAL
-	</selectKey>
-INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
-VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
-</insert>
-
 <insert id="taskInsert" parameterType="HashMap">
 	<selectKey resultType="Integer" keyProperty="tuidx" order="AFTER">
 		SELECT tuidx_seq.CURRVAL FROM DUAL
 	</selectKey>
-INSERT INTO onclick_taskupload (TUIDX,TUNAME,TUSTART,TUFIN,TUDATE,TUNOTYN,LIDX,TUCONTENTS,FIDX)
-VALUES (tuidx_seq.nextval,#{tusubject},#{tustart},#{tufin},sysdate,#{tunotyn},#{lidx},#{tucontents},#{fidx})
+INSERT INTO onclick_taskupload (TUIDX,TUNAME,TUSTART,TUFIN,TUDATE,LIDX,TUCONTENTS,FIDX)
+VALUES (tuidx_seq.nextval,#{tusubject},#{tustart},#{tufin},sysdate,#{lidx},#{tucontents},#{fidx})
 </insert>
 
 <insert id="stuTaskDefault" parameterType="Integer">
@@ -80,13 +69,13 @@ SELECT tidx_seq.nextval, SIDX, #{1}  FROM onclick_enroll WHERE lidx=#{0}
 
 <update id="taskModify" parameterType="HashMap">
 UPDATE onclick_taskupload
-SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUCONTENTS=#{tucontents}
 WHERE tuidx=#{tuidx}
 </update>
 
 <update id="taskFileModify" parameterType="HashMap">
 UPDATE onclick_taskupload
-SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}, FIDX=#{fidx}
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUCONTENTS=#{tucontents}, FIDX=#{fidx}
 WHERE tuidx=#{tuidx}
 </update>
 
