@@ -75,10 +75,4 @@ SET cname=#{cname},
 WHERE cidx=#{cidx}
 </update>
 
-<select id="stuClassList" parameterType="Integer" resultType="HashMap">
-SELECT a.sidx as sidx, a.vattendence as vattendence ,b.cname as cname , b.cidx as cidx
-FROM onclick_videoattendence a , onclick_class b
-WHERE a.cidx=b.cidx
-AND sidx=#{0}
-</select>
 </mapper>

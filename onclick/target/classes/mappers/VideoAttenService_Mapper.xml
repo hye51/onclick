@@ -23,5 +23,11 @@ WHERE sidx=#{sidx}
 AND cidx=#{cidx}
 </select>
 
+<select id="stuAttendence" parameterType="Integer" resultType="vd">
+SELECT sidx,cidx,vattendence
+FROM onclick_videoattendence 
+WHERE sidx=#{0}
+</select>
+
 
 </mapper> 

@@ -98,13 +98,13 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-							<% if(session.getAttribute("sidx") != null){ %>
+							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<% } else{ %>
+                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록

@@ -26,6 +26,9 @@ public class ClassController {
 	@Autowired
 	ClassService cs;
 	
+	@Autowired
+	VideoAttenService vs;
+	
 	@RequestMapping(value="/lecUpload.do")
 	public String classWrite() {
 		//교수만 가능한 기능으로 접속계정이 교수인지 확인 필요
@@ -46,22 +49,22 @@ public class ClassController {
 		//교수 강좌리스트 보기
 		ArrayList<ClassVo> alist = cs.classSelect(lidx);
 		model.addAttribute("alist", alist);
-System.out.println("교수 강좌리스트 보기");
+		System.out.println("교수 강좌리스트 보기");
+		
 		return "lecture/proClassList";
 	}
 	
 	@RequestMapping(value="/stuLecList.do")
 	public String stuClassList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
 		//학생 강좌리스트 보기
-		System.out.println("학생 강좌리스트 보기");
 		ArrayList<ClassVo> alist = cs.classSelect(lidx);
 		model.addAttribute("alist", alist);
 		int sidx = (Integer)session.getAttribute("sidx");
 		
 		//강좌 수강 현황
-		HashMap<String, Object> hm = cs.stuClassList(sidx);
-		System.out.println("강좌 수강 현황  : " + hm);
-				
+		ArrayList<VideoAttenDto> stuAttList = vs.stuAttendence(sidx);
+		model.addAttribute("stuAttList", stuAttList);
+		
 		return "lecture/stuClassList";
 	}
 	

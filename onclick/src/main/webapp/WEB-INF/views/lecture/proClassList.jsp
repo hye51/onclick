@@ -4,8 +4,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<%//int sidx =(Integer)session.getAttribute("sidx"); 
-int pidx =(Integer)session.getAttribute("pidx"); %>
+<%int pidx =(Integer)session.getAttribute("pidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -140,13 +139,10 @@ int pidx =(Integer)session.getAttribute("pidx"); %>
 				</div>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
-               	<!-- 학생/교수 계정에 따른 버튼 표시 유무-->
-               	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
 				<nav style="float: right">
 					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
 				</nav>
 				</br>
-				<%} %>
                	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
 				  <%for(int i =1;i<16;i++){ %>

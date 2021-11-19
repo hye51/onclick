@@ -23,7 +23,4 @@ public interface ClassService {
 	//강좌 내용 수정 
 	public int classUpdate(ClassVo cv);
 	
-	//학생 강좌 리스트 
-	public HashMap<String,Object> stuClassList(int sidx);
-	
 }

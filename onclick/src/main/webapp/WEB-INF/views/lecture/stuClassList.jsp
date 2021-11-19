@@ -4,8 +4,8 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
-<%int sidx =(Integer)session.getAttribute("sidx"); 
-//int pidx =(Integer)session.getAttribute("pidx"); %>
+<%ArrayList<VideoAttenDto> stuAttList=(ArrayList<VideoAttenDto>)request.getAttribute("stuAttList"); %>
+<%int sidx =(Integer)session.getAttribute("sidx"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -140,13 +140,10 @@
 				</div>
 				<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
-               	<!-- 학생/교수 계정에 따른 버튼 표시 유무-->
-               	<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null){ %>
 				<nav style="float: right">
 					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							
 				</nav>
 				</br>
-				<%} %>
                	<div class="accordion accordion-flush" style="width:100%">
 				  <div class="accordion-item" style="width:100%">
 				  <%for(int i =1;i<16;i++){ %>
@@ -161,7 +158,13 @@
 				      <div class="accordion-body">
 				      <!-- 교수인지 학생인지 구분 필요 -->
 						<a href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
-						<span> </span>
+						<%for(VideoAttenDto vd : stuAttList){ %>
+							<%if(cv.getCidx() == vd.getCidx()){ %>
+								<%if(vd.getVattendence().equals("Y")){ %>
+									<span class="badge rounded-pill bg-primary">수강 완료</span>
+								<%}%>
+							<%}%>
+						<%}%>
 				      </div>
 					  <%}%>
 				  	<%}%>

@@ -92,14 +92,5 @@ public class ClassServiceImpl implements ClassService{
 		return result;
 	}
 
-	@Override
-	public HashMap<String, Object> stuClassList(int sidx) {
-		////학생 강좌 리스트
-		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
-		HashMap<String, Object> hm = csm.stuClassList(sidx);
-		
-		return hm;
-	}
-	
 
 }
