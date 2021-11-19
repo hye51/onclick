@@ -14,4 +14,7 @@ public interface FileService_Mapper {
 	
 	//파일 삭제
 	public int fileDelete(int fidx);
+	
+	//파일 업로드
+	public int fileInsert(HashMap<String, Object> hm);
 }

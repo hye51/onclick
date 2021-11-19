@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
 <%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv"); %>
 <%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
 <%int tuidx = tv.getTuidx(); %>
+<%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	Date today = new Date(); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -147,13 +151,13 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
 							      	<td colspan="3" style="width:45%">
-							      		<%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %>
+							      		<%=tv.getTustart() %> ~ <%=tv.getTufin() %>
 									</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
 							      	<td style="width:40%">
-							      		<%=tv.getTudate().substring(0, 10) %>
+							      		<%=tv.getTudate() %>
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
 							      	<%
@@ -182,7 +186,9 @@
 							<%if(std.getTsubyn().equals("Y")){ %>
 						      		<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>">제출보기</a></button>
 						    	<%} else { %>
-						    		<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+						    		<%if(std.getTustart().compareTo(dateFormat.format(today))<=0 && std.getTufin().compareTo(dateFormat.format(today))>=0) {%>
+								    	<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
+								    <%}%>
 						   		<%} %>
 							
                     	</div>
@@ -213,13 +219,13 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출기간</td>
 							      	<td colspan="3" >
-							      		<%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %>
+							      		<%=tv.getTustart() %> ~ <%=tv.getTufin() %>
 									</td>
 							    </tr>
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">작성일</td>
 							      	<td colspan="3">
-							      		<%=tv.getTudate().substring(0, 10) %>
+							      		<%=tv.getTudate() %>
 							      	</td>	
 							    </tr>
 							    <tr>

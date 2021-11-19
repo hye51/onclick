@@ -154,8 +154,12 @@
 										for(S_taskDTO std : stlist) {%>
 										<tr>
 											<th scope="row"><%=i++%></th>
-										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=std.getTuidx()%>"><%=std.getTuname() %></a></td>
-										    <td><%=std.getTustart().substring(0, 10) %> ~ <%=std.getTufin().substring(0, 10) %></td>
+											<%if(std.getTufin().compareTo(dateFormat.format(today))<0) {%>
+												<td><%=std.getTuname() %></td>
+											<%} else { %>
+										    	<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=std.getTuidx()%>"><%=std.getTuname() %></a></td>
+										    <%} %>
+										    <td><%=std.getTustart() %> ~ <%=std.getTufin()%></td>
 											<%if(std.getTsubyn().equals("Y")) {%> <!-- 제출했을경우 -->
 											   	<td><%=std.getTdate().substring(0, 10) %></td>
 											    <td style="color:blue"><a href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>">제출</a></td>
@@ -195,8 +199,8 @@
 										<tr>
 											<th scope="row"><%=i++%></th>
 										    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>&lidx=<%=tv.getLidx()%>"><%=tv.getTuname() %></a></td>
-										    <td><%=tv.getTustart().substring(0, 10) %> ~ <%=tv.getTufin().substring(0, 10) %></td>
-										    <td><%=tv.getTudate().substring(0, 10) %></td>
+										    <td><%=tv.getTustart() %> ~ <%=tv.getTufin() %></td>
+										    <td><%=tv.getTudate() %></td>
 										    <%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
 										    	<td style="color:blue">진행</td>
 										    <%} else if(tv.getTustart().compareTo(dateFormat.format(today))> 0){ %>
@@ -234,5 +238,15 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+         
+        var msg = "${msg}";
+        
+        if(msg) {
+    		alert(msg);
+    	}
+        
+        </script>
     </body>
 </html>

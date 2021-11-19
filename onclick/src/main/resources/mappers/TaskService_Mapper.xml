@@ -3,26 +3,58 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.TaskService_Mapper">
 
+<select id="taskDashSelectAll" parameterType="Integer" resultType="tv">
+<![CDATA[SELECT *
+FROM(
+	 SELECT tuidx,
+			tuname,
+			TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
+			TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
+			TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+			tunotyn,
+			tudelyn,
+			lidx,
+			tucontents,
+			fidx
+	 FROM onclick_taskupload
+	 WHERE tudelyn='N'
+	 AND lidx=#{lidx}
+	 ORDER BY tudate DESC
+     )
+WHERE ROWNUM <= 5 ]]>
+</select>
+
 <select id="taskSelectOne" parameterType="Integer" resultType="tv">
-SELECT *
+SELECT tuidx,
+		tuname,
+		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
+		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
+		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+		tunotyn,
+		tudelyn,
+		lidx,
+		tucontents,
+		fidx
 FROM onclick_taskupload
 WHERE tudelyn='N'
 AND tuidx=#{tuidx}
 </select>
 
 <select id="taskSelectAll" parameterType="Integer" resultType="tv">
-SELECT *
+SELECT tuidx,
+		tuname,
+		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
+		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
+		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+		tunotyn,
+		tudelyn,
+		lidx,
+		tucontents,
+		fidx
 FROM onclick_taskupload
 WHERE tudelyn='N'
 AND lidx=#{lidx}
 ORDER BY tudate DESC
-</select>
-
-<select id="taskAll" parameterType="Integer" resultType="tv">
-SELECT * 
-FROM onclick_taskupload
-WHERE tudelyn='N'
-AND lidx=#{lidx}
 </select>
 
 <insert id="taskFileInsert" parameterType="HashMap">
@@ -46,12 +78,6 @@ INSERT INTO onclick_stutask(TIDX, SIDX, TUIDX)
 SELECT tidx_seq.nextval, SIDX, #{1}  FROM onclick_enroll WHERE lidx=#{0}
 </insert>
 
-<update id="taskDelete" parameterType="Integer">
-UPDATE onclick_taskupload
-SET tudelyn='Y'
-WHERE tuidx=#{tuidx}
-</update>
-
 <update id="taskModify" parameterType="HashMap">
 UPDATE onclick_taskupload
 SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}
@@ -67,6 +93,18 @@ WHERE tuidx=#{tuidx}
 <update id="tExFileDelete" parameterType="Integer">
 UPDATE onclick_taskupload
 SET FIDX=null
+WHERE tuidx=#{tuidx}
+</update>
+
+<update id="taskDelete" parameterType="Integer">
+UPDATE onclick_taskupload
+SET tudelyn='Y'
+WHERE tuidx=#{tuidx}
+</update>
+
+<update id="stuTaskDelete" parameterType="Integer">
+UPDATE onclick_stutask
+SET tdelyn='Y'
 WHERE tuidx=#{tuidx}
 </update>
 

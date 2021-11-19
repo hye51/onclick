@@ -145,11 +145,11 @@
 							    <tr>
 							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">제출 시작일</td>
 							      	<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="taskStart" style="border:0; width:100%"></td>
+							      		<input class="form-control" type="date" name="taskStart" style="border:0; width:100%" value="<%=tv.getTustart()%>"></td>
 									</td>
 									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">제출 종료일</td>
 									<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="taskFin" style="border:0; width:100%"></td>
+							      		<input class="form-control" type="date" name="taskFin" style="border:0; width:100%" value="<%=tv.getTufin()%>"></td>
 									</td>
 							    </tr>
 							    <tr>

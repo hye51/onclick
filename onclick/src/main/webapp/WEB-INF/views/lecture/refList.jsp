@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%@ page import="java.util.ArrayList" %>
-
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%ArrayList<RefVO> rlist = (ArrayList<RefVO>)request.getAttribute("rlist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -108,7 +108,7 @@
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -129,22 +129,39 @@
             <div id="layoutSidenav_content">
                <main>
 					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">강의자료 목록</h4>
-						<nav style="float: right">
-							<a class="btn btn-primary" href="<%=request.getContextPath()%>/refUpload.do">자료 업로드</a>							
-						</nav>
 						<div class="card-body mx-auto d-block " style="width:80%">
+						<%if(session.getAttribute("sidx") == null && session.getAttribute("pidx") != null) { %> <!-- 교수일 경우 -->
+							<button type="button" class="btn btn-secondary mb-2" style="float:right" onclick="location.href='<%=request.getContextPath()%>/refWrite.do?lidx=<%=lv.getLidx()%>'">자료 업로드</button>
+						<%} %>	
 							<table class="table text-center">
 								<thead>
 									<tr class="table-secondary">
 										<th style="width:10%">No</th>
-									    <th style="width:30%">제목</th>
+									    <th style="width:45%">제목</th>
 									    <th style="width:30%">작성일</th>
-									    <th style="width:10%">작성자</th>
-									    <th style="width:10%">첨부파일</th>
+									    <th style="width:15%">첨부파일</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<%	int i = 1;
+										for(RefVO rv : rlist) {%>
+										<tr>
+											<th scope="row"><%=i++ %></th>
+											<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/refContent.do?ridx=<%=rv.getRidx()%>"><%=rv.getRname() %></a></td>
+											<td><%=rv.getRdate() %></td>
+											<%if(rv.getFidx() != 0) {%>
+												<td>
+													<button class="btn"  onclick="location.href='<%=request.getContextPath()%>/fileDownload.do?fidx=<%=rv.getFidx()%>'">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="fileIcon" viewBox="0 0 16 16" >
+														  <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+														  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+														</svg></td>
+													</button>
+											<%} else { %>
+												<td></td>
+											<%} %>
+										</tr>
+									<%} %>
 								</tbody>
 							</table>
                         </div>
@@ -170,5 +187,16 @@
         <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+         
+        
+        var msg = "${msg}";
+        
+        if(msg) {
+    		alert(msg);
+    	}
+        
+        </script>
     </body>
 </html>

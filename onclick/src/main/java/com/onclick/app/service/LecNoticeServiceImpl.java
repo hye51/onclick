@@ -56,28 +56,15 @@ public class LecNoticeServiceImpl implements LecNoticeService{
 	@Override
 	public int lecNoticeAndFileInsert(HashMap<String, Object> hm, HashMap<String, Object> lecNoticeFile) {
 		//강의 공지사항 업로드 (파일 O)
-		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
-		int value1 = lnsm.lecNoticeFileInsert(lecNoticeFile);
+		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
+		int value1 = fsm.fileInsert(lecNoticeFile);
 		int fidx = Integer.parseInt(String.valueOf(lecNoticeFile.get("fidx")));
 		
+		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
 		hm.put("fidx", fidx);
 		int value2 = lnsm.lecNoticeInsert(hm);
 		
 		int result = value1 + value2;
-		
-		return result;
-	}
-
-	@Override
-	@Transactional
-	public int lecNotAndFileDelete(int lnidx, int fidx) {
-		//강의 공지사항 & 파일 삭제
-		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
-		int lndel = lnsm.lecNoticeDelete(lnidx);
-		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
-		int fdel = fsm.fileDelete(fidx);
-		
-		int result = lndel + fdel;
 		
 		return result;
 	}
@@ -105,11 +92,13 @@ public class LecNoticeServiceImpl implements LecNoticeService{
 	@Override
 	public int lecNotAndFileModify(HashMap<String, Object> hm, HashMap<String, Object> lecNoticeFile) {
 		//강의 공지사항 수정(파일 O)
-		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
+		FileService_Mapper fsm = sqlSession.getMapper(FileService_Mapper.class);
 		//새로운 파일 insert
-		int value1 = lnsm.lecNoticeFileInsert(lecNoticeFile);
+		int value1 = fsm.fileInsert(lecNoticeFile);
 		//새로운 파일 인덱스 포함해서 수정
 		int fidx = Integer.parseInt(String.valueOf(lecNoticeFile.get("fidx")));
+		
+		LecNoticeService_Mapper lnsm = sqlSession.getMapper(LecNoticeService_Mapper.class);
 		hm.put("fidx", fidx);
 		int value2 = lnsm.lecNotModify(hm);
 		

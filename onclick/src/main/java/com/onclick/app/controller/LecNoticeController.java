@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecNoticeVO;
@@ -33,6 +34,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
+	
 	@RequestMapping(value="/noticeList.do")
 	public String lecNoticeList(@RequestParam("lidx") String lidx, Model model) {
 		//강의 공지사항 목록
@@ -42,6 +44,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 		return "lecture/noticeList";
 	}
 	
+	
 	@RequestMapping(value="/lecNoticeContent.do")
 	public String lecNoticeContents(@RequestParam("lnidx") int lnidx,
 									HttpSession session) {
@@ -49,7 +52,8 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
 		session.setAttribute("lnv", lnv);
 		
-		if((Integer)lnv.getFidx() != null) {
+		//파일 인덱스 있는 경우 FileVO 세션에 담기
+		if((Integer)lnv.getFidx() != null) { 
 			FileVO fv = fs.fileSelectAll(lnv.getFidx());
 			session.setAttribute("fv", fv);
 		}
@@ -70,9 +74,9 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 										@RequestParam("lecNotFile") MultipartFile lnfile,
 										HttpSession session) throws Exception {
 		//과목 공지사항 작성 완료
-		System.out.println("공지사항 작성완료");
 		LecVO lv = (LecVO)session.getAttribute("lv");
 		int lidx = lv.getLidx();
+		
 		String str = null;
 		
 		if(lnfile.isEmpty()) { // 첨부파일 없는 경우 
@@ -81,12 +85,13 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			hm.put("lnsubject", lnsubject);
 			hm.put("lncontents", lncontents);
 			hm.put("lidx", lidx);
-			hm.put("fidx", 0);
+			hm.put("fidx", "");
 			
 			int value = lns.lecNoticeInsert(hm);
+			//insert된 강의 공지사항 인덱스 받아오기
 			int lnidx = Integer.parseInt(String.valueOf(hm.get("lnidx")));
 			
-			if(value == 1) {
+			if(value == 1) { //insert 성공
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNoticeWrite.do";
@@ -101,7 +106,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 			//파일경로
 			String route = uploadPath;
-			
+			//저장된 이름
 			String savedName = UploadFileUtiles.uploadFile(uploadPath, originalFileName, lnfile.getBytes());
 			
 			HashMap<String, Object> lecNoticeFile = new HashMap<String, Object>();
@@ -116,9 +121,10 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			hm.put("lidx", lidx);
 			
 			int value = lns.lecNoticeAndFileInsert(hm, lecNoticeFile);
+			//insert된 강의 공지사항 인덱스 받아오기
 			int lnidx = Integer.parseInt(String.valueOf(hm.get("lnidx")));
 			
-			if(value == 2) {
+			if(value == 2) { //insert 성공
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNoticeWrite.do";
@@ -131,7 +137,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	
 	@RequestMapping(value="/lecNotModify.do")
 	public String lecNoticeModify(@RequestParam("lnidx") int lnidx, HttpSession session) {
-		//공지사항 수정
+		//공지사항 수정 화면
 		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
 		session.setAttribute("lnv", lnv);
 		
@@ -157,7 +163,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			
 			int value = lns.lecNotModify(hm);
 			
-			if(value == 1) {
+			if(value == 1) { //수정 완료
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNotModify.do?lnidx="+lnidx;
@@ -172,7 +178,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 			//파일경로
 			String route = uploadPath;
-			
+			//저장된 이름
 			String savedName = UploadFileUtiles.uploadFile(uploadPath, originalFileName, lnfile.getBytes());
 			
 			HashMap<String, Object> lecNoticeFile = new HashMap<String, Object>();
@@ -188,7 +194,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			
 			int value = lns.lecNotAndFileModify(hm, lecNoticeFile);
 			
-			if(value == 2) {
+			if(value == 2) { //수정 완료
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNotModify.do?lnidx="+lnidx;
@@ -199,9 +205,8 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	}
 	
 	@RequestMapping(value="/lecNotDeleteAction.do")
-	public String lecNoticeDelete(HttpSession session) {
+	public String lecNoticeDelete(HttpSession session, RedirectAttributes rttr) {
 		//공지사항 삭제
-		
 		LecVO lv = (LecVO)session.getAttribute("lv");
 		int lidx = lv.getLidx();
 		LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv");
@@ -209,26 +214,15 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 		
 		String str = "";
 		
+		int value = lns.lecNoticeDelete(lnidx);
 		
-		if(lnv.getFidx() != 0) { //파일 있을 경우 파일도 같이 삭제
-			int fidx = lnv.getFidx();
-			int value = lns.lecNotAndFileDelete(lnidx, fidx);
-			
-			if(value==2) {
-				str="redirect:/noticeList.do?lidx="+lidx;
-			} else {
-				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
-			}
-			
-		} else { //파일 없을 경우 과제만 삭제
-			int value = lns.lecNoticeDelete(lnidx);
-			
-			if(value==1) {
-				str="redirect:/noticeList.do?lidx="+lidx;
-			} else {
+		if(value==1) {
+			rttr.addFlashAttribute("msg", "삭제되었습니다.");
+			str="redirect:/noticeList.do?lidx="+lidx;
+		} else {
 			str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
-			}
 		}
+		
 		
 		return str;
 	}
@@ -239,8 +233,6 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 										@RequestParam("lnidx") int lnidx) {
 		//수정페이지에서 파일 삭제버튼 눌렀을 때(ajax)
 		int value = lns.lnExFileDelete(lnidx, fidx);
-		
-		System.out.println("lnexdel:"+value);
 		
 		HashMap<String,Object> hm = new HashMap<String,Object>();
 		hm.put("value",value);

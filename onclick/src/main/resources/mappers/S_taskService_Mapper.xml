@@ -55,20 +55,15 @@ AND tuidx=#{1}
 </select>
 
 <select id="stuTask" parameterType="Integer" resultType="std">
-SELECT a.*, b.tuname, b.tustart, b.tufin
-FROM onclick_stutask a
-JOIN onclick_taskupload b
-ON a.tuidx = b.tuidx
-WHERE b.tudelyn='N'
+SELECT a.*, b.tuname, 
+		TO_CHAR(b.tustart, 'YYYY-MM-DD') as tustart, 
+		TO_CHAR(b.tufin, 'YYYY-MM-DD') as tufin
+FROM onclick_stutask a, onclick_taskupload b
+WHERE a.tuidx = b.tuidx
+AND b.tudelyn='N'
 AND a.sidx=#{sidx}
 ORDER BY b.tudate DESC
 </select>
-
-<update id="s_taskDelete" parameterType="Integer">
-UPDATE onclick_stutask
-SET tdelyn='Y', tsubyn='N', tsubject='', tdate='', tcontents=''
-WHERE tidx=#{tidx}
-</update>
 
 <update id="stuExFileDelete" parameterType="Integer">
 UPDATE onclick_stutask

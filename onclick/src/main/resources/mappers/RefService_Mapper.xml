@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.RefService_Mapper">
+
+<select id="refSelectAll" parameterType="Integer" resultType="rv">
+SELECT ridx,
+		rname,
+		TO_CHAR(rdate, 'YYYY-MM-DD') rdate,
+		rdelyn,
+		lidx,
+		rcontents,
+		fidx
+FROM onclick_refupload
+WHERE rdelyn='N'
+AND lidx=#{lidx}
+ORDER BY rdate DESC
+</select>
+
+<insert id="refInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER">
+		SELECT ridx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_refupload (RIDX,RNAME,RDATE,LIDX,RCONTENTS,FIDX)
+VALUES (ridx_seq.nextval, #{rname}, sysdate, #{lidx}, #{rcontents}, #{fidx})
+</insert>
+
+<select id="refSelectOne" parameterType="Integer" resultType="rv">
+SELECT ridx,
+		rname,
+		TO_CHAR(rdate, 'YYYY-MM-DD') rdate,
+		rdelyn,
+		lidx,
+		rcontents,
+		fidx
+FROM onclick_refupload
+WHERE rdelyn='N'
+AND ridx=#{ridx}
+</select>
+
+<update id="refModify" parameterType="HashMap">
+UPDATE onclick_refupload
+SET RNAME=#{rname}, RCONTENTS=#{rcontents}
+WHERE ridx=#{ridx}
+</update>
+
+<update id="refAndFileModify" parameterType="HashMap">
+UPDATE onclick_refupload
+SET RNAME=#{rname}, RCONTENTS=#{rcontents}, FIDX=#{fidx}
+WHERE ridx=#{ridx}
+</update>
+
+<update id="rExFileDelete" parameterType="Integer">
+UPDATE onclick_refupload
+SET FIDX=null
+WHERE ridx=#{ridx}
+</update>
+
+<update id="refDelete" parameterType="Integer">
+UPDATE onclick_refupload
+SET rdelyn='Y'
+WHERE ridx=#{ridx}
+</update>
+
+</mapper>
