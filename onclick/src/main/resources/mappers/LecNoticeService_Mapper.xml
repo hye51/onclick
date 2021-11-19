@@ -41,7 +41,13 @@ VALUES(lnidx_seq.nextval,#{lnsubject},#{lncontents},sysdate,#{lidx},#{fidx})
 
 <update id="lecNotModify" parameterType="HashMap">
 UPDATE onclick_lecnotice
-SET LNSUBJECT=#{lnsubject},LNCONTENTS=#{lncontents},LNDATE=sysdate ,FIDX=#{fidx}
+SET LNSUBJECT=#{lnsubject},LNCONTENTS=#{lncontents}
+WHERE lnidx=#{lnidx}
+</update>
+
+<update id="lecNotAndFileModify" parameterType="HashMap">
+UPDATE onclick_lecnotice
+SET LNSUBJECT=#{lnsubject},LNCONTENTS=#{lncontents}, FIDX=#{fidx}
 WHERE lnidx=#{lnidx}
 </update>
 

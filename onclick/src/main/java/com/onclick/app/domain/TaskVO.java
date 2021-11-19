@@ -7,7 +7,6 @@ public class TaskVO { //교수님 과제 업로드
 	private String tustart; //제출 시작일
 	private String tufin; //제출 종료일
 	private String tudate; //작성일
-	private String tunotyn; //알림 여부
 	private String tudelyn;
 	private int lidx; //강의고유번호
 	private String tucontents; //과제 내용
@@ -54,12 +53,6 @@ public class TaskVO { //교수님 과제 업로드
 	}
 	public void setTudate(String tudate) {
 		this.tudate = tudate;
-	}
-	public String getTunotyn() {
-		return tunotyn;
-	}
-	public void setTunotyn(String tunotyn) {
-		this.tunotyn = tunotyn;
 	}
 	public String getTudelyn() {
 		return tudelyn;

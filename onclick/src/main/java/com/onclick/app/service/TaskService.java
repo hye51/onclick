@@ -17,9 +17,6 @@ public interface TaskService { //교수 과제
 	//과제 목록
 	public ArrayList<TaskVO> taskSelectAll(int lidx);
 	
-//	//과제 세션에 담기
-//	public TaskVO taskAll(int lidx);
-	
 	//과제 & 파일 업로드
 	public int taskAndFileInsert(HashMap<String,Object> hm,HashMap<String, Object> hmFile, int lidx);
 	

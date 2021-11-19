@@ -22,6 +22,9 @@ public interface LecNoticeService_Mapper {
 	//강의 공지사항 수정 (파일 X)
 	public int lecNotModify(HashMap<String, Object> hm);
 	
+	//강의 공지사항 수정 (파일 ))
+	public int lecNotAndFileModify(HashMap<String, Object> hm);
+	
 	//강의 공지사항 수정 - 파일 인덱스 삭제
 	public int lnExFileDelete(int lnidx);
 	

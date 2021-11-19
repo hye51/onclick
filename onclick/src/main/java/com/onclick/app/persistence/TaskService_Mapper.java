@@ -17,12 +17,6 @@ public interface TaskService_Mapper {
 	//과제 목록
 	public ArrayList<TaskVO> taskSelectAll(int lidx);
 	
-//	//과제 세션에 담기
-//	public TaskVO taskAll(int lidx);
-	
-	//과제 파일 업로드
-	public int taskFileInsert(HashMap<String,Object> hmFile);
-	
 	//과제 내용 업로드
 	public int taskInsert(HashMap<String,Object> hm);
 	
