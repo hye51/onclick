@@ -20,7 +20,7 @@ public class ClassServiceImpl implements ClassService{
 	
 	@Transactional
 	@Override
-	public int classInsert(ClassVo cv) {
+	public HashMap<String,Object> classInsert(ClassVo cv) {
 		//강좌 업로드
 		HashMap<String,Object> hm = new HashMap<String,Object>();
 		hm.put("cname", cv.getCname());
@@ -42,7 +42,11 @@ public class ClassServiceImpl implements ClassService{
 		//강의를 듣는 모든학생 insert 
 		int cnt = csm.stuVideoDefault(cidx, cv.getLidx());
 
-		return result;
+		HashMap<String,Object> value = new HashMap<String,Object>();
+		value.put("result", result);
+		value.put("cidx", cidx);
+		
+		return value;
 	}
 
 	@Override

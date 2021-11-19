@@ -19,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.NoticeVO;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.StudentService;
 import com.onclick.app.domain.TaskVO;
 
@@ -28,6 +30,9 @@ public class StudentController {
 
 	@Autowired
 	StudentService ss;
+	
+	@Autowired
+	NoticeService ns;
 	
 	@ResponseBody
 	@RequestMapping(value="/student/idCheck.do")
@@ -79,7 +84,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/student/stuDashBoard.do")
-	public String DashBoard(@RequestParam("sidx") String sidx, Model model) {
+	public String DashBoard(@RequestParam("sidx") String sidx, Model model, HttpSession session) {
 		//학생 대시보드 이동 
 		//강의 이름 가져오기(대시보드-강의목록)
 		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(Integer.parseInt(sidx));
@@ -89,6 +94,10 @@ public class StudentController {
 		ArrayList<TaskVO> stuTaskList = ss.stuTaskSelectAll(Integer.parseInt(sidx));
 		model.addAttribute("stuTaskList", stuTaskList);
 		
+		//알림 조회
+		ArrayList<NoticeVO> alarm = ns.alarmList(Integer.parseInt(sidx));
+		session.setAttribute("alarm", alarm);
+
 		return "/student/stuDashBoard";
 	}
 

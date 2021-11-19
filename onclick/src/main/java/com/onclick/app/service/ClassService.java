@@ -9,7 +9,7 @@ import com.onclick.app.domain.ClassVo;
 public interface ClassService {
 
 	//강좌 작성 
-	public int classInsert(ClassVo cv);
+	public HashMap<String,Object> classInsert(ClassVo cv);
 	
 	//강좌 리스트
 	public ArrayList<ClassVo> classSelect(int lidx);

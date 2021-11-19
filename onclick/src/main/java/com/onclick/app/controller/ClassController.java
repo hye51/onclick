@@ -18,6 +18,7 @@ import com.onclick.app.domain.StudentVO;
 import com.onclick.app.domain.VideoAttenDto;
 import com.onclick.app.service.ClassService;
 import com.onclick.app.service.EnrollService;
+import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.VideoAttenService;
 
 @Controller
@@ -29,6 +30,9 @@ public class ClassController {
 	@Autowired
 	VideoAttenService vs;
 	
+	@Autowired
+	NoticeService ns;
+	
 	@RequestMapping(value="/lecUpload.do")
 	public String classWrite() {
 		//교수만 가능한 기능으로 접속계정이 교수인지 확인 필요
@@ -37,10 +41,14 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="/lecUploadAction.do")
-	public String classWriteAction(ClassVo cv) {
+	public String classWriteAction(ClassVo cv,HttpSession session) {
 		//강좌업로드 실행
-		int result = cs.classInsert(cv);
-	
+		HashMap<String,Object> value = cs.classInsert(cv);
+		
+		String pname= (String)session.getAttribute("pname");
+		int cidx = (Integer)value.get("cidx");
+		int cnt = ns.alarmClassInsert(cv.getLidx(),cidx,pname);
+		
 		return "redirect:/proLecList.do?lidx="+cv.getLidx();
 	}
 
@@ -92,7 +100,7 @@ public class ClassController {
 		//강좌내용 수정 실행
 		int result = cs.classUpdate(cv);
 
-		return "redirect:/lecList.do?lidx="+cv.getLidx();
+		return "redirect:/proLecList.do?lidx="+cv.getLidx();
 	}
 	
 	@RequestMapping(value="/classDelete.do")
@@ -105,7 +113,7 @@ public class ClassController {
 		String location = "";
 		if(result == 1) {
 			rttr.addFlashAttribute("deleteOk", "삭제하였습니다.");
-			location="redirect:/lecList.do?lidx="+lidx;
+			location="redirect:/proLecList.do?lidx="+lidx;
 		}else {
 			rttr.addFlashAttribute("deleteNok", "삭제에 실패하였습니다.");
 			location="redirect:/proLecContent.do?cidx="+cidx+"&pidx="+session.getAttribute("pidx");

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.NoticeService_Mapper">
+
+<insert id="alarmClassInsert" parameterType="HashMap">
+INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,cidx)
+SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{cidx} 
+FROM onclick_enroll
+WHERE lidx=#{lidx}
+</insert>
+
+<select id="alarmList" parameterType="Integer" resultType="nv">
+SELECT * 
+FROM onclick_notice
+WHERE sidx=#{0}
+</select>
+
+</mapper> 

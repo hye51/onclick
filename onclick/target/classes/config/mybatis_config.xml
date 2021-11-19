@@ -13,6 +13,7 @@
  <typeAlias alias="fv" type="com.onclick.app.domain.FileVO"/>
  <typeAlias alias="vd" type="com.onclick.app.domain.VideoAttenDto"/>
  <typeAlias alias="cv" type="com.onclick.app.domain.ClassVo"/>
-  <typeAlias alias="rv" type="com.onclick.app.domain.RefVO"/>
+ <typeAlias alias="rv" type="com.onclick.app.domain.RefVO"/>
+ <typeAlias alias="nv" type="com.onclick.app.domain.NoticeVO"/>
  </typeAliases>  
  </configuration>

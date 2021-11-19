@@ -5,6 +5,7 @@
 <%@ page import="com.onclick.app.domain.*" %>
 <%ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList"); %>
 <%ArrayList<TaskVO> stuTaskList = (ArrayList<TaskVO>)request.getAttribute("stuTaskList"); %>
+<%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,17 +47,44 @@
 				<!-- Dropdown - Alerts -->
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				<h6 class="dropdown-header">Alerts</h6>
+				<!-- 알림 내용 표시 -->
+				<%for(NoticeVO nv : alarm){ %>
 				<a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-secondary">
-                           <img src="../app/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+				
+						<%if(nv.getCidx()!=0){ %>
+							<div class="mr-3">
+		                        <div class="icon-circle bg-primary">
+		                            <i class="fas fa-file-alt text-white"></i>
+		                        </div>
+	                    	</div>
+						<div>
+                        <div class="small text-gray-500">강좌</div>
+                    	<% }else if(nv.getLnidx()!=0){%>
+	                    	<div class="mr-3">
+		                        <div class="icon-circle bg-success">
+		                            <i class="bi bi-camera-reels-fill text-white "></i>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels-fill text-white" viewBox="0 0 16 16">
+									<path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+									<path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+									<path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z"/>
+									</svg>
+	                        	</div>
+	                    	</div>
+						<div>
+                    	 <div class="small text-gray-500">공지사항</div>
+                    	<% }else if(nv.getTuidx()!=0){%>
+	                    	<div class="mr-3">
+		                        <div class="icon-circle bg-warning">
+		                           <i class="fas fa-file-alt text-white"></i>
+		                        </div>
+	                    	</div>
+						<div>
+                    	<div class="small text-gray-500">과제</div>
+                    	<% }%>
+                        <span class="font-weight-bold"><%=nv.getNcontents() %></span>
                     </div>
                 </a>
+                <%} %>
 				</ul>     
 			</div>
             <!-- Navbar-->
@@ -216,5 +244,46 @@
         <script type="text/javascript">
         
         </script>
+        <style>
+        .icon-circle {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bg-primary {
+    background-color: #4e73df!important;
+}
+.bg-success {
+    background-color: #1cc88a!important; 
+}
+.bg-warning {
+    background-color: #f6c23e!important;
+}
+.text-white {
+    color: #fff!important;
+}
+.dropdown-header {
+    background-color: #4e73df;
+    border: 1px solid #4e73df;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #fff;
+}
+.dropdown-header {
+    font-weight: 800;
+    font-size: .65rem;
+    color: #b7b9cc;
+    text-transform: uppercase!important;
+}
+
+.d-flex {
+    display: flex!important;
+}
+
+
+        </style>
     </body>
 </html>
