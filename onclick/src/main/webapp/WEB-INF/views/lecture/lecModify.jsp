@@ -35,8 +35,8 @@
 				 </button>
 					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					 </ul>
-				  </div>
-				 </div>	
+				  </div>              
+	          </div>
             </form>
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->

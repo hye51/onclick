@@ -1,6 +1,7 @@
 package com.onclick.app.service;
 
 import com.onclick.app.domain.ProfessorVO;
+import com.onclick.app.domain.StudentVO;
 
 public interface ProfessorService {
 
@@ -21,4 +22,5 @@ public interface ProfessorService {
 
 	//교수 정보 보기 
 	public ProfessorVO proInfo(int pidx);
+	
 }

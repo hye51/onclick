@@ -106,6 +106,12 @@
 	        	alert(msg);
 	        }
 	        
+	        var msg = '${logout}';
+	        if(msg != ""){
+	        	//로그아웃 알림창
+	        	alert(msg);
+	        }
+	        
 	        var msg = '${joinOk}';
 	        if(msg != ""){
 	        	//회원가입 성공시 알림창

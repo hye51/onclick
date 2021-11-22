@@ -62,8 +62,11 @@ public class StudentController {
 		//학생 로그인 후 대시보드 이동
 		String str = "";
 		StudentVO sv = ss.studentLogin(sidx, spwd);
-		
+
 		//학번 세션에 저장 
+		System.out.println("sv"+sv);
+		
+		//학번 세션에 저장 ( 인터셉터에서 처리 )
 		//session.setAttribute("sidx", sidx);
 		
 		if(sv != null) { 
@@ -150,11 +153,6 @@ public class StudentController {
 	}
 
 /*	
-	@RequestMapping(value="/.do")
-	public String studentLogout() {
-		//학생 로그아웃
-		return null;
-	}
 	
 	@RequestMapping(value="/.do")
 	public String studentIdCheck() {

@@ -2,6 +2,7 @@ package com.onclick.app.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class ProfessorController {
 	}
 	@RequestMapping(value="/professor/pwdCheck.do")
 	public String professorpwdCheck() {
-		//학생 정보수정 - 비밀번호 확인 페이지
+		//교수 정보수정 - 비밀번호 확인 페이지
 		return "/professor/pwdCheck";
 	}
 	
@@ -112,14 +113,14 @@ public class ProfessorController {
 		return cnt;
 	}
 	
-
-	@RequestMapping(value="/professor/proInfo.do")
-	public String professorInfo(@RequestParam("pidx") int pidx,Model model) {
-		//교수정보 보기
+	@RequestMapping(value="/professor/proModify.do")
+	public String professorModifyAction(HttpSession session, HttpServletRequest request) {
+		//교수 정보 수정화면 이동
+		int pidx = (Integer)session.getAttribute("pidx");
 		ProfessorVO pv = ps.proInfo(pidx);
-		model.addAttribute("pv", pv);
+		request.setAttribute("pv", pv);
 
-		return "professor/proInfo";
+		return "/professor/proModify";
 	}
 	
 	@RequestMapping(value="/professor/proModifyAction.do")
@@ -135,6 +136,16 @@ public class ProfessorController {
 		String pphone = pphone1 + "-" + pphone2 + "-" +pphone3;
 		
 		return "redirect:/professor/pwdCheck.do";
+	}
+	
+
+	@RequestMapping(value="/professor/proInfo.do")
+	public String professorInfo(@RequestParam("pidx") int pidx,Model model) {
+		//교수정보 보기
+		ProfessorVO pv = ps.proInfo(pidx);
+		model.addAttribute("pv", pv);
+
+		return "professor/proInfo";
 	}
 	
 	

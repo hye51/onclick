@@ -67,13 +67,13 @@
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		       <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
+		          <a class="nav-link" href="#">My page</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
+		          <a class="nav-link" href="#">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>

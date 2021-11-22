@@ -70,15 +70,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 	
 	@Override
-	public ProfessorVO proInfo(int pidx) {
-		//교수 정보 보기 
-		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
-		ProfessorVO pv  = psm.proInfo(pidx);
-		
-		return pv;
-	}
-	
-	@Override
 	public int professorModifyAction(int pidx, String ppwd) {
 		//교수 정보 수정 
 		HashMap<String,Object> hm = new HashMap<String,Object>();
@@ -89,6 +80,15 @@ public class ProfessorServiceImpl implements ProfessorService {
 		int cnt = psm.professorModifyAction(hm);
 		
 		return cnt;
+	}
+	
+	@Override
+	public ProfessorVO proInfo(int pidx) {
+		//교수 정보 보기 
+		ProfessorService_Mapper psm = sqlSession.getMapper(ProfessorService_Mapper.class);
+		ProfessorVO pv  = psm.proInfo(pidx);
+		
+		return pv;
 	}
 	
 	
