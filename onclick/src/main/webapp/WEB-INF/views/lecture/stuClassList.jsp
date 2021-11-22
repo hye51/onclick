@@ -78,7 +78,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/home.png">
+						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
 							<%=lv.getLname() %>
 						</div>
                         <div class="nav">

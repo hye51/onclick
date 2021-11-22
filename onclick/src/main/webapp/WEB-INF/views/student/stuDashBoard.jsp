@@ -16,7 +16,7 @@
         <meta name="author" content="" />
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>   
     </head>
     <body class="sb-nav-fixed">
@@ -49,37 +49,49 @@
 				<h6 class="dropdown-header">Alerts</h6>
 				<!-- 알림 내용 표시 -->
 				<%for(NoticeVO nv : alarm){ %>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-				
 						<%if(nv.getCidx()!=0){ %>
+						<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
 							<div class="mr-3">
 		                        <div class="icon-circle bg-primary">
-		                            <i class="fas fa-file-alt text-white"></i>
-		                        </div>
-	                    	</div>
-						<div>
-                        <div class="small text-gray-500">강좌</div>
-                    	<% }else if(nv.getLnidx()!=0){%>
-	                    	<div class="mr-3">
-		                        <div class="icon-circle bg-success">
-		                            <i class="bi bi-camera-reels-fill text-white "></i>
+		                        	<i class="bi bi-camera-reels-fill text-white "></i>
 		                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels-fill text-white" viewBox="0 0 16 16">
 									<path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
 									<path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
 									<path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z"/>
 									</svg>
+		                        </div>
+	                    	</div>
+						<div>
+                        <div class="small text-gray-500">강좌
+                        	<%if(nv.getNcheck().equals("N")){ %>
+                        	 <span style="float:right;">안읽음</span>
+                        	 <%} %>
+                         </div>
+                    	<% }else if(nv.getLnidx()!=0){%>
+                    	<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
+	                    	<div class="mr-3">
+		                        <div class="icon-circle bg-success">
+		                              <i class="fas fa-file-alt text-white"></i>
 	                        	</div>
 	                    	</div>
 						<div>
-                    	 <div class="small text-gray-500">공지사항</div>
+                    	 <div class="small text-gray-500">공지사항
+                    	 	<%if(nv.getNcheck().equals("N")){ %>
+                        	 <span style="float:right;">안읽음</span>
+                        	 <%} %>
+                    	  </div>
                     	<% }else if(nv.getTuidx()!=0){%>
+                    	<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
 	                    	<div class="mr-3">
 		                        <div class="icon-circle bg-warning">
 		                           <i class="fas fa-file-alt text-white"></i>
 		                        </div>
 	                    	</div>
 						<div>
-                    	<div class="small text-gray-500">과제</div>
+                    	<div class="small text-gray-500">과제
+                    	 <%if(nv.getNcheck().equals("N")){ %>
+                        	 <span style="float:right;">안읽음</span></div>
+                        	 <%} %>
                     	<% }%>
                         <span class="font-weight-bold"><%=nv.getNcontents() %></span>
                     </div>
@@ -105,7 +117,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/user.png">
+						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/user.png">
 							홍길동님
 						</div>
                         <div class="nav">
@@ -215,9 +227,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        
+                        </div>  
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -235,12 +245,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
         <script type="text/javascript">
         
         </script>

@@ -49,6 +49,8 @@ public class NoticeServiceImpl implements NoticeService{
 		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
 		ArrayList<NoticeVO> alarm = nsm.alarmList(sidx);
 		
+		//알림 개수 
+		
 		return alarm;
 	}
 
