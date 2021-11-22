@@ -59,7 +59,7 @@ public class NoticeServiceImpl implements NoticeService{
 		//알림 상태 읽음으로 변경
 		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
 		int result=nsm.alarmUpdate(nidx);
-		
+		System.out.println(result);
 		return result;
 	}
 

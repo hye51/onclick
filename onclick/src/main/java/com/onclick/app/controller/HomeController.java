@@ -78,6 +78,7 @@ public class HomeController {
 	@RequestMapping(value="/alarmUpdate.do")
 	public int alarmUpdate(@RequestParam("nidx") int nidx) {
 		//알림 읽음표시 
+		System.out.println("nidx : " + nidx);
 		int cnt=ns.alarmUpdate(nidx);
 		
 		return cnt;
@@ -87,7 +88,6 @@ public class HomeController {
 	@RequestMapping(value="/alarmSelect.do")
 	public ArrayList<NoticeVO> alarmSelect(@RequestParam("sidx") int sidx) {
 		//알림 조회
-		System.out.println("ddddddddd : "  + sidx );
 		ArrayList<NoticeVO> data = ns.alarmList(sidx);
 
 		return data;
