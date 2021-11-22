@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.onclick.app.domain.ClassVo;
+import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.VideoAttenDto;
 import com.onclick.app.service.ClassService;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.VideoAttenService;
 
 @Controller
@@ -22,6 +24,9 @@ public class VideoAttenController {
 	
 	@Autowired
 	ClassService cs;
+	
+	@Autowired
+	LecService ls;
 	
 	/*
 	
@@ -60,12 +65,17 @@ public class VideoAttenController {
 	 */
 
 	@RequestMapping(value="/stuLecContent.do")
-	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model) {
+	public String lecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model,HttpSession session) {
 		//학생 동영상 출석 화면
 		//강의정보
 		ClassVo cv = cs.classSelectOne(cidx);
 		model.addAttribute("cv", cv);
+		int lidx = cv.getLidx();
 		
+		//해당 과목 정보 가져오기(알림으로 넘어온 경우)
+		LecVO lv = ls.lecSelectOne(lidx);
+		session.setAttribute("lv", lv);
+				
 		//이전 시청기록 
 		VideoAttenDto vd = vs.videoSelectOne(sidx, cidx);
 		model.addAttribute("vd", vd);

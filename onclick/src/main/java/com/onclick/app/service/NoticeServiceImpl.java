@@ -54,4 +54,13 @@ public class NoticeServiceImpl implements NoticeService{
 		return alarm;
 	}
 
+	@Override
+	public int alarmUpdate(int nidx) {
+		//알림 상태 읽음으로 변경
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmUpdate(nidx);
+		
+		return result;
+	}
+
 }

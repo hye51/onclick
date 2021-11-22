@@ -39,64 +39,19 @@
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
           	<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				<a id="alarmList"  class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fas fa-bell fa-fw"></i>
 				    <!-- Counter - Alerts -->
 				    <span class="badge badge-danger badge-counter">3+</span>
 				</a>
 				<!-- Dropdown - Alerts -->
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<ul id="alr" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				<h6 class="dropdown-header">Alerts</h6>
 				<!-- 알림 내용 표시 -->
-				<%for(NoticeVO nv : alarm){ %>
-						<%if(nv.getCidx()!=0){ %>
-						<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
-							<div class="mr-3">
-		                        <div class="icon-circle bg-primary">
-		                        	<i class="bi bi-camera-reels-fill text-white "></i>
-		                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels-fill text-white" viewBox="0 0 16 16">
-									<path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-									<path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-									<path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z"/>
-									</svg>
-		                        </div>
-	                    	</div>
-						<div>
-                        <div class="small text-gray-500">강좌
-                        	<%if(nv.getNcheck().equals("N")){ %>
-                        	 <span style="float:right;">안읽음</span>
-                        	 <%} %>
-                         </div>
-                    	<% }else if(nv.getLnidx()!=0){%>
-                    	<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
-	                    	<div class="mr-3">
-		                        <div class="icon-circle bg-success">
-		                              <i class="fas fa-file-alt text-white"></i>
-	                        	</div>
-	                    	</div>
-						<div>
-                    	 <div class="small text-gray-500">공지사항
-                    	 	<%if(nv.getNcheck().equals("N")){ %>
-                        	 <span style="float:right;">안읽음</span>
-                        	 <%} %>
-                    	  </div>
-                    	<% }else if(nv.getTuidx()!=0){%>
-                    	<a class="dropdown-item d-flex align-items-center list-group-item-action list-group-item" href="#">
-	                    	<div class="mr-3">
-		                        <div class="icon-circle bg-warning">
-		                           <i class="fas fa-file-alt text-white"></i>
-		                        </div>
-	                    	</div>
-						<div>
-                    	<div class="small text-gray-500">과제
-                    	 <%if(nv.getNcheck().equals("N")){ %>
-                        	 <span style="float:right;">안읽음</span></div>
-                        	 <%} %>
-                    	<% }%>
-                        <span class="font-weight-bold"><%=nv.getNcontents() %></span>
-                    </div>
-                </a>
-                <%} %>
+				
+				
+				
+				
 				</ul>     
 			</div>
             <!-- Navbar-->
@@ -251,8 +206,120 @@
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+        <!-- jquery 3.3.1 라이브러리 활용 -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
+        //알림클릭시 읽음로 표시 
+         $('#alarm').click(function(){
+        	 var nidx= $('#nidx').val();
+        	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+	        			
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.");
+	        		}
+	        	});
+        });
         
+         $('#alarmList').click(function(){
+        var sidx = <%=session.getAttribute("sidx")%>;
+        var str;
+		var tstr="";
+         $.ajax({
+ 			type : "GET",
+ 			url : "<%=request.getContextPath() %>/alarmSelect.do",
+ 			dataType : "json",
+ 			data : { "sidx" : sidx 
+ 					},
+ 			cache : false,
+ 			error : function(){
+ 				alert("error 입니다 :");
+ 			},
+ 			success : function(data){
+ 						if(data.length == 0){
+ 							alert("알림이 존재하지 않습니다");
+ 						}else {
+ 							$.each (data, function (index, nv) {
+								
+								alert(nckeck)
+ 								if(nv.cidx!=0){
+									//강좌인 경우
+										str="<a id ='alarm' class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' href='<%=request.getContextPath()%>/stuLecContent.do?sidx="+sidx+">"
+	 									  	+"<div class='mr-3'>"
+	 			                        		+"<div class='icon-circle bg-primary'>"
+					                        		+"<i class='bi bi-camera-reels-fill text-white '></i>"
+					                           		+"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-camera-reels-fill text-white' viewBox='0 0 16 16'>"
+													+"<path d='M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>"
+													+"<path d='M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'/>"
+													+"<path d='M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z'/>"
+												+"</svg>"
+			                        			+"</div>"
+			                        		+"</div>"
+			                        		+"<div>"
+			                        		+"<div class='small text-gray-500'>강좌"
+			                        		if(nv.ncheck=='N'){
+			                        			+"<span style='float:right;'>안읽음</span></div>"
+			                        		}else{
+			                        			+"<span style='float:right;'>읽음</span></div>"
+			                        		}
+			                        		+"</div>"
+			                        		+"<span class='font-weight-bold'>"+nv.ncontents +"</span>"
+			                        		+"</a>";
+										tstr = tstr+str;
+									}else if(nv.tuidx!=0){
+									//과제인 경우
+										str="<a id ='alarm' class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' href='<%=request.getContextPath()%>/stuLecContent.do?sidx="+sidx+">"
+ 									  	+"<div class='mr-3'>"
+ 			                        		+"<div class='icon-circle bg-success'>"
+				                        		+"<i class='fas fa-file-alt text-white'></i>"
+		                        			+"</div>"
+		                        		+"</div>"
+		                        		+"<div>"
+		                        		+"<div class='small text-gray-500'>과제"
+		                        		if(nv.ncheck=='N'){
+		                        			+"<span style='float:right;'>안읽음</span></div>"
+		                        		}else{
+		                        			+"<span style='float:right;'>읽음</span></div>"
+		                        		}
+		                        		+"</div>"
+		                        		+"<span class='font-weight-bold'>"+nv.ncontents +"</span>"
+		                        		+"</a>";
+		                        		tstr = tstr+str;
+									}else if(nv.lnidx!=0){
+									//공지사항인 경우
+										str="<a id ='alarm' class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' href='<%=request.getContextPath()%>/stuLecContent.do?sidx="+sidx+">"
+ 									  	+"<div class='mr-3'>"
+ 			                        		+"<div class='icon-circle bg-warning'>"
+				                        		+"<i class='fas fa-file-alt text-white'></i>"
+		                        			+"</div>"
+		                        		+"</div>"
+		                        		+"<div>"
+		                        		+"<div class='small text-gray-500'>공지사항"
+		                        		if(nv.ncheck=='N'){
+		                        			+"<span style='float:right;'>안읽음</span></div>"
+		                        		}else{
+		                        			+"<span style='float:right;'>읽음</span></div>"
+		                        		}
+		                        		+"</div>"
+		                        		+"<span class='font-weight-bold'>"+nv.ncontents +"</span>"
+		                        		+"</a>";
+		                        		tstr = tstr+str;
+									}
+							
+		                        
+ 								
+ 								});
+ 		
+ 								$("#alr").html(tstr);	
+ 							} 
+ 					}
+
+ 			});	
+         });
         </script>
         <style>
         .icon-circle {

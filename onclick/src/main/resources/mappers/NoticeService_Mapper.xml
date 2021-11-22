@@ -16,4 +16,10 @@ FROM onclick_notice
 WHERE sidx=#{0}
 </select>
 
+<update id="alarmUpdate" parameterType="Integer">
+UPDATE onclick_notice
+SET ncheck='Y' 
+WHERE nidx=#{0}
+</update>
+
 </mapper> 

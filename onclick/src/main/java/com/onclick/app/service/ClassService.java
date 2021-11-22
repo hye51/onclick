@@ -23,4 +23,6 @@ public interface ClassService {
 	//강좌 내용 수정 
 	public int classUpdate(ClassVo cv);
 	
+	
+	
 }

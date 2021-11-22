@@ -19,4 +19,7 @@ public interface NoticeService_Mapper {
 	//알림 조회 
 	public ArrayList<NoticeVO> alarmList(int sidx);
 	
+	//알림 상태 읽음으로 변경
+	public int alarmUpdate(int nidx); 
+	
 }

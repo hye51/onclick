@@ -28,4 +28,5 @@ public interface ClassService_Mapper {
 	
 	//학생 강좌 리스트 
 	public HashMap<String,Object> stuClassList(int sidx);
+
 }

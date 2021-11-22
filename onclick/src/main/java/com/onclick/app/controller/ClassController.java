@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.ClassVo;
+import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.StudentVO;
 import com.onclick.app.domain.VideoAttenDto;
 import com.onclick.app.service.ClassService;
 import com.onclick.app.service.EnrollService;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.VideoAttenService;
 
