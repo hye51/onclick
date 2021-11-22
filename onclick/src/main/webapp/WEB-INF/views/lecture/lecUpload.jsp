@@ -27,10 +27,15 @@
             <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="강의 이동" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
+             <div class="row">
+	            <div class="dropdown col-md-9">
+				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
+				 강의 이동
+				 </button>
+					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					 </ul>
+				  </div>	               
+	          </div>
             </form>
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
@@ -58,15 +63,15 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
-		        </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
+				</li>
 		      </ul> 			     
         </nav>
         <div id="layoutSidenav">

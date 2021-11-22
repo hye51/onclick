@@ -29,6 +29,23 @@
 		<beans:constructor-arg value="C:/java exercise/dev_html/workspace/onclick/onclick/onclick/uploadFiles" />
 	</beans:bean>
 	
+		<beans:bean id = "loginInterceptor" class = "com.onclick.app.Interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.onclick.app.Interceptor.AuthInterceptor"></beans:bean>
+
+	   <interceptors>
+	    <interceptor>
+		    <mapping path="/student/stuLogin.do"/>
+		     <mapping path="/professor/proLogin.do"/>
+		    <beans:ref bean="loginInterceptor"/>		    
+		</interceptor>	  
+	    <interceptor>
+		    <mapping path="/student/stuDashBoard.do"/>
+		    <mapping path="/professor/proDashBoard.do"/>
+		    <mapping path="/lecture/*.do"/>
+		    <beans:ref bean="authInterceptor"/>		    
+		</interceptor>
+       </interceptors>
+	
 	<context:component-scan base-package="com.onclick.app" />
 
 </beans:beans>
