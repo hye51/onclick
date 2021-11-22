@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -71,6 +72,19 @@ public class ProfessorController {
 		return location;
 	}
 	
+	@RequestMapping(value="/professor/proLogout.do", method=RequestMethod.GET)
+    public String professorLogout(RedirectAttributes rttr,
+    								   HttpSession session) throws Exception{
+    
+		//교수 로그아웃
+		 //세션에 저장된 값을 삭제
+		 session.invalidate();
+		 
+		 rttr.addFlashAttribute("logout", "로그아웃 하였습니다.");
+
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value="/professor/proDashBoard.do")
 	public String professorLecList(HttpSession session, Model model) {
 		//대시보드 이동
@@ -107,12 +121,24 @@ public class ProfessorController {
 
 		return "professor/proInfo";
 	}
-/*		
-	@RequestMapping(value="*.do")
-	public String professorModify() {
-		//교수 정보 수정 화면
-		return "";
+	
+	@RequestMapping(value="/professor/proModifyAction.do")
+	public String professorModifyAction(@RequestParam("ppwd") String ppwd,
+									  @RequestParam("pemail1") String pemail1,
+									  @RequestParam("pemail2") String pemail2,
+									  @RequestParam("pphone1") String pphone1,
+									  @RequestParam("pphone2") String pphone2,
+									  @RequestParam("pphone3") String pphone3
+									) {
+		//교수 정보 수정실행
+		String pemail = pemail1+"@"+pemail2;
+		String pphone = pphone1 + "-" + pphone2 + "-" +pphone3;
+		
+		return "redirect:/professor/pwdCheck.do";
 	}
+	
+	
+/*		
 	
 	@RequestMapping(value="*.do")
 	public String professorModifyAction() {

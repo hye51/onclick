@@ -15,14 +15,14 @@
         <meta name="author" content="" />
         <title>강의홈</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../app/resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath()%>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -30,10 +30,15 @@
             <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="강의 이동" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
+             <div class="row">
+	            <div class="dropdown col-md-9">
+				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
+				 강의 이동
+				 </button>
+					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					 </ul>
+				  </div>	               
+	          </div>
             </form>
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
@@ -49,7 +54,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="<%=request.getContextPath()%>/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -61,14 +66,14 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
+		       <li class="nav-item">
 		          <a class="nav-link" href="#">Mypage</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>
@@ -78,7 +83,7 @@
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
 							<%=lv.getLname() %>
-						<img alt="" src="../app/resources/assets/img/home.png">
+						<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/home.png">
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -215,13 +220,13 @@
                 </footer>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/scripts.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/r	esources/js/datatables-simple-demo.js"></script>	
         <!-- jquery 3.3.1 라이브러리 활용 -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">

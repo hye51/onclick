@@ -14,7 +14,7 @@
         <meta name="author" content="" />
         <title>강의 공지사항</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../app/resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -60,14 +60,14 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
+		       <li class="nav-item">
 		          <a class="nav-link" href="#">Mypage</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
+		          <a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
 		        </li>
 		      </ul> 			     
         </nav>
@@ -169,12 +169,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
          
