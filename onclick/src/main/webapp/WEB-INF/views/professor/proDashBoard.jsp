@@ -125,15 +125,16 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">Professor</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
-                        <table class="table table-bordered">
+                        <div class="card-body mx-auto d-block " style="width:90%">
+                        <table class="table text-center table-bordered" >
 								<thead>
 									<tr class="table-secondary">
 										<th scope="col-3">no</th>
-									    <th scope="col-5">과목명</th>
+									    <th scope="col-5">강의명</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -141,7 +142,7 @@
                        				 <%int i=1 ;
                        				 for(LecVO lv : alist){ %>
 										<th scope="row"><%=i++%></th>
-									    <td><%=lv.getLname()%></td>
+									    <td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a></td>
 									</tr>
 									<%} %>
 								</tbody>
