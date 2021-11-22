@@ -61,6 +61,7 @@ public class ProfessorController {
 
 			//사번 저장 
 			session.setAttribute("pidx", pidx);
+			session.setAttribute("pname",pv.getPname());
 			
 			location ="redirect:/professor/proDashBoard.do";	
 		}else {
@@ -100,7 +101,7 @@ public class ProfessorController {
 	
 
 	@RequestMapping(value="/professor/proInfo.do")
-	public String professorInfo(@RequestParam("pidx") int pidx,Model model) {
+	public String professorInfo(@RequestParam("pidx") int pidx, Model model, HttpSession session) {
 		//교수정보 보기
 		ProfessorVO pv = ps.proInfo(pidx);
 		model.addAttribute("pv", pv);
