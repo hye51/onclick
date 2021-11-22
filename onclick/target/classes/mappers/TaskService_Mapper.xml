@@ -38,8 +38,12 @@ WHERE tudelyn='N'
 AND tuidx=#{tuidx}
 </select>
 
-<select id="taskSelectAll" parameterType="Integer" resultType="tv">
-SELECT tuidx,
+<select id="taskSelectAll" parameterType="HashMap" resultType="tv">
+<![CDATA[SELECT B.rnum, B.* 
+FROM
+	(SELECT rownum as rnum, A.* 
+FROM
+	(SELECT tuidx,
 		tuname,
 		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
 		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
@@ -47,11 +51,20 @@ SELECT tuidx,
 		tudelyn,
 		lidx,
 		tucontents,
-		fidx
+		fidx 
+	FROM onclick_taskupload 
+	WHERE tudelyn='N'
+	AND lidx=#{lidx}
+	ORDER BY tudate DESC) A 
+WHERE rownum <= #{page}*#{perPageNum}) B 
+WHERE B.rnum >= (#{page}-1)*#{perPageNum}+1]]>
+</select>
+
+<select id="taskTotalCount" parameterType="Integer" resultType="Integer">
+SELECT count(*) 
 FROM onclick_taskupload
 WHERE tudelyn='N'
 AND lidx=#{lidx}
-ORDER BY tudate DESC
 </select>
 
 <insert id="taskInsert" parameterType="HashMap">

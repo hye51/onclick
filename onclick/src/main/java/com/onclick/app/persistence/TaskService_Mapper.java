@@ -3,6 +3,7 @@ package com.onclick.app.persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.onclick.app.domain.Criteria;
 import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 
@@ -15,7 +16,10 @@ public interface TaskService_Mapper {
 	public TaskVO taskSelectOne(int tuidx);
 
 	//과제 목록
-	public ArrayList<TaskVO> taskSelectAll(int lidx);
+	public ArrayList<TaskVO> taskSelectAll(HashMap<String, Object> hm);
+	
+	//전체 개수 가져오기
+	public int taskTotalCount(int lidx);
 	
 	//과제 내용 업로드
 	public int taskInsert(HashMap<String,Object> hm);

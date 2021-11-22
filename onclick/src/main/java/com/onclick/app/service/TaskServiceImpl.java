@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onclick.app.domain.Criteria;
 import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.persistence.FileService_Mapper;
@@ -39,13 +40,24 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public ArrayList<TaskVO> taskSelectAll(int lidx) {
+	public ArrayList<TaskVO> taskSelectAll(HashMap<String, Object> hm) {
 		//과제 목록
 		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
-		ArrayList<TaskVO> tlist = tsm.taskSelectAll(lidx);
+		ArrayList<TaskVO> tlist = tsm.taskSelectAll(hm);
 		
 		return tlist;
 	}
+	
+
+	@Override
+	public int taskTotalCount(int lidx) {
+		//과제 전체 개수 
+		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
+		int taskTC = tsm.taskTotalCount(lidx);
+		
+		return taskTC;
+	}
+
 	
 	@Override
 	@Transactional
@@ -158,6 +170,7 @@ public class TaskServiceImpl implements TaskService{
 		
 		return submitList;
 	}
+
 
 
 }
