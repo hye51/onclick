@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.Criteria;
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.PageMaker;
 import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.FileService;
@@ -40,17 +42,21 @@ public class TaskController { //교수 과제 컨트롤러
 	@Autowired
 	S_taskService sts;
 	
+	@Autowired
+	PageMaker pm;
+	
 	@Resource(name="uploadPath")
 	private String uploadPath;
 
 	@RequestMapping(value="/taskContent.do")
-	public String taskContent(@RequestParam("tuidx") int tuidx, Model model, HttpSession session) {
+	public String taskContent(@RequestParam("tuidx") int tuidx,
+						@RequestParam("lidx") int lidx,
+						Model model, HttpSession session) {
 		System.out.println("수정완료 후 과제 내용보기");
 		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
 		//해당 과목 정보 가져오기
-		int lidx = (Integer)session.getAttribute("lidx");
 		LecVO lv = ls.lecSelectOne(lidx);
 		session.setAttribute("lv", lv);
 		
@@ -72,10 +78,29 @@ public class TaskController { //교수 과제 컨트롤러
 	}
 
 	@RequestMapping(value="/taskList.do")
-	public String taskList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
+	public String taskList(@RequestParam("lidx") int lidx, 
+			Criteria cri, Model model, HttpSession session) {
+		//페이징 처리
+		//과제 전체 개수
+		int taskTC = ts.taskTotalCount(lidx);		
+		
+		int page = cri.getPage();
+		int perPageNum = cri.getPerPageNum();
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("lidx", lidx);
+		hm.put("page", page);
+		hm.put("perPageNum", perPageNum);
+		
 		//교수가 업로드한 과제 목록
-		ArrayList<TaskVO> tlist = ts.taskSelectAll(lidx);
+		ArrayList<TaskVO> tlist = ts.taskSelectAll(hm);
+		
+		pm.setCri(cri);
+		pm.setTotalCount(taskTC);
+		
 		model.addAttribute("tlist", tlist);
+		model.addAttribute("pm", pm);
+		
 		//해당 강의 정보 가져오기
 		LecVO lv = ls.lecSelectOne(lidx);
 		session.setAttribute("lv", lv);
@@ -193,8 +218,11 @@ public class TaskController { //교수 과제 컨트롤러
 			@RequestParam("taskContents") String tucontents,
 			@RequestParam("taskNotice") String tunotyn,
 			@RequestParam("taskFile") MultipartFile tufile,
-			@RequestParam("tuidx") int tuidx) throws Exception{
+			@RequestParam("tuidx") int tuidx,
+			@RequestParam("lidx") int lidx) throws Exception{
 		//교수 과제 수정 완료
+		System.out.println("교수 과제 수정 완료");
+		
 		String str = null;
 		
 		if(tufile.isEmpty()) { //첨부파일 수정 X
@@ -211,7 +239,7 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskModify(hm);
 			
 			if(value == 1) {
-				str = "redirect:/taskContent.do?tuidx="+tuidx;
+				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			} else {
 				str = "redirect:/taskModify.do?tuidx="+tuidx;
 			}
@@ -246,7 +274,7 @@ public class TaskController { //교수 과제 컨트롤러
 			int value = ts.taskAndFileModify(hm, taskFile);
 			
 			if(value == 2) { //파일 insert + 과제 수정
-				str = "redirect:/taskContent.do?tuidx="+tuidx;
+				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			} else {
 				str = "redirect:/taskModify.do?tuidx="+tuidx;
 			}
