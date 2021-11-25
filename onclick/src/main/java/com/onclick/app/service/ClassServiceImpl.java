@@ -112,5 +112,13 @@ public class ClassServiceImpl implements ClassService{
 		return clist;
 	}
 
+	@Override
+	public ArrayList<ClassVo> lastClassDash(int sidx) {
+		//학생 대시보드 - 최근 수강한 강의
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> lclist = csm.lastClassDash(sidx);
+		return lclist;
+	}
+
 
 }

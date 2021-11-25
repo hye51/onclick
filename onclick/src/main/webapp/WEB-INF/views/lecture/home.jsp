@@ -174,7 +174,7 @@
                                     	<table>
                                        	<% for(TaskVO tv : tList) { %>
 	                                       	<tr>
-		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
+		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
 	                                    	</tr>
                                     	<% } %>
                                     	</table>

@@ -99,6 +99,10 @@ public class StudentController {
 		ArrayList<ClassVo> clist = cs.classAllFinDash(Integer.parseInt(sidx));
 		model.addAttribute("clist", clist);
 		
+		//대시보드-마감예정인강의
+		ArrayList<ClassVo> lclist = cs.lastClassDash(Integer.parseInt(sidx));
+		model.addAttribute("lclist", lclist);
+		
 		//알림 조회
 		ArrayList<NoticeVO> alarm = ns.alarmList(Integer.parseInt(sidx));
 		session.setAttribute("alarm", alarm);

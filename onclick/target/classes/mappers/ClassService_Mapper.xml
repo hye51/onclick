@@ -76,21 +76,43 @@ WHERE cidx=#{cidx}
 </update>
 
 <select id="classFinDash" parameterType="Integer" resultType="cv">
-SELECT *
-FROM onclick_class
-WHERE lidx=#{lidx}
-AND TO_CHAR(cfin, 'yy/MM/dd') >= TO_CHAR(sysdate, 'yy/MM/dd')
-AND cdelyn='N'
-ORDER BY cfin
+<![CDATA[SELECT *
+FROM(
+	SELECT *
+	FROM onclick_class
+	WHERE lidx=#{lidx}
+	AND TO_CHAR(cfin, 'yy/MM/dd') >= TO_CHAR(sysdate, 'yy/MM/dd')
+	AND cdelyn='N'
+	ORDER BY cfin
+	     )
+WHERE ROWNUM <= 5 ]]>
 </select>
 
 <select id="classAllFinDash" parameterType="Integer" resultType="cv">
-SELECT a.* 
-FROM onclick_class a
-JOIN onclick_enroll b
-ON a.lidx = b.lidx
-WHERE b.sidx=#{sidx}
-AND a.cdelyn='N'
+<![CDATA[SELECT *
+FROM(
+	SELECT a.* 
+	FROM onclick_class a
+	JOIN onclick_enroll b
+	ON a.lidx = b.lidx
+	WHERE b.sidx=#{sidx}
+	AND a.cdelyn='N'
+     )
+WHERE ROWNUM <= 5 ]]>
+</select>
+
+<select id="lastClassDash" parameterType="Integer" resultType="cv">
+<![CDATA[SELECT *
+FROM(
+	SELECT a.*
+	FROM onclick_class a
+	JOIN onclick_videoattendence b
+	ON a.cidx = b.cidx
+	WHERE a.cdelyn='N'
+	AND sidx=#{sidx}
+	ORDER BY b.vlast DESC
+     )
+WHERE ROWNUM <= 5 ]]>
 </select>
 
 </mapper>
