@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.NoticeVO;
 import com.onclick.app.domain.StudentVO;
 import com.onclick.app.domain.TaskVO;
+import com.onclick.app.service.ClassService;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
@@ -36,6 +38,10 @@ public class HomeController {
 	
 	@Autowired
 	NoticeService ns;
+
+	@Autowired
+	ClassService cs;
+
 	
 	@RequestMapping(value="/")
 	public String main() {
@@ -61,6 +67,9 @@ public class HomeController {
 		
 		ArrayList<TaskVO> tlist = ts.taskDashSelectAll(lidx);
 		model.addAttribute("tlist", tlist);
+		
+		ArrayList<ClassVo> cdList = cs.classFinDash(lidx);
+		model.addAttribute("cdList", cdList);
 		
 		return "lecture/home";
 	}

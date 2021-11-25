@@ -5,6 +5,7 @@
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<LecNoticeVO> lndList = (ArrayList<LecNoticeVO>)request.getAttribute("lndList"); %>
 <%ArrayList<TaskVO> tList = (ArrayList<TaskVO>)request.getAttribute("tlist"); %>
+<%ArrayList<ClassVo> cdList = (ArrayList<ClassVo>)request.getAttribute("cdList"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,8 +71,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -87,11 +89,19 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link" href="#" >
+                          	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                          	<a class="nav-link" href="<%=request.getContextPath()%>/stuAttend.do?lidx=<%=lv.getLidx()%>" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/proAttend.do?lidx=<%=lv.getLidx()%>" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                            <%} %>
 							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -131,9 +141,9 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4"><%=lv.getLname() %></h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">HOME</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -157,31 +167,30 @@
                                     	<table>
                                        	<% for(TaskVO tv : tList) { %>
 	                                       	<tr>
-		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
+		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
 	                                    	</tr>
                                     	<% } %>
                                     	</table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">일정</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ 
+                                int sidx = (Integer)session.getAttribute("sidx"); %>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">마감 예정인 강의</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    	<table>
+                                        <% for(ClassVo cv : cdList) { %>
+	                                       	<tr>
+		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx %>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a></td>
+	                                    	</tr>
+                                    	<% } %>
+                                    	</table>
                                     </div>
                                 </div>
                             </div>
+                            <%} %>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card text-dark text-black mb-4">
                                     <div class="card-body">추가</div>

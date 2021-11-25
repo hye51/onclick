@@ -96,5 +96,29 @@ public class ClassServiceImpl implements ClassService{
 		return result;
 	}
 
+	@Override
+	public ArrayList<ClassVo> classFinDash(int lidx) {
+		//강의 홈 대시보드 - 마감 예정인 강의(해당 강의 하나)
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> cdlist = csm.classFinDash(lidx);
+		return cdlist;
+	}
+
+	@Override
+	public ArrayList<ClassVo> classAllFinDash(int sidx) {
+		//학생 대시보드 - 마감 예정인 강의(강의 전체)
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> clist = csm.classAllFinDash(sidx);
+		return clist;
+	}
+
+	@Override
+	public ArrayList<ClassVo> lastClassDash(int sidx) {
+		//학생 대시보드 - 최근 수강한 강의
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> lclist = csm.lastClassDash(sidx);
+		return lclist;
+	}
+
 
 }

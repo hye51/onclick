@@ -69,8 +69,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>

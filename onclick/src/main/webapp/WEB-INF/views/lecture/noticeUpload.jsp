@@ -75,8 +75,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -133,11 +134,10 @@
                     </div>
                 </nav>
             </div>
-            <!-- 공지사항 업로드화면(교수님) -->
+            <!-- 공지사항 업로드화면-->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">공지사항</h2>
-                	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active">업로드</li>
+	            <h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">공지사항 업로드</h3>
+                	<ol class="breadcrumb mb-4 ps-5">
                 	</ol>
             	<main> 
             		<div class="container-fluid px-4 ">

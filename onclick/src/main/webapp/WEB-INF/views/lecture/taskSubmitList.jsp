@@ -76,8 +76,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -137,7 +138,7 @@
             
             <div id="layoutSidenav_content">
                <main>
-					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">과제 목록</h4>
+					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">학생 과제 목록</h4>
 						<div class="card-body mx-auto d-block " style="width:80%">
 							<table class="table text-center">
 								<thead>

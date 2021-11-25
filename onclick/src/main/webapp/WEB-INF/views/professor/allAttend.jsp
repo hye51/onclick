@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.onclick.app.domain.*" %>
+<%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%LecNoticeVO lnv = (LecNoticeVO)session.getAttribute("lnv"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>강의 공지사항 수정</title>
+        <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -93,11 +92,19 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link" href="#" >
+                            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                          	<a class="nav-link" href="<%=request.getContextPath()%>/stuAttend.do?lidx=<%=lv.getLidx()%>" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/proAttend.do?lidx=<%=lv.getLidx()%>" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                            <%} %>
 							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -134,72 +141,66 @@
                     </div>
                 </nav>
             </div>
-            <!-- 공지사항 수정화면(교수님) -->
+            
             <div id="layoutSidenav_content">
-	            <h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">공지사항 수정</h3>
-                	<ol class="breadcrumb mb-4 ps-5">
-                    	<li class="breadcrumb-item active"><%=lnv.getLnsubject() %></li>
-                	</ol>
-            	<main> 
-            		<div class="container-fluid px-4 ">
-            			<form name="frm">
-						<table class="table mx-auto bg-light" style="width:80%">   
-							<tbody>
-								<tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">제목</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control" name="lecNotSubject" type="text" value="<%=lnv.getLnsubject() %>" /> 
-									</td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      	<%if(session.getAttribute("fv") == null) {%>
-							      		<input class="form-control" name="lecNotFile" type="file"  /> 
-							      	<%} else {
-							    		FileVO fv = (FileVO)session.getAttribute("fv"); %>
-							      		<input class="form-control" name="lecNotFile" id="lecNotFile" type="file" disabled/>
-							      	<%} %>
-							      	</td>
-							    </tr>
-							    <%if(session.getAttribute("fv") != null) {
-							    	FileVO fv = (FileVO)session.getAttribute("fv"); %>
-								    <tr class="exFile">
-								    	<td scope="row" style="border-bottom:0; text-align:left; width:10%"></td>
-								    	<td colspan="2" style="border-bottom:0; width:80%;"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
-								    	<td style="border-bottom:0; text-align:right; width:10%"><button type="button" id="lecNotFileDel" class="btn btn-sm">X</button></td>
-								    </tr>
-							    <%} %>
-							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input class="form-control" type="text" name="lecNotContents" style="width:100%; height:300px; border:0; solid; black" value="<%=lnv.getLncontents() %>"></td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="lecNotNotice" value="Y" checked>
-											<label class="form-check-label" for="lecNotNotice" >
-											발송
-											</label>
-										<input class="form-check-input" type="radio" name="lecNotNotice" value="N">
-											<label class="form-check-label" for="lecNotNotice">
-											미발송
-											</label>
-									</td>
-							    </tr>
-							</tbody>
-						</table>
-						<div class="form-row text-center">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="history.back(-1)">취소</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
-                    	</div>
-                    	</form>
-                	</div>
+               <main>
+					<h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">출결 현황</h3>
+						<div class="card-body mx-auto d-block " style="width:80%">
+						<div class="dropdown">
+						  <button class="btn dropdown-toggle" type="button" id="week" data-bs-toggle="dropdown" aria-expanded="true">
+						   	주차
+						  </button>
+						  <ul class="dropdown-menu" id="state" role="menu" aria-labelledby="dropdownMenu2">
+						  	<li role="presentation"><a class="dropdown-item" href="#" value="1">1주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="2">2주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="3">3주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="4">4주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="5">5주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="6">6주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="7">7주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="8">8주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="9">9주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="10">10주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="11">11주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="12">12주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="13">13주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="14">14주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="15">15주차</a></li>
+						  </ul>
+						</div>
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th scope="col-3">학번</th>
+									    <th scope="col-5">실시간 강의</th>
+									    <th scope="col-5">동영상 강의</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th rowspan='3' valign="middle" align="center" scope="row">1</th>
+									    <td></td>
+									    <td></td>
+									</tr>
+									<tr>
+									    <td></td>
+									    <td></td>
+									</tr>
+									<tr>
+									    <td></td>
+									    <td></td>
+									</tr>
+								</tbody>
+							</table>
+                        </div>
+
                 </main>
+                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div >
+                            <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
@@ -220,48 +221,15 @@
         <script type="text/javascript">
         
         $(function(){
-	        $('#lecNotFileDel').click(function(){
-	        	
-				<%int fidx = 0;
-					if(session.getAttribute("fv") != null){
-	        		FileVO fv = (FileVO)session.getAttribute("fv"); 
-	        		fidx = fv.getFidx();
-	        	}%>
-	        
-	        	var fidx = <%=fidx%>;
-				var lnidx= <%=lnv.getLnidx()%>;
-				
-				$.ajax({
-					url:'<%=request.getContextPath()%>/lnExFileDelete.do',
-					data: {"fidx":fidx,
-						   "lnidx":lnidx},
-					dataType:'JSON',
-					type:'POST',
-					error: function(){
-						alert("에러입니다."); },
-					success:function(data){
-						if(data.value == 2) {
-							$('.exFile').css("display", "none");
-							alert("삭제되었습니다.");
-							$("#lecNotFile").attr("disabled",false);
-						} else {
-							alert("파일이 삭제되지 않았습니다.");
-						}
-					}
-				});
-					
-	        	});
-	    });   
-        
-        function check() {
-			var fm= document.frm;
-			
-				fm.action="<%=request.getContextPath()%>/lecNotModifyAction.do?lnidx=<%=lnv.getLnidx()%>";
-				fm.method = "post";
-				fm.enctype="multipart/form-data";
-				fm.submit();
-				
-			}
+	        $('#state li > a').on('click', function() {
+	            // 버튼에 선택된 항목 텍스트 넣기 
+	            $('#week').text($(this).text());
+	                
+	            // 선택된 항목 값(value) 얻기
+	            //alert($(this).attr('value'));
+	        });
+        });
         </script>
+        
     </body>
 </html>
