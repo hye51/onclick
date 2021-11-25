@@ -31,8 +31,6 @@
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="../resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">

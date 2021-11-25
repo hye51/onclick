@@ -24,6 +24,13 @@ AND pidx=#{pidx}
 AND ppwd=#{ppwd}
 </select>
 
+<select id="proPwdCheck"  parameterType="HashMap" resultType="Integer">
+SELECT count(*) as cnt
+FROM onclick_professor 
+WHERE pdelyn='N' 
+AND ppwd=#{ppwd}
+</select>
+
 <select id="proInfo" parameterType="Integer" resultType="pv">
 SELECT *
 FROM  onclick_professor  

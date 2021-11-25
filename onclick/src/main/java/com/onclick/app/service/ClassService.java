@@ -31,4 +31,5 @@ public interface ClassService {
 	
 	//학생 대시보드 - 최근 수강한 강의
 	public ArrayList<ClassVo> lastClassDash(int sidx);
+
 }

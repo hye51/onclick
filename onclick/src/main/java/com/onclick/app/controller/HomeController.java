@@ -1,6 +1,7 @@
 package com.onclick.app.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,15 +10,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.NoticeVO;
 import com.onclick.app.domain.StudentVO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.ClassService;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
+import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.TaskService;
 
 @Controller
@@ -33,7 +37,11 @@ public class HomeController {
 	TaskService ts;
 	
 	@Autowired
+	NoticeService ns;
+
+	@Autowired
 	ClassService cs;
+
 	
 	@RequestMapping(value="/")
 	public String main() {
@@ -75,5 +83,19 @@ public class HomeController {
 		return "lecture/stuList";
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/alarmUpdate.do")
+	public int alarmUpdate(@RequestParam("nidx") int nidx) {
+		//알림 읽음표시 
+		int cnt=ns.alarmUpdate(nidx);
+		return cnt;
+	}
 
+	@ResponseBody
+	@RequestMapping(value="/alarmSelect.do")
+	public ArrayList<NoticeVO> alarmSelect(@RequestParam("sidx") int sidx) {
+		//알림 조회
+		ArrayList<NoticeVO> data = ns.alarmList(sidx);
+		return data;
+	}
 }

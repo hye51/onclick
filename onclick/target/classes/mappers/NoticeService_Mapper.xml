@@ -10,10 +10,30 @@ FROM onclick_enroll
 WHERE lidx=#{lidx}
 </insert>
 
+<insert id="alarmTaskInsert" parameterType="HashMap">
+INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,tuidx)
+SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{tuidx} 
+FROM onclick_enroll
+WHERE lidx=#{lidx}
+</insert>
+
+<insert id="alarmNoticeInsert" parameterType="HashMap">
+INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,lnidx)
+SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{lnidx} 
+FROM onclick_enroll
+WHERE lidx=#{lidx}
+</insert>
+
 <select id="alarmList" parameterType="Integer" resultType="nv">
 SELECT * 
 FROM onclick_notice
 WHERE sidx=#{0}
 </select>
+
+<update id="alarmUpdate" parameterType="Integer">
+UPDATE onclick_notice
+SET ncheck='Y' 
+WHERE nidx=#{0}
+</update>
 
 </mapper> 

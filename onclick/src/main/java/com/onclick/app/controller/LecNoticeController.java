@@ -20,6 +20,7 @@ import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecNoticeService;
+import com.onclick.app.service.NoticeService;
 import com.onclick.app.util.UploadFileUtiles;
 
 @Controller
@@ -30,6 +31,9 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 
 	@Autowired
 	FileService fs;
+	
+	@Autowired
+	NoticeService ns;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -92,6 +96,10 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			int lnidx = Integer.parseInt(String.valueOf(hm.get("lnidx")));
 			
 			if(value == 1) { //insert 성공
+				//공지사항 알림 
+				String pname= (String)session.getAttribute("pname");
+				int cnt = ns.alarmNoticeInsert(lidx, lnidx, pname);
+				
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNoticeWrite.do";
