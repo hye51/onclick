@@ -8,7 +8,10 @@ import com.onclick.app.domain.RefVO;
 public interface RefService {
 
 	//자료 목록
-	public ArrayList<RefVO> refSelectAll(int lidx);
+	public ArrayList<RefVO> refSelectAll(HashMap<String, Object> hm);
+	
+	//자료 전체 개수
+	public int refTotalCount(int lidx);
 	
 	//자료 업로드(파일 X)
 	public int refInsert(HashMap<String, Object> hm);

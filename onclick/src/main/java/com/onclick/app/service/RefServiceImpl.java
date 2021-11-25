@@ -20,12 +20,22 @@ public class RefServiceImpl implements RefService{
 	SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<RefVO> refSelectAll(int lidx) {
+	public ArrayList<RefVO> refSelectAll(HashMap<String, Object> hm) {
 		//자료 목록
 		RefService_Mapper rsm = sqlSession.getMapper(RefService_Mapper.class);
-		ArrayList<RefVO> rlist = rsm.refSelectAll(lidx);
+		ArrayList<RefVO> rlist = rsm.refSelectAll(hm);
 		return rlist;
 	}
+	
+
+	@Override
+	public int refTotalCount(int lidx) {
+		//자료 전체 개수
+		RefService_Mapper rsm = sqlSession.getMapper(RefService_Mapper.class);
+		int refTC = rsm.refTotalCount(lidx);
+		return refTC;
+	}
+
 
 	@Override
 	public int refInsert(HashMap<String, Object> hm) {

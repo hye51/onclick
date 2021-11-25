@@ -7,8 +7,8 @@
 <%LecVO lv = (LecVO)session.getAttribute("lv");
 	session.setAttribute("lidx", lv.getLidx());%>
 <%Criteria cri = new Criteria(); %>
-<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
 <%PageMaker pm = (PageMaker)request.getAttribute("pm"); %>
+<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
 <%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	Date today = new Date(); %>
 <!DOCTYPE html>
@@ -83,8 +83,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -241,7 +242,7 @@
 						    <li class="page-item">
 						    <%if(pm.isNext() == true && pm.getEndPage()>0) { %>
 								<a class="page-link" style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?page=<%=pm.getEndPage()+1%>&lidx=<%=lv.getLidx()%>" aria-label="다음">
-								<span aria-hidden="true">&laquo;</span>
+								<span aria-hidden="true">&raquo;</span>
 								</a>
 							<%} %>
 						    </li>

@@ -2,9 +2,6 @@
 package com.onclick.app.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.EnrollDTO;
-import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.NoticeVO;
 import com.onclick.app.domain.StudentVO;
+import com.onclick.app.domain.TaskVO;
+import com.onclick.app.service.ClassService;
 import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.StudentService;
-import com.onclick.app.domain.TaskVO;
 
 @Controller
 public class StudentController {
@@ -33,6 +31,9 @@ public class StudentController {
 	
 	@Autowired
 	NoticeService ns;
+	
+	@Autowired
+	ClassService cs;
 	
 	@ResponseBody
 	@RequestMapping(value="/student/idCheck.do")
@@ -93,6 +94,10 @@ public class StudentController {
 		//대시보드-과제목록
 		ArrayList<TaskVO> stuTaskList = ss.stuTaskSelectAll(Integer.parseInt(sidx));
 		model.addAttribute("stuTaskList", stuTaskList);
+		
+		//대시보드-마감예정인강의
+		ArrayList<ClassVo> clist = cs.classAllFinDash(Integer.parseInt(sidx));
+		model.addAttribute("clist", clist);
 		
 		//알림 조회
 		ArrayList<NoticeVO> alarm = ns.alarmList(Integer.parseInt(sidx));

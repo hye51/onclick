@@ -81,8 +81,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -141,9 +142,9 @@
             </div>
             <!--과제 내용보기-->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">과제 목록</h2>
-                	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active"><%=tv.getTuname() %></li>
+	            <h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">과제</h3>
+                	<ol class="breadcrumb mb-4 ps-5">
+                    	<li class="breadcrumb-item active"><%=tv.getTuname()%></li>
                 	</ol>
             	<main>
             		<!-- 학생 과제 내용보기 -->
@@ -168,8 +169,7 @@
 							      		<%=tv.getTudate() %>
 							      	</td>
 							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; font-weight: 700; width:10%">제출여부</td>
-							      	<%
-							      		if(std.getTsubyn().equals("Y")){ %>
+							      	<%if(std.getTsubyn().equals("Y")){ %>
 								      		<td style="color:blue">제출완료</td>
 								    	<%} else { %>
 								    		<td style="color:red">미제출</td>
@@ -194,7 +194,7 @@
 							<%if(std.getTsubyn().equals("Y")){ %>
 						      		<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>">제출보기</a></button>
 						    	<%} else { %>
-						    		<%if(std.getTustart().compareTo(dateFormat.format(today))<=0 && std.getTufin().compareTo(dateFormat.format(today))>=0) {%>
+						    		<%if(tv.getTustart().compareTo(dateFormat.format(today))<=0 && tv.getTufin().compareTo(dateFormat.format(today))>=0) {%>
 								    	<button type="button" class="btn btn-secondary btn-sm" style="width:80px"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskWrite.do?tuidx=<%=tv.getTuidx()%>">제출</a></button>
 								    <%}%>
 						   		<%} %>

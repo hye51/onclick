@@ -75,4 +75,22 @@ SET cname=#{cname},
 WHERE cidx=#{cidx}
 </update>
 
+<select id="classFinDash" parameterType="Integer" resultType="cv">
+SELECT *
+FROM onclick_class
+WHERE lidx=#{lidx}
+AND TO_CHAR(cfin, 'yy/MM/dd') >= TO_CHAR(sysdate, 'yy/MM/dd')
+AND cdelyn='N'
+ORDER BY cfin
+</select>
+
+<select id="classAllFinDash" parameterType="Integer" resultType="cv">
+SELECT a.* 
+FROM onclick_class a
+JOIN onclick_enroll b
+ON a.lidx = b.lidx
+WHERE b.sidx=#{sidx}
+AND a.cdelyn='N'
+</select>
+
 </mapper>
