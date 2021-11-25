@@ -23,6 +23,7 @@ import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecService;
+import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.S_taskService;
 import com.onclick.app.service.TaskService;
 import com.onclick.app.util.UploadFileUtiles;
@@ -44,6 +45,10 @@ public class TaskController { //교수 과제 컨트롤러
 	
 	@Autowired
 	PageMaker pm;
+	
+	@Autowired
+	NoticeService ns;
+	
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -131,7 +136,8 @@ public class TaskController { //교수 과제 컨트롤러
 			@RequestParam("taskStart") String tustart,
 			@RequestParam("taskFin") String tufin,
 			@RequestParam("taskContents") String tucontents,
-			@RequestParam("taskFile") MultipartFile tufile) throws Exception{
+			@RequestParam("taskFile") MultipartFile tufile,
+			HttpSession session) throws Exception{
 
 		String str = null;
 		
@@ -152,6 +158,10 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 0) {
 				str = "redirect:/taskWrite.do";
 			} else {
+				//과제 업로드 알림 
+				String pname= (String)session.getAttribute("pname");
+				int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
+				
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 			
@@ -187,6 +197,10 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 0) {
 				str = "redirect:/taskWrite.do";
 			} else {
+				//과제 업로드 알림 
+				String pname= (String)session.getAttribute("pname");
+				int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
+				
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 		}

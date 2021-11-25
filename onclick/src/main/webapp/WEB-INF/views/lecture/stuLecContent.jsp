@@ -295,114 +295,148 @@
 		</style>
         <script type="text/javascript">
         //알림클릭시 읽음로 표시 
-         $('#alarmCheck').click(function(){
-        	 var nidx= $('#nidx').val();
+        function checkClass(nidx,sidx,cidx){
+        	//강의 클릭시
         	 $.ajax({
 	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
 	        		type:'post',
+	        		dataType : "json",
 	        		data:{"nidx" : nidx},
 	        		success:function(cnt){
-	        			
+        				location.href="<%=request.getContextPath()%>/stuLecContent.do?sidx="+sidx+"&cidx="+cidx;
 	        		},
 	        		error:function(){
-	        			alert("에러입니다.");
+	        			alert("에러입니다.(update1)");
 	        		}
 	        	});
-        });
-        
+        }
+     
+        function checkTask(nidx,lidx,tuidx){
+        	//과제 클릭시
+       	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		dataType : "json",
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+	        			 location.href="<%=request.getContextPath()%>/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.(update2)");
+	        		}
+	        	});
+       }
+       
+       function checkLec(nidx,lnidx){
+       		//공지사항 클릭시
+      	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		dataType : "json",
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+	        			location.href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx="+lnidx;
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.(update3)");
+	        		}
+	        	});
+      }
+      
          $('#alarm').click(function(){
-        var sidx = <%=session.getAttribute("sidx")%>;
-        var str;
-		var tstr="";
-         $.ajax({
- 			type : "GET",
- 			url : "<%=request.getContextPath() %>/alarmSelect.do",
- 			dataType : "json",
- 			data : { "sidx" : sidx 
- 					},
- 			cache : false,
- 			error : function(){
- 				alert("error 입니다 :");
- 			},
- 			success : function(data){
- 						if(data.length == 0){
- 							alert("알림이 존재하지 않습니다");
- 						}else {
- 							$.each (data, function (index, nv) {
- 							
- 								if(nv.cidx!=0){
-									//강좌인 경우
- 								str="<a id='alarmCheck'class='dropdown-item d-flex align-items-center list-group-item-action list-group-item'  href=<%=request.getContextPath()%>/stuLecContent.do?sidx="+nv.sidx+"&cidx="+nv.cidx+" >"
- 			                    	+"<div class='mr-3'>"
- 				                       +"<div class='icon-circle bg-primary'>"
- 				                       +"<i class=''bi bi-camera-reels-fill text-white '></i>"
- 				                       +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-camera-reels-fill text-white' viewBox='0 0 16 16'>"
-			                    	   +"<path d='M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>"
-			                    	   +"<path d='M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'/>"
-			                    	   +"<path d='M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z'/>"
-			                    	   +"</svg>"
- 				                       +" </div>"
- 			                    	+"</div>"
- 									+"<div>"
- 			                    	+"<div class='small text-gray-500'>강좌";
- 			                    	if(nv.ncheck=="N"){
- 			                    		str=str +"<span style='float:right;'>안읽음</span>";
- 			                    	}else{
- 			                    		str=str +"<span style='float:right;'>읽음</span>";
- 			                    	}
- 			                    	str=str  +"</div>"
- 								    +"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
- 		                    		+"</div>"
- 		                			+"</a>";
- 								tstr = tstr+str;
-								}else if(nv.tuidx!=0){
-								//과제인 경우
-									str="<a id='alarmCheck' class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' >"
-	 			                    	+"<div class='mr-3'>"
-	 				                       +" <div class='icon-circle bg-success'>"
-	 				                         +"  <i class='fas fa-file-alt text-white'></i>"
+	        var sidx = <%=session.getAttribute("sidx")%>;
+	        var str;
+			var tstr="";
+			
+	         $.ajax({
+	 			type : "GET",
+	 			url : "<%=request.getContextPath() %>/alarmSelect.do",
+	 			dataType : "json",
+	 			data : { "sidx" : sidx 
+	 					},
+	 			cache : false,
+	 			error : function(){
+	 				alert("error 입니다 :");
+	 			},
+	 			success : function(data){
+	 						if(data.length == 0){
+	 							alert("알림이 존재하지 않습니다");
+	 						}else {
+	 							$.each (data, function (index, nv) {
+	 							
+	 								if(nv.cidx!=0){
+										//강좌인 경우
+	 								str="<a name='alarmCheck'class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkClass("+nv.nidx+","+nv.sidx+","+nv.cidx+"); return false;'>"
+	 										+"<div class='mr-3'>"
+	 				                       +"<div class='icon-circle bg-primary'>"
+	 				                       +"<i class=''bi bi-camera-reels-fill text-white '></i>"
+	 				                       +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-camera-reels-fill text-white' viewBox='0 0 16 16'>"
+				                    	   +"<path d='M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>"
+				                    	   +"<path d='M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'/>"
+				                    	   +"<path d='M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z'/>"
+				                    	   +"</svg>"
 	 				                       +" </div>"
 	 			                    	+"</div>"
 	 									+"<div>"
-	 			                    	+"<div class='small text-gray-500'>과제"
+	 			                    	+"<div class='small text-gray-500'>강좌";
 	 			                    	if(nv.ncheck=="N"){
 	 			                    		str=str +"<span style='float:right;'>안읽음</span>";
 	 			                    	}else{
 	 			                    		str=str +"<span style='float:right;'>읽음</span>";
 	 			                    	}
 	 			                    	str=str  +"</div>"
-	 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+	 								    +"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
 	 		                    		+"</div>"
 	 		                			+"</a>";
-									tstr = tstr+str;
-								}else if(nv.lnidx!=0){
-								//공지사항인 경우
-									str="<a id='alarmCheck' class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' >"
-	 			                    	+"<div class='mr-3'>"
-	 				                       +" <div class='icon-circle bg-warning'>"
-	 				                         +"  <i class='fas fa-file-alt text-white'></i>"
-	 				                       +" </div>"
-	 			                    	+"</div>"
-	 									+"<div>"
-	 			                    	+"<div class='small text-gray-500'>공지사항"
-	 			                    	if(nv.ncheck=="N"){
-	 			                    		str=str +"<span style='float:right;'>안읽음</span>";
-	 			                    	}else{
-	 			                    		str=str +"<span style='float:right;'>읽음</span>";
-	 			                    	}
-	 			                    	str=str  +"</div>"
-	 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
-	 		                    		+"</div>"
-	 		                			+"</a>";
-									tstr = tstr+str;
-									}
- 								});
- 		
- 								$("#alarmList").html(tstr);	
- 							} 
- 					}
-
- 			});	
+	 								tstr = tstr+str;
+									}else if(nv.tuidx!=0){
+									//과제인 경우
+										str="<a name='alarmCheck'class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkTask("+nv.nidx+","+nv.lidx+","+nv.tuidx+"); return false;'>"
+											+"<div class='mr-3'>"
+		 				                       +" <div class='icon-circle bg-success'>"
+		 				                         +"  <i class='fas fa-file-alt text-white'></i>"
+		 				                       +" </div>"
+		 			                    	+"</div>"
+		 									+"<div>"
+		 			                    	+"<div class='small text-gray-500'>과제"
+		 			                    	if(nv.ncheck=="N"){
+		 			                    		str=str +"<span style='float:right;'>안읽음</span>";
+		 			                    	}else{
+		 			                    		str=str +"<span style='float:right;'>읽음</span>";
+		 			                    	}
+		 			                    	str=str  +"</div>"
+		 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+		 		                    		+"</div>"
+		 		                			+"</a>";
+										tstr = tstr+str;
+									}else if(nv.lnidx!=0){
+									//공지사항인 경우
+										str="<a class='alarmCheck dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkLec("+nv.nidx+","+nv.lnidx+"); return false;' >"
+											+"<div class='mr-3'>"
+		 				                       +" <div class='icon-circle bg-warning'>"
+		 				                         +"  <i class='fas fa-file-alt text-white'></i>"
+		 				                       +" </div>"
+		 			                    	+"</div>"
+		 									+"<div>"
+		 			                    	+"<div class='small text-gray-500'>공지사항"
+		 			                    	if(nv.ncheck=="N"){
+		 			                    		str=str +"<span style='float:right;'>안읽음</span>";
+		 			                    	}else{
+		 			                    		str=str +"<span style='float:right;'>읽음</span>";
+		 			                    	}
+		 			                    	str=str  +"</div>"
+		 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+		 		                    		+"</div>"
+		 		                			+"</a>";
+										tstr = tstr+str;
+										}
+	 								});
+	 		
+	 								$("#alarmList").html(tstr);	
+	 							} 
+	 					}
+	
+	 			});	
          });
         </script>
         <style>

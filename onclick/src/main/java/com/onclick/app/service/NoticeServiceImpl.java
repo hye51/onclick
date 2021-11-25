@@ -18,7 +18,7 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	@Override
 	public int alarmClassInsert(int lidx,int cidx,String pname) {
-		//강좌 업로드시 
+		//강좌 업로드 알림 
 		HashMap<String,Object> hm = new HashMap<String,Object>();
 		hm.put("ncontents", "새로운 강의가 업로드 되었습니다.");
 		hm.put("nwriter", pname);
@@ -32,15 +32,33 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public int alarmTaskInsert(int lidx, String pname) {
+	public int alarmTaskInsert(int lidx,int tuidx,String pname) {
 		//과제 업로드 알림 
-		return 0;
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("ncontents", "새로운 과제가 업로드 되었습니다.");
+		hm.put("nwriter", pname);
+		hm.put("lidx", lidx);
+		hm.put("tuidx",tuidx);
+		
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmTaskInsert(hm);
+		
+		return result;
 	}
 
 	@Override
-	public int alarmNoticeInsert(int lidx, String pname) {
+	public int alarmNoticeInsert(int lidx,int lnidx, String pname) {
 		//공지사항 업로드 알림 
-		return 0;
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("ncontents", "새로운 공지사항이 업로드 되었습니다.");
+		hm.put("nwriter", pname);
+		hm.put("lidx", lidx);
+		hm.put("lnidx",lnidx);
+		
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmNoticeInsert(hm);
+				
+		return result;
 	}
 
 	@Override

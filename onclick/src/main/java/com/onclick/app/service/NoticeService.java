@@ -11,10 +11,10 @@ public interface NoticeService {
 	public int alarmClassInsert(int lidx,int cidx,String pname);
 	
 	//과제 업로드 알림 
-	public int alarmTaskInsert(int lidx, String pname);
+	public int alarmTaskInsert(int lidx,int tuidx, String pname);
 	
 	//공지사항 업로드 알림 
-	public int alarmNoticeInsert(int lidx, String pname);
+	public int alarmNoticeInsert(int lidx,int lnidx, String pname);
 	
 	//알림 조회 
 	public ArrayList<NoticeVO> alarmList(int sidx);
