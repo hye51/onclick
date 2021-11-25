@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
-<%@ page import="java.util.ArrayList" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%ArrayList<S_taskDTO> submitList = (ArrayList<S_taskDTO>)request.getAttribute("submitList");  %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -94,11 +92,19 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link" href="#" >
+                            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                          	<a class="nav-link" href="<%=request.getContextPath()%>/stuAttend.do?lidx=<%=lv.getLidx()%>" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/proAttend.do?lidx=<%=lv.getLidx()%>" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                            <%} %>
 							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -138,41 +144,56 @@
             
             <div id="layoutSidenav_content">
                <main>
-					<h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">학생 과제 목록</h4>
+					<h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">출결 현황</h3>
 						<div class="card-body mx-auto d-block " style="width:80%">
+						<div class="dropdown">
+						  <button class="btn dropdown-toggle" type="button" id="week" data-bs-toggle="dropdown" aria-expanded="true">
+						   	주차
+						  </button>
+						  <ul class="dropdown-menu" id="state" role="menu" aria-labelledby="dropdownMenu2">
+						  	<li role="presentation"><a class="dropdown-item" href="#" value="1">1주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="2">2주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="3">3주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="4">4주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="5">5주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="6">6주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="7">7주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="8">8주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="9">9주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="10">10주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="11">11주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="12">12주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="13">13주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="14">14주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="15">15주차</a></li>
+						  </ul>
+						</div>
 							<table class="table text-center">
 								<thead>
 									<tr class="table-secondary">
-										<th style="width:10%">No</th>
-									    <th style="width:20%">학번</th>
-									    <th style="width:40%">제목</th>
-									    <th style="width:15%">제출일</th>
-									    <th style="width:15%">제출여부</th>
+										<th scope="col-3">학번</th>
+									    <th scope="col-5">실시간 강의</th>
+									    <th scope="col-5">동영상 강의</th>
 									</tr>
 								</thead>
 								<tbody>
-									<% 	int i = 1;
-										for(S_taskDTO std : submitList) {%>
-										<tr>
-											<th scope="row"><%=i++%></th>
-											<td><%=std.getSidx() %></td>
-											<%if(std.getTsubject()==null) {%>
-										    	<td style="text-align:center">-</td>
-										    	<td style="text-align:center">-</td>
-											    <%} else{ %>
-											    	<td><a style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/stuTaskContent.do?tidx=<%=std.getTidx()%>"><%=std.getTsubject() %></a></td>
-											    	<td><%=std.getTdate().substring(0, 10) %></td>
-											    <%} %>
-										    <%if(std.getTsubyn().equals("Y")) {%>
-										    	<td style="color:blue; text-align:center">제출</td>
-											    <%} else{ %>
-											    	<td style="color:red; text-align:center">미제출</td>
-											    <%} %>
-									    </tr>
-								    <%} %>
+									<tr>
+										<th rowspan='3' valign="middle" align="center" scope="row">1</th>
+									    <td></td>
+									    <td></td>
+									</tr>
+									<tr>
+									    <td></td>
+									    <td></td>
+									</tr>
+									<tr>
+									    <td></td>
+									    <td></td>
+									</tr>
 								</tbody>
 							</table>
                         </div>
+
                 </main>
                 
                 <footer class="py-4 bg-light mt-auto">
@@ -196,5 +217,19 @@
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+        
+        $(function(){
+	        $('#state li > a').on('click', function() {
+	            // 버튼에 선택된 항목 텍스트 넣기 
+	            $('#week').text($(this).text());
+	                
+	            // 선택된 항목 값(value) 얻기
+	            //alert($(this).attr('value'));
+	        });
+        });
+        </script>
+        
     </body>
 </html>

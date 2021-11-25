@@ -133,12 +133,12 @@
                         <table class="table text-center table-bordered" >
 								<thead>
 									<tr class="table-secondary">
-										<th scope="col-3">no</th>
-									    <th scope="col-5">강의명</th>
+										<th scope="col-3" width="10%">no</th>
+									    <th scope="col-5" width="90%">강의명</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr style="text-align:center">
                        				 <%int i=1 ;
                        				 for(LecVO lv : alist){ %>
 										<th scope="row"><%=i++%></th>

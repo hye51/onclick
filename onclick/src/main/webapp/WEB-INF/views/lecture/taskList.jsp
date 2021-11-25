@@ -7,8 +7,8 @@
 <%LecVO lv = (LecVO)session.getAttribute("lv");
 	session.setAttribute("lidx", lv.getLidx());%>
 <%Criteria cri = new Criteria(); %>
-<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
 <%PageMaker pm = (PageMaker)request.getAttribute("pm"); %>
+<%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>
 <%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	Date today = new Date(); %>
 <!DOCTYPE html>
@@ -83,8 +83,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -188,6 +189,29 @@
 								</tbody>
 							</table>
                         </div>
+                        <nav aria-label="Page navigation example fixed-bottom" >
+						  <ul class="pagination pagination-sm justify-content-center" >
+						    <li class="page-item" style="border:none;">
+						    <%if(pm.isPrev() == true) { %>
+								<a class="page-link" style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?page=<%=pm.getStartPage()-1%>&lidx=<%=lv.getLidx()%>" aria-label="이전">
+								<span aria-hidden="true">&laquo;</span>
+								</a>
+							<%} %>
+						    </li>
+						    <% for(int p =pm.getStartPage(); p<=pm.getEndPage(); p++) { %>
+								<li class="page-item">
+								<a class="page-link" style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?page=<%=p %>&lidx=<%=lv.getLidx()%>"><%=p %></a>
+								</li>
+							<% }%>
+						    <li class="page-item">
+						    <%if(pm.isNext() == true && pm.getEndPage()>0) { %>
+								<a class="page-link" style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?page=<%=pm.getEndPage()+1%>&lidx=<%=lv.getLidx()%>" aria-label="다음">
+								<span aria-hidden="true">&raquo;</span>
+								</a>
+							<%} %>
+						    </li>
+						  </ul>
+						</nav>
 					<%} else { %> <!-- 교수 -->
 						<div class="card-body mx-auto d-block " style="width:80%">
 							<button type="button" class="btn btn-secondary mb-2" style="float:right" onclick="location.href='<%=request.getContextPath()%>/taskWrite.do?lidx=<%=lv.getLidx()%>'">과제 업로드</button>
@@ -223,8 +247,7 @@
 								</tbody>
 							</table>
 							</div>
-					<%} %>
-						<nav aria-label="Page navigation example fixed-bottom" >
+							<nav aria-label="Page navigation example fixed-bottom" >
 						  <ul class="pagination pagination-sm justify-content-center" >
 						    <li class="page-item" style="border:none;">
 						    <%if(pm.isPrev() == true) { %>
@@ -241,12 +264,14 @@
 						    <li class="page-item">
 						    <%if(pm.isNext() == true && pm.getEndPage()>0) { %>
 								<a class="page-link" style="color:black; text-decoration:none;" href="<%=request.getContextPath()%>/taskList.do?page=<%=pm.getEndPage()+1%>&lidx=<%=lv.getLidx()%>" aria-label="다음">
-								<span aria-hidden="true">&laquo;</span>
+								<span aria-hidden="true">&raquo;</span>
 								</a>
 							<%} %>
 						    </li>
 						  </ul>
 						</nav>
+					<%} %>
+						
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

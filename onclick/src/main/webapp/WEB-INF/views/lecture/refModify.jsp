@@ -13,14 +13,14 @@
         <meta name="author" content="" />
         <title>ONclick Main</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../app/resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -47,7 +47,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="<%=request.getContextPath() %>/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -75,8 +75,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
-						<img alt="" src="../app/resources/assets/img/home.png">
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -97,11 +98,19 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<% }%>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
@@ -127,9 +136,9 @@
             </div>
             <!-- 자료 수정하기 화면 -->
             <div id="layoutSidenav_content">
-	            <h2 class="mt-4 ms-3">업로드</h2>
-                	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active">자료 수정</li>
+	            <h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">자료 수정</h3>
+                	<ol class="breadcrumb mb-4 ps-5">
+                    	<li class="breadcrumb-item active"><%=rv.getRname() %></li>
                 	</ol>
             	<main>
 					<div class="container-fluid px-4 ">
@@ -145,7 +154,12 @@
 							    <tr>
 							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">첨부 파일</td>
 							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      	<%if(session.getAttribute("fv") == null) {%>
 							      		<input class="form-control" name="refFile" type="file"  /> 
+							      	<%} else {
+							    		FileVO fv = (FileVO)session.getAttribute("fv"); %>
+							      		<input class="form-control" name="refFile" id="refFile" type="file" disabled/>
+							      	<%} %>
 							      	</td>
 							    </tr>
 							    <%if(session.getAttribute("fv") != null) {
@@ -196,12 +210,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../app/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../app/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="<../app/resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
         
@@ -229,6 +243,7 @@
 						if(data.value == 2) {
 							$('.exFile').css("display", "none");
 							alert("삭제되었습니다.");
+							$("#refFile").attr("disabled",false);
 						} else {
 							alert("파일이 삭제되지 않았습니다.");
 						}

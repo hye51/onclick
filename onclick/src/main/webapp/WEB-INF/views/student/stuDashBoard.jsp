@@ -3,9 +3,12 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.onclick.app.domain.*" %>
+<% int sidx = (Integer)session.getAttribute("sidx"); %>
 <%ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList"); %>
 <%ArrayList<TaskVO> stuTaskList = (ArrayList<TaskVO>)request.getAttribute("stuTaskList"); %>
 <%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
+<%ArrayList<ClassVo> clist = (ArrayList<ClassVo>)request.getAttribute("clist"); %>
+<%ArrayList<ClassVo> lclist = (ArrayList<ClassVo>)request.getAttribute("lclist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -204,8 +207,13 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">최근 수강중인 강의</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <table class="text-center">
+                                        <% for(ClassVo cv : lclist) { %>
+											<tr>
+											<td style=" text-align:left"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx %>&cidx=<%=cv.getCidx()%>"><%=cv.getCname()%></td>
+											</tr>
+										<% } %>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -213,8 +221,13 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">마감 예정인 강의</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <table class="text-center">
+                                        <% for(ClassVo cv : clist) { %>
+											<tr>
+											<td style=" text-align:left"><a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx %>&cidx=<%=cv.getCidx()%>"><%=cv.getCname()%></td>
+											</tr>
+										<% } %>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

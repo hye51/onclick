@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.Criteria;
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecVO;
+import com.onclick.app.domain.PageMaker;
 import com.onclick.app.domain.RefVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.RefService;
@@ -30,6 +32,9 @@ public class RefController { //자료 컨트롤러
 	
 	@Autowired
 	FileService fs;
+	
+	@Autowired
+	PageMaker pm;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -105,10 +110,27 @@ public class RefController { //자료 컨트롤러
 	}
 	
 	@RequestMapping(value="/refList.do")
-	public String refList(@RequestParam("lidx") int lidx, Model model) {
+	public String refList(@RequestParam("lidx") int lidx, 
+					Criteria cri, Model model) {
 		//자료 목록
-		ArrayList<RefVO> rlist = rs.refSelectAll(lidx);
+		//자료 전체 개수
+		int refTC = rs.refTotalCount(lidx);
+		
+		int page = cri.getPage();
+		int perPageNum = cri.getPerPageNum();
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("lidx", lidx);
+		hm.put("page", page);
+		hm.put("perPageNum", perPageNum);
+		
+		ArrayList<RefVO> rlist = rs.refSelectAll(hm);
+		
+		pm.setCri(cri);
+		pm.setTotalCount(refTC);
+		
 		model.addAttribute("rlist", rlist);
+		model.addAttribute("pm", pm);
 		
 		return "lecture/refList";
 	}
