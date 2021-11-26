@@ -294,7 +294,7 @@
 		 } 
 		</style>
         <script type="text/javascript">
-        //알림클릭시 읽음로 표시 
+      //알림클릭시 읽음로 표시 
         function checkClass(nidx,sidx,cidx){
         	//강의 클릭시
         	 $.ajax({

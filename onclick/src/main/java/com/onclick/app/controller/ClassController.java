@@ -47,11 +47,12 @@ public class ClassController {
 		//강좌업로드 실행
 		HashMap<String,Object> value = cs.classInsert(cv);
 		
-		//강좌업로드 알림 
-		String pname= (String)session.getAttribute("pname");
-		int cidx = (Integer)value.get("cidx");
-		int cnt = ns.alarmClassInsert(cv.getLidx(),cidx,pname);
-		
+		if(cv.getCnotyn().equals("Y")) {
+			//강좌업로드 알림 
+			String pname= (String)session.getAttribute("pname");
+			int cidx = (Integer)value.get("cidx");
+			int cnt = ns.alarmClassInsert(cv.getLidx(),cidx,pname);
+		}
 		return "redirect:/proLecList.do?lidx="+cv.getLidx();
 	}
 
@@ -115,6 +116,9 @@ public class ClassController {
 		int result = cs.classDelete(cidx);
 		String location = "";
 		if(result == 1) {
+			//강좌 삭제시 해당 알림 삭제
+			int cnt=ns.alarmClassDelete(cidx);
+			
 			rttr.addFlashAttribute("deleteOk", "삭제하였습니다.");
 			location="redirect:/proLecList.do?lidx="+lidx;
 		}else {

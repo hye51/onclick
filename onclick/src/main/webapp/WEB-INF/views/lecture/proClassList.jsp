@@ -35,30 +35,6 @@
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <!-- heyri1019 alarm -->
-          	<!-- Nav Item - Alerts -->
-          	<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-				    <i class="fas fa-bell fa-fw"></i>
-				    <!-- Counter - Alerts -->
-				    <span class="badge badge-danger badge-counter">3+</span>
-				</a>
-				<!-- Dropdown - Alerts -->
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<h6 class="dropdown-header">Alerts</h6>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-				</ul>     
-			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -99,17 +75,25 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecContent.do">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                           	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="#">
+                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<% }%>
+                           <a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="#">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -130,14 +114,8 @@
             
             <div id="layoutSidenav_content">
                <main>
-               	<div class="card p-4 mt-4 ms-5" style="width:90%">
-					<div class="card-body" style="width:100%">
-               	<% if(alist.isEmpty()){ %>
-					    등록된 강의가 없습니다.
-				<%} %>
-					</div>
-				</div>
-				<div class="container-fluid p-4 ms-5" style="width:90%">
+              	 <h4 class="mt-4 pt-3 ps-5" style="font-weight:bold">강의 목록</h4>
+            	<div class="container-fluid p-4 ms-5" style="width:90%">
                	</br>
 				<nav style="float: right">
 					<a class="btn btn-primary" href="<%=request.getContextPath()%>/lecUpload.do">강의 업로드</a>							

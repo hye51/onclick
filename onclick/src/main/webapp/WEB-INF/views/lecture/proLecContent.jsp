@@ -33,30 +33,6 @@
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <!-- heyri1019 alarm -->
-          	<!-- Nav Item - Alerts -->
-          	<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-				    <i class="fas fa-bell fa-fw"></i>
-				    <!-- Counter - Alerts -->
-				    <span class="badge badge-danger badge-counter">3+</span>
-				</a>
-				<!-- Dropdown - Alerts -->
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<h6 class="dropdown-header">Alerts</h6>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-				</ul>     
-			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		        <li class="nav-item">
@@ -154,6 +130,7 @@
 								  <source src="<%=cv.getCfile()%>" type="video/mp4">
 								</video>
 							  <% }%>
+							</iframe>
 								<br>
 								<div class="bd-callout bd-callout-info shadow ">
 								  <div class="card-body">

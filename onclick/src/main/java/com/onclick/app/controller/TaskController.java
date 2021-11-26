@@ -137,6 +137,7 @@ public class TaskController { //교수 과제 컨트롤러
 			@RequestParam("taskFin") String tufin,
 			@RequestParam("taskContents") String tucontents,
 			@RequestParam("taskFile") MultipartFile tufile,
+			@RequestParam("taskNotice") String taskNotice,
 			HttpSession session) throws Exception{
 
 		String str = null;
@@ -158,10 +159,11 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 0) {
 				str = "redirect:/taskWrite.do";
 			} else {
-				//과제 업로드 알림 
-				String pname= (String)session.getAttribute("pname");
-				int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
-				
+				if(taskNotice.equals("Y")) {
+					//과제 업로드 알림 
+					String pname= (String)session.getAttribute("pname");
+					int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
+				}
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 			
@@ -197,9 +199,11 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 0) {
 				str = "redirect:/taskWrite.do";
 			} else {
-				//과제 업로드 알림 
-				String pname= (String)session.getAttribute("pname");
-				int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
+				if(taskNotice.equals("Y")) {
+					//과제 업로드 알림 
+					String pname= (String)session.getAttribute("pname");
+					int cnt = ns.alarmTaskInsert(lidx, tuidx, pname);
+				}
 				
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
@@ -313,6 +317,9 @@ public class TaskController { //교수 과제 컨트롤러
 		if(value == 0) {
 			str="redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 		} else {
+			//과제가 삭제시 해당 알림 삭제
+			int result = ns.alarmTaskDelete(tuidx);
+			
 			rttr.addFlashAttribute("msg", "삭제되었습니다.");
 			str="redirect:/taskList.do?lidx="+lidx;
 		}
