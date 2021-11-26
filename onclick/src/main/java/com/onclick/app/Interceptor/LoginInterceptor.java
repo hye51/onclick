@@ -11,28 +11,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
 	//로그인을 하고 난 후 세션값을 담아 놓는  역할을 하는 클래스
 	
-	@Override
-	public void postHandle(
-			HttpServletRequest request, 
-			HttpServletResponse response, 
-			Object handler, 
-			ModelAndView modelAndView
-			) throws Exception {
-
-			Object sidx = modelAndView.getModel().get("sidx");			
-			Object pidx = modelAndView.getModel().get("pidx");
-
-			HttpSession session = request.getSession();
-			
-			if(sidx != null) {			
-				session.setAttribute("sidx", sidx);
-			} 
-			
-			if(pidx != null) { 
-				session.setAttribute("pidx", pidx);
-			}
-		
-	}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        // TODO Auto-generated method stub
+        super.postHandle(request, response, handler, modelAndView);
+    }
+ 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        // TODO Auto-generated method stub
+        super.afterCompletion(request, response, handler, ex);
+    }
 	
 	public boolean preHandle(
 			HttpServletRequest request, 
