@@ -112,6 +112,18 @@
 	        	alert(msg);
 	        }
 	        
+	        var msg = '${logout}';
+	        if(msg != ""){
+	        	//로그아웃 알림창
+	        	alert(msg);
+	        }
+	        
+	        var msg = '${hold}';
+	        if(msg != ""){
+	        	//개발 보류 알림 창
+	        	alert(msg);
+	        }
+	        
 			//학생 로그인 
         	function stuCheck(){
 			
