@@ -41,6 +41,7 @@
 	    <interceptor>
 		    <mapping path="/student/stuDashBoard.do"/>
 		    <mapping path="/professor/proDashBoard.do"/>
+		    <mapping path="/lecHome.do"/>
 		    <mapping path="/lecture/*.do"/>
 		    <beans:ref bean="authInterceptor"/>		    
 		</interceptor>

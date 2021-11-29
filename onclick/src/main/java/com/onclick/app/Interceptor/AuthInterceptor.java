@@ -1,12 +1,10 @@
 package com.onclick.app.Interceptor;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter{
@@ -19,7 +17,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();		
 		
 		if(session.getAttribute("sidx") == null) {				
-			//학생로그인 했을 때
+			//학생로그인 했을 때		
 			if(session.getAttribute("pidx") == null) {
 				//교수, 학생 로그인 실패 시
 				response.sendRedirect(request.getContextPath()+"/");

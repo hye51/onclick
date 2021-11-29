@@ -20,4 +20,7 @@ public interface ProfessorService_Mapper {
 	
 	//교수 정보 보기 
 	public ProfessorVO proInfo(int pidx);
+	
+	//교수 정보 수정
+	public int professorModifyAction(HashMap<String, Object> hm);
 }

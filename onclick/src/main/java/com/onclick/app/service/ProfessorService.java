@@ -15,6 +15,9 @@ public interface ProfessorService {
 	
 	//교수 비밀번호 확인
 	public int proPwdCheck(String ppwd);
+	
+	//교수 정보 수정 
+	public int professorModifyAction(int pidx, String ppwd);
 
 	//교수 정보 보기 
 	public ProfessorVO proInfo(int pidx);

@@ -19,7 +19,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -46,7 +46,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="<%=request.getContextPath() %>/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -58,15 +58,19 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
-		        </li>
+				<li class="nav-item">
+					<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+					<a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">Mypage</a>
+					<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+					<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
+					<% } %>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">LogOut</a>
+				</li>
 		      </ul> 			     
         </nav>
         <div id="layoutSidenav">
