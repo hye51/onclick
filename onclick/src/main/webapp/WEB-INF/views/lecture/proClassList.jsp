@@ -133,7 +133,6 @@
 				    <%for(ClassVo cv : alist){%>
 				      <% if(cv.getCweek()==i){ %>
 				      <div class="accordion-body">
-				      <!-- 교수인지 학생인지 구분 필요 -->
 						<a href="<%=request.getContextPath()%>/proLecContent.do?pidx=<%=pidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 						<span> </span>
 				      </div>

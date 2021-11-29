@@ -1,11 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
 <%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
+<%
+LocalDate now = LocalDate.now();
+LocalDate fin = LocalDate.parse(cv.getCfin(),DateTimeFormatter.ISO_DATE);
+
+if(now.isAfter(fin)) {%>
+<script type="text/javascript">
+	var result='N';
+	var confirm= window.confirm("출석 인정 기간이 지난 영상입니다. 시청 기록은 기록되지 않습니다."
+				+"강의를 수강하시겠습니까?");
+	if(!confirm){
+		location.href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>";
+	}
+</script>
+<% }else{%>
+<script type="text/javascript">
+	var result='Y';
+</script>
+<%} %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -146,7 +166,7 @@
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
 						      <% if(cv.getCfile() != null){ %>
-								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
+								<video  id="myVideo" class="bar" style="width:100%; height:450px;" controlsList="nodownload" controls>
 								  <source src="<%=cv.getCfile()%>" type="video/mp4">
 								</video>
 							 <% } %>
@@ -261,7 +281,8 @@
         			"vstart": startTime,
         			"vfull":videoFulltime,
         			"cidx":<%=cv.getCidx()%>,
-        			"vpercent":<%=vd.getVpercent()%>},
+        			"vpercent":<%=vd.getVpercent()%>,
+        			"result":result},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},
@@ -269,6 +290,7 @@
         			alert("에러입니다.");
         		}
         	});
+		
 			
 		}, false);
 		
@@ -286,10 +308,11 @@
 	     		$('.reln').css("display","inline-block");
 	     	}
      	 });
+
         </script>
 		<style>
 		/*영상 조각 방지*/ 
-		 video::-webkit-media-controls-timeline {
+		video::-webkit-media-controls-timeline {
 		 display : none;
 		 } 
 		</style>
