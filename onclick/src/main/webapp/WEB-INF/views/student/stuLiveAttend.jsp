@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
+<%ArrayList<AttendenceDTO> alist = (ArrayList<AttendenceDTO>)request.getAttribute("alist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +21,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
-           	<img alt="" src="../app/resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -46,7 +48,7 @@
 				<a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-secondary">
-                           <img src="../resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
+                           <img src="<%=request.getContextPath() %>/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
                         </div>
                     </div>
                     <div>
@@ -74,8 +76,9 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../app/resources/assets/img/home.png">
+							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
 							<%=lv.getLname() %>
+							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -91,22 +94,50 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<a class="nav-link" href="#" >
+                          	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecContent.do">
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                </nav>
+                            	</div>
+                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                </nav>
+                               	</div>
+                            <%} %>
+							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="#">
+                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<% }%>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="#">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do?lidx=<%=lv.getLidx()%>">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -124,100 +155,49 @@
                     </div>
                 </nav>
             </div>
+            
             <div id="layoutSidenav_content">
-                <h2 class="mt-4 ms-3">업로드</h2>
-                	<ol class="breadcrumb mb-4 ms-4">
-                    	<li class="breadcrumb-item active">자료 업로드</li>
-                	</ol>
-            	<main>
-					<div class="container-fluid px-4 ">
-					<form name="upload">
-						<table class="table mx-auto bg-light" style="width:80%">   
-							<tbody>
-								<tr>
-							      	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의주차</td>
-								      <td colspan="2" style="border-bottom:0; width:50%" >
-								      	<select class="form-select" name="cweek">
-								      	 <option class="form-select" selected>-- 강의 주차 선택 --</option>
-										  <% for(int i=1;i<16;i++) { %>
-										  <option value="<%=i %>"><%=i %>주차</option>
-										  <% } %>
-										</select>
-								  	</td>		
-							    </tr>
-							    <tr>
-							    	<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 인정일</td>
-							      	<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="csta" style="border:0; width:100%" ></td>
-									</td>
-									<td class="text-secondary" style="border-bottom:0; text-align:left; width:15%">출석 마감일</td>
-									<td style="border-bottom:0; width:35%">
-							      		<input class="form-control" type="date" name="cfin" style="border:0; width:100%" ></td>
-									</td>
-							    </tr>
-								<tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의명</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control"  name ="cname" type="text" /> 
-									</td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">강의 영상</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-control"  name ="cfile" type="text" placeholder="업로드할 강의 영상의 링크를 입력해주세요." /> 
-									</td>
-							    </tr>
-							    <tr>
-							    	<td colspan="4" style="border-bottom:0"><input type="text" name="ccontents" style="width:100%; height:300px; border:0; solid; black"></td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">알림 전송</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="cnotyn" value="Y" checked>
-											<label class="form-check-label">
-											발송
-											</label>
-										<input class="form-check-input" type="radio" name="cnotyn" value="N">
-											<label class="form-check-label" >
-											미발송
-											</label>
-									</td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">다시보기</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="creyn" value="Y" checked>
-											<label class="form-check-label">
-											사용
-											</label>
-										<input class="form-check-input" type="radio" name="creyn" value="N">
-											<label class="form-check-label">
-											미사용
-											</label>
-									</td>
-							    </tr>
-							    <tr>
-							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">실시간/동영상</td>
-							      	<td colspan="3" style="border-bottom:0; width:90%">
-							      		<input class="form-check-input" type="radio" name="clive" value="Y">
-											<label class="form-check-label">
-											실시간
-											</label>
-										<input class="form-check-input" type="radio" name="clive" value="N" checked>
-											<label class="form-check-label">
-											동영상
-											</label>
-									</td>
-							    </tr>
-							</tbody>
-						</table>
-						<div class="form-row text-center mb-2">
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px">취소</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
-                    	</div>
-                   	</form>
-                	</div>	
+               <main>
+					<h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">출결 현황</h3>
+						<div class="card-body mx-auto d-block " style="width:80%">
+							<table class="table text-center">
+								<thead>
+									<tr class="table-secondary">
+										<th style="width:15%">주차</th>
+									    <th style="width:55%">강의명</th>
+									    <th style="width:15%">출석여부</th>
+									</tr>
+								</thead>
+								<tbody>
+								<%for(int i=1; i<16; i++) {%>
+									<tr>
+										<th scope="row" style="valign:center;"><%=i %></th>
+									    <td><%for(AttendenceDTO adto : alist) {
+									    		if(adto.getCweek()==i) {%>
+									    		<%=adto.getCname() %>
+									    	<%} if(alist.size() > 1){
+									    		out.println("<br>");
+									    	}
+									    	} %></td>
+									    <td><%for(AttendenceDTO adto : alist) {
+									    		if(adto.getCweek()==i) {
+									    			if(adto.getAattend().equals("Y")) {%>
+									    			<span style="color:blue">O</span>
+									    			<%} else { %>
+									    			<span style="color:red">X</span>
+									    			<%} %>
+									    	<%} if(alist.size() > 1){
+									    		out.println("<br>");
+									    	 }
+									    	} %></td>
+									</tr>
+								<%} %>	
+								</tbody>
+							</table>
+                        </div>
+
                 </main>
+                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -239,39 +219,10 @@
         <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-        //강의 업로드 작성시 유효성검사
-        function check() {
-			var fm= document.upload;
-			
-			if(fm.csta.value == ""){
-				fm.csta.focus();
-				alert("시작일을 입력하세요");
-				return false;
-			}else if(fm.cfin.value == ""){
-				fm.cfin.focus();
-				alert("마감일을 입력하세요");
-				return false;
-			}else if(fm.cweek.value == ""){
-				fm.cweek.focus();
-				alert("강의주차를 입력하세요");
-				return false;
-			}else if(fm.cname.value == ""){
-				fm.cname.focus();
-				alert("강의명을 입력하세요");
-				return false;
-			}else if(fm.ccontents.value == ""){
-				fm.ccontents.focus();
-				alert("강의 내용을 입력하세요");
-				return false;
-			}
-				fm.action="<%=request.getContextPath()%>/lecUploadAction.do?lidx=<%=lv.getLidx()%>";
-				fm.method = "post";
-				//fm.enctype="multipart/form-data"; 
-				fm.submit();
-				return;
-		}
-
+        
         </script>
+        
     </body>
 </html>

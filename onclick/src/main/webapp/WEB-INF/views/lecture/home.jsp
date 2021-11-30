@@ -90,17 +90,29 @@
                                 </nav>
                             </div>
                           	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
-                          	<a class="nav-link" href="<%=request.getContextPath()%>/stuAttend.do?lidx=<%=lv.getLidx()%>" >
+                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                </nav>
+                            	</div>
                             <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
-                            <a class="nav-link" href="<%=request.getContextPath()%>/proAttend.do?lidx=<%=lv.getLidx()%>" >
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>&cweek=0">동영상 강의 출석</a>
+                                </nav>
+                               	</div>
                             <%} %>
 							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">

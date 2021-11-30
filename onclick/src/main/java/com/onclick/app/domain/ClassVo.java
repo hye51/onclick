@@ -16,7 +16,15 @@ public class ClassVo {
 	private String cnotyn;/* 알림 여부 */
 	private String cdelyn; /* 삭제 여부 */
 	private int lidx;/* 강의 고유번호 */
+	private String clive; /* 실시간(Y) 또는 동영상(N)구분*/
 
+	
+	public String getClive() {
+		return clive;
+	}
+	public void setClive(String clive) {
+		this.clive = clive;
+	}
 	public int getCidx() {
 		return cidx;
 	}

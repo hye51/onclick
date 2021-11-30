@@ -14,6 +14,9 @@ public interface ClassService_Mapper {
 	//강좌 업로드에 따른 동영상 기본값 입력
 	public int stuVideoDefault(int cidx, int lidx);
 	
+	//강좌 업로드에 따른 실시간 기본값 입력
+	public int stuLiveDefault(int cidx, int lidx);
+	
 	//강좌 리스트 
 	public ArrayList<ClassVo> classSelect(int lidx);
 	
@@ -37,5 +40,8 @@ public interface ClassService_Mapper {
 	
 	//학생 대시보드 - 최근 수강한 강의
 	public ArrayList<ClassVo> lastClassDash(int sidx);
+	
+	//주차별 강의 정보 가져오기
+	public ArrayList<ClassVo> classWeekVideo(int lidx, int cweek);
 
 }
