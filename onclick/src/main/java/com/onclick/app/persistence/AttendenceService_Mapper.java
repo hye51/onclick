@@ -1,16 +1,15 @@
-//211027 jhr 작업
-package com.onclick.app.service;
+package com.onclick.app.persistence;
 
 import java.util.ArrayList;
 
 import com.onclick.app.domain.AttendenceDTO;
 import com.onclick.app.domain.VideoDTO;
 
-public interface AttendenceService {
+public interface AttendenceService_Mapper {
 
 	//학생 출석 정보 가져오기 - 동영상
 	public ArrayList<VideoDTO> stuVideoAttend(int lidx, int sidx);
-	
+
 	//학생 출석 정보 가져오기 - 실시간
 	public ArrayList<AttendenceDTO> stuLiveAttend(int lidx, int sidx);
 	
