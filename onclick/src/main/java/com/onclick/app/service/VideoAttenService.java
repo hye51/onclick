@@ -20,4 +20,7 @@ public interface VideoAttenService {
 	
 	//학생 강좌별 수강현황
 	public ArrayList<VideoAttenDto> stuAttendence(int sidx);
+	
+	//강의 평가
+	public int videoLevelUpdate(int vlevel, int vidx);
 }

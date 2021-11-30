@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%ArrayList<ClassVo> alist=(ArrayList<ClassVo>)request.getAttribute("alist"); %>
 <%ArrayList<VideoAttenDto> stuAttList=(ArrayList<VideoAttenDto>)request.getAttribute("stuAttList"); %>
 <%int sidx =(Integer)session.getAttribute("sidx"); %>
+<%LocalDate now = LocalDate.now();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -150,6 +153,7 @@
 				      <% if(cv.getCweek()==i){ %>
 				      <div class="accordion-body">
 					<%for(VideoAttenDto vd : stuAttList){ %>
+					<% LocalDate start = LocalDate.parse(cv.getCsta(),DateTimeFormatter.ISO_DATE); %>
 				      <%if(cv.getCidx() == vd.getCidx()){ %>
 					      <% if(cv.getCreyn().equals("N")&&vd.getVattendence().equals("Y")){ %>
 				      		<!-- 수강완료후 다시보기 불가인경우 -->
@@ -157,12 +161,21 @@
 					      <%}else if(cv.getCreyn().equals("Y")&&vd.getVattendence().equals("Y")){ %>
 					      	<!-- 수강완료후 다시보기 가능한 경우 -->
 					      	<a href="<%=request.getContextPath()%>/stuLecRe.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
+					      <%}else if(now.isBefore(start)){ %>
+					      	<!-- 수강 인정 기간이 오늘 날짜보다 이른경우 -->
+					      	<a href="#" class="disable" onclick="attenDisable('<%=start%>'); return false;"><%=cv.getCname()%></a>
 					      <%}else{ %>
 							<a href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx%>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a>
 						  <%}%>
-				        <%if(vd.getVattendence().equals("Y")){ %>
+				        <%if(vd.getVattendence().equals("Y")&&vd.getVlevel()==0){ %>
 						 <span class="badge rounded-pill bg-primary">수강 완료</span>
-					    <%}%>
+						 <span class="badge rounded-pill bg-warning"> 
+						 <a onclick="window.open('<%=request.getContextPath()%>/lecEvaluation.do?vidx=<%=vd.getVidx()%>', '_blank', 
+                       'top=140, left=300, width=500, height=400,location=no, directories=no,copyhistory=no, resizable=no');">강의 평가 전</a></span>
+					    <%}else if(vd.getVattendence().equals("Y")&&vd.getVlevel()!=0){%>
+					    <span class="badge rounded-pill bg-primary">수강 완료</span>
+						 <span class="badge rounded-pill bg-success">강의 평가 완료</span>
+					    <%} %>
 				      <%} %>
 					<%}%>
 				      </div>
@@ -205,6 +218,10 @@
         
         function videoRe(){
         	alert("수강완료 후 다시보기가 거부된 강의입니다.");
+        }
+        
+        function attenDisable(start){
+        	alert("시청이 가능한 기간은 " + start+"부터 입니다." );
         }
         </script>
         <script type="text/javascript">

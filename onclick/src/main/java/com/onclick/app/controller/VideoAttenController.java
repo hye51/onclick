@@ -28,15 +28,25 @@ public class VideoAttenController {
 	
 	@Autowired
 	LecService ls;
-	
-	/*
 
-	@RequestMapping(value="/.do")
-	public String videoLevelUpdate() {
-		//동영상 시청후 강의난이도 작성
-		return null;
+	@RequestMapping(value="/lecEvaluation.do")
+	public String videoLevelUpdate( @RequestParam("vidx") int vidx,
+									Model model) {
+		//강의난이도 작성페이지 불러오기 
+		model.addAttribute("vidx", vidx);
+		
+		return "lecture/lecEvaluation";
 	}
-		 */
+	
+	@RequestMapping(value="/lecEvaluationAction.do")
+	public String videoLevelUpdateAction(@RequestParam("vlevel") int vlevel,
+										 @RequestParam("vidx") int vidx) {
+		//동영상 시청후 강의난이도 실행 
+		int result = vs.videoLevelUpdate(vlevel, vidx);
+		
+		return "lecture/lecEvaluationSuc";
+	}
+
 
 	@ResponseBody
 	@RequestMapping(value="/videoEnd.do")

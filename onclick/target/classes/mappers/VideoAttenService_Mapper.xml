@@ -30,10 +30,15 @@ AND cidx=#{cidx}
 </select>
 
 <select id="stuAttendence" parameterType="Integer" resultType="vd">
-SELECT sidx,cidx,vattendence
+SELECT sidx,cidx,vattendence, vlevel, vidx
 FROM onclick_videoattendence 
 WHERE sidx=#{0}
 </select>
 
+<update id="videoLevelUpdate" parameterType="Integer">
+UPDATE onclick_videoattendence
+SET vlevel=#{0}
+WHERE vidx=#{1} 
+</update>
 
 </mapper> 

@@ -79,6 +79,15 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		
 		return result;
 	}
+
+	@Override
+	public int videoLevelUpdate(int vlevel, int vidx) {
+		//강의 평가
+		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
+		int result= vsm.videoLevelUpdate(vlevel, vidx);
+		
+		return result;
+	}
 	
 	
 }

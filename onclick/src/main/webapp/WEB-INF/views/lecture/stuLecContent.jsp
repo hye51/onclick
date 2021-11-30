@@ -113,7 +113,7 @@ if(now.isAfter(fin)) {%>
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
@@ -178,7 +178,7 @@ if(now.isAfter(fin)) {%>
 								</div>
 								<br>
 						      <div class="text-center mt-2">
-						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
+						      	<button type="button" class="btn" style="width:100px;" onclick="location.href='<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>'">강의 목록</button>
 						      	 | 
 						      	<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#videorecord" aria-expanded="false" aria-controls="collapseExample" style="width:100px">시청 기록</button>
 								<div class="collapse" id="videorecord">
@@ -463,7 +463,7 @@ if(now.isAfter(fin)) {%>
          });
         </script>
         <style>
-        .icon-circle {
+.icon-circle {
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 100%;
@@ -500,8 +500,6 @@ if(now.isAfter(fin)) {%>
 .d-flex {
     display: flex!important;
 }
-
-
         </style>
     </body>
 </html>
