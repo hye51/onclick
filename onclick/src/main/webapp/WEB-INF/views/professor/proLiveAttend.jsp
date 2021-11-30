@@ -92,18 +92,30 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
-                          	<a class="nav-link" href="<%=request.getContextPath()%>/stuAttend.do?lidx=<%=lv.getLidx()%>" >
+                            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
+                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                </nav>
+                            	</div>
                             <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
-                            <a class="nav-link" href="<%=request.getContextPath()%>/proAttend.do?lidx=<%=lv.getLidx()%>" >
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석 관리
-                                <div class="sb-sidenav-collapse-arrow"></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                </nav>
+                               	</div>
                             <%} %>
 							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
@@ -146,36 +158,50 @@
                <main>
 					<h3 class="mt-4 pt-3 ps-5" style="font-weight:bold">출결 현황</h3>
 						<div class="card-body mx-auto d-block " style="width:80%">
+						<div class="dropdown">
+						  <button class="btn dropdown-toggle" type="button" id="week" data-bs-toggle="dropdown" aria-expanded="true">
+						   	주차
+						  </button>
+						  <ul class="dropdown-menu" id="state" role="menu" aria-labelledby="dropdownMenu2">
+						  	<li role="presentation"><a class="dropdown-item" href="#" value="1">1주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="2">2주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="3">3주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="4">4주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="5">5주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="6">6주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="7">7주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="8">8주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="9">9주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="10">10주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="11">11주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="12">12주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="13">13주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="14">14주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="#" value="15">15주차</a></li>
+						  </ul>
+						</div>
 							<table class="table text-center">
 								<thead>
 									<tr class="table-secondary">
-										<th scope="col-3">주차</th>
-									    <th scope="col-5">실시간 강의</th>
-									    <th scope="col-5">동영상 강의</th>
-									    <th scope="col-5">주차 출석</th>
+										<th style="width:15%">학번</th>
+										<th style="width:15%">이름</th>
+									    <th style="width:23%"></th>
+									    <th style="width:23%"></th>
+									    <th style="width:24%"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<th rowspan='3' valign="middle" align="center" scope="row">1</th>
+										<th rowspan='3' scope="row">1</th>
 									    <td></td>
 									    <td></td>
-									    <td rowspan='3' valign="center">@mdo</td>
-									</tr>
-									<tr>
-									    <td></td>
-									    <td></td>
-									</tr>
-									<tr>
 									    <td></td>
 									    <td></td>
 									</tr>
 								</tbody>
 							</table>
                         </div>
-
                 </main>
-                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -200,6 +226,20 @@
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
         
+        $(function(){
+	        $('#state li > a').on('click', function() {
+	            // 버튼에 선택된 항목 텍스트 넣기 
+	            $('#week').text($(this).text());
+	                
+	            // 선택된 항목 값(value) 얻기
+	            var value = $(this).attr('value');
+	            
+	            
+			
+	    						
+	            
+	        });
+        });
         </script>
         
     </body>
