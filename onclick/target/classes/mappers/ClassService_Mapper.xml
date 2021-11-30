@@ -36,7 +36,19 @@ SELECT aidx_seq.nextval,sidx,#{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>
 
 <select id="classSelect" parameterType="Integer" resultType="cv">
-SELECT *	
+SELECT 	cidx,
+		cname,
+		ccontents,
+		cdate,
+		TO_CHAR(csta, 'YYYY-MM-DD') as csta,
+		TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+		cweek,
+		cseq,
+		cfile,
+		cnotyn,
+		cdelyn,
+		lidx,
+		creyn	
 FROM onclick_class
 WHERE lidx=#{lidx}
 AND cdelyn='N'

@@ -76,6 +76,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	public String lecNoticeWriteAction(@RequestParam("lecNotSubject") String lnsubject,
 										@RequestParam("lecNotContents") String lncontents,
 										@RequestParam("lecNotFile") MultipartFile lnfile,
+										@RequestParam("lecNotNotice") String lndelyn,
 										HttpSession session) throws Exception {
 		//과목 공지사항 작성 완료
 		LecVO lv = (LecVO)session.getAttribute("lv");
@@ -96,10 +97,11 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			int lnidx = Integer.parseInt(String.valueOf(hm.get("lnidx")));
 			
 			if(value == 1) { //insert 성공
-				//공지사항 알림 
-				String pname= (String)session.getAttribute("pname");
-				int cnt = ns.alarmNoticeInsert(lidx, lnidx, pname);
-				
+				if(lndelyn.equals("Y")) {
+					//공지사항 알림 
+					String pname= (String)session.getAttribute("pname");
+					int cnt = ns.alarmNoticeInsert(lidx, lnidx, pname);					
+				}
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNoticeWrite.do";
@@ -133,6 +135,11 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			int lnidx = Integer.parseInt(String.valueOf(hm.get("lnidx")));
 			
 			if(value == 2) { //insert 성공
+				if(lndelyn.equals("Y")) {
+					//공지사항 알림 
+					String pname= (String)session.getAttribute("pname");
+					int cnt = ns.alarmNoticeInsert(lidx, lnidx, pname);					
+				}
 				str="redirect:/lecNoticeContent.do?lnidx="+lnidx;
 			} else {
 				str="redirect:/lecNoticeWrite.do";
@@ -224,6 +231,9 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 		int value = lns.lecNoticeDelete(lnidx);
 		
 		if(value==1) {
+			//공지사항 삭제시 알림 삭제
+			int cnt=ns.alarmNoticeDelete(lnidx);
+			
 			rttr.addFlashAttribute("msg", "삭제되었습니다.");
 			str="redirect:/noticeList.do?lidx="+lidx;
 		} else {

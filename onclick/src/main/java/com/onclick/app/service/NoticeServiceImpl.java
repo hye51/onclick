@@ -77,7 +77,34 @@ public class NoticeServiceImpl implements NoticeService{
 		//알림 상태 읽음으로 변경
 		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
 		int result=nsm.alarmUpdate(nidx);
-		System.out.println(result);
+		
+		return result;
+	}
+
+	@Override
+	public int alarmClassDelete(int cidx) {
+		//강좌 삭제시 알림삭제
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmClassDelete(cidx);
+		
+		return result;
+	}
+
+	@Override
+	public int alarmTaskDelete(int tuidx) {
+		//과제 삭제시 알림삭제
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmTaskDelete(tuidx);
+		
+		return result;
+	}
+
+	@Override
+	public int alarmNoticeDelete(int lnidx) {
+		//공지사항 삭제시 알림삭제
+		NoticeService_Mapper nsm = sqlSession.getMapper(NoticeService_Mapper.class);
+		int result=nsm.alarmNoticeDelete(lnidx);
+		
 		return result;
 	}
 

@@ -22,4 +22,12 @@ public interface NoticeService_Mapper {
 	//알림 상태 읽음으로 변경
 	public int alarmUpdate(int nidx); 
 	
+	//강좌 삭제시 알림삭제
+	public int alarmClassDelete(int cidx);
+	
+	//과제 삭제시 알림삭제
+	public int alarmTaskDelete(int tuidx);
+	
+	//공지사항 삭제시 알림삭제
+	public int alarmNoticeDelete(int lnidx);
 }
