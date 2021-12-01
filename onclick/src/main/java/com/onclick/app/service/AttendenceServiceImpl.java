@@ -36,12 +36,23 @@ public class AttendenceServiceImpl implements AttendenceService {
 	}
 
 	@Override
-	public ArrayList<VideoDTO> proVideoAttend(int lidx, int cweek) {
+	public ArrayList<VideoDTO> proVideoAttend(int cidx, int cidx2, int cidx3) {
 		//교수 전체 출석 정보 가져오기 - 동영상(주차별)
-		AttendenceService_Mapper asm = sqlSession.getMapper(AttendenceService_Mapper.class);
-		ArrayList<VideoDTO> vlist = asm.proVideoAttend(lidx, cweek);
 		
+		
+		AttendenceService_Mapper asm = sqlSession.getMapper(AttendenceService_Mapper.class);
+	//	ArrayList<VideoDTO> vlist = asm.proVideoAttend(lidx, cweek);
+		ArrayList<VideoDTO> vlist = asm.proVideoAttend2(cidx, cidx2,cidx3);
 		return vlist;
+	}
+
+	@Override
+	public ArrayList<AttendenceDTO> proLiveAttend(int lidx, int cweek) {
+		//교수 전체 출석 정보 가져오기 - 실시간(주차별)
+		AttendenceService_Mapper asm = sqlSession.getMapper(AttendenceService_Mapper.class);
+		ArrayList<AttendenceDTO> alist = asm.proLiveAttend(lidx, cweek);
+		
+		return alist;
 	}
 
 }

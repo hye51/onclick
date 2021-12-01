@@ -11,6 +11,21 @@ public class VideoDTO {
 	private String clive;
 	private int sidx;
 	private String vattendence;
+	private String vattendence2;
+	
+	public String getVattendence2() {
+		return vattendence2;
+	}
+	public void setVattendence2(String vattendence2) {
+		this.vattendence2 = vattendence2;
+	}
+	public String getVattendence3() {
+		return vattendence3;
+	}
+	public void setVattendence3(String vattendence3) {
+		this.vattendence3 = vattendence3;
+	}
+	private String vattendence3;
 	private String sname;
 	
 	

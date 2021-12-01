@@ -3,6 +3,7 @@ package com.onclick.app.persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.onclick.app.domain.AttendenceDTO;
 import com.onclick.app.domain.ClassVo;
 
 public interface ClassService_Mapper {
@@ -43,5 +44,8 @@ public interface ClassService_Mapper {
 	
 	//주차별 강의 정보 가져오기
 	public ArrayList<ClassVo> classWeekVideo(int lidx, int cweek);
+	
+	//주차별 강의 정보 가져오기(실시간)
+	public ArrayList<ClassVo> classWeekLive(int lidx, int cweek); 
 
 }

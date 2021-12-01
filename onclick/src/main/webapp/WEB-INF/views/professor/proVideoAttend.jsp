@@ -2,7 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.onclick.app.domain.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%ArrayList<VideoDTO> vlist = (ArrayList<VideoDTO>)request.getAttribute("vlist"); %>
+<%ArrayList<VideoDTO> vlist = (ArrayList<VideoDTO>)request.getAttribute("vlist");
+System.out.println("vlist"+vlist);
+System.out.println(vlist.get(0).getSidx());
+System.out.println(vlist.get(0).getSname());
+System.out.println(vlist.get(0).getVattendence());
+System.out.println(vlist.get(0).getVattendence2());
+System.out.println(vlist.get(0).getVattendence3());
+%>
 <%ArrayList<ClassVo> clist = (ArrayList<ClassVo>)request.getAttribute("clist"); %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <!DOCTYPE html>
@@ -103,7 +110,6 @@
                             </a>
                                 <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
                                 </nav>
                             	</div>
@@ -115,8 +121,7 @@
                             </a>
                                 <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/proLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>&cweek=0">동영상 강의 출석</a>
                                 </nav>
                                	</div>
                             <%} %>
@@ -166,58 +171,84 @@
 						   	1 주차
 						  </button>
 						  <ul class="dropdown-menu" id="state" role="menu" aria-labelledby="dropdownMenu2">
-						  	<li role="presentation"><a class="dropdown-item" href="#" value="1">1 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="2">2 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="3">3 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="4">4 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="5">5 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="6">6 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="7">7 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="8">8 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="9">9 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="10">10 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="11">11 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="12">12 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="13">13 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="14">14 주차</a></li>
-						    <li role="presentation"><a class="dropdown-item" href="#" value="15">15 주차</a></li>
+						  	<li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=1" value="1">1 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=2" value="2">2 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=3" value="3">3 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=4" value="4">4 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=5" value="5">5 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=6" value="6">6 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=7" value="7">7 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=8" value="8">8 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=9" value="9">9 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=10" value="10">10 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=11" value="11">11 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=12" value="12">12 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=13" value="13">13 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=14" value="14">14 주차</a></li>
+						    <li role="presentation"><a class="dropdown-item" href="<%=request.getContextPath() %>/proVideoAttend.do?lidx=<%=lv.getLidx() %>&cweek=15" value="15">15 주차</a></li>
 						  </ul>
 						</div>
-						<div id="attendTBL">
-							<table class="table text-center">
+							<table class="table text-center" style="width:100%">
 								<thead>
 									<tr class="table-secondary">
-										<th style="">학번</th>
-										<th style="">이름</th>
-										<%for(ClassVo cv : clist) { 
-											if(cv.getCweek() == 1) {%>
-									    	<th style=""><%=cv.getCname() %></th>
-										<%} 
-										}%>
+										<th style="width:15%">학번</th>
+										<th style="width:10%">이름</th>
+										<%if(clist.size() == 3) {
+											for(int i=0; i<=2; i++) {%>
+									    	<th style="width:25%"><%=clist.get(i).getCname() %></th>
+											<%} 
+											}else if(clist.size() == 2) {
+												for(int i=0; i<=1; i++) {%>
+												<th style="width:25%"><%=clist.get(i).getCname() %></th>
+												<%}%>
+												<th style="width:25%">-</th> 
+											<%} else if(clist.size() == 1) {%>
+													<th style="width:25%"><%=clist.get(0).getCname() %></th>
+													<th style="width:25%">-</th>
+													<th style="width:25%">-</th>
+											<%} else {%>
+												<th style="width:25%">-</th>
+												<th style="width:25%">-</th>
+												<th style="width:25%">-</th>
+											<%} %>
 									</tr>
 								</thead>
 								<tbody>
-								<%for(VideoDTO vdto : vlist) {
-									if(vdto.getCweek() == 1) {%>
+								<%for(VideoDTO vdto : vlist) {%>
 									<tr>
-									    <td><%=vdto.getSidx() %></td>
-									    <td><%=vdto.getSname() %></td>
-									    <%for(int i=1; i<=vlist.size(); i++) {
-									    	if(vdto.getCseq()==i){
-									    		if(vdto.getVattendence().equals("Y")){%>
-									    		<td><span style="color:blue">O</span></td>
-									    		<%} else {%>
-									    		<td><span style="color:red">X</span></td>
-									    		<%} 
-									    	}
-									    }%>
-									</tr>
-								<%} 
-								}%>
+									    <td style="width:15%"><%=vdto.getSidx() %></td>
+									    <td style="width:10%"><%=vdto.getSname() %></td>
+									    <%if(vdto.getVattendence().equals("-")) {%>
+									    	<td style="width:25%;">-<td>
+									    <%} else {
+									    	if(vdto.getVattendence().equals("Y")) {%>
+									    		<td style="style=width:25%;color:blue">출석</td>
+										    <%} else { %>
+										    	<td style="style=width:25%;color:red">결석</td>
+										    <%} 
+										}%>
+									    <%if(vdto.getVattendence2().equals("-")) {%>
+									    	<td style="width:25%;">-<td>
+									    <%} else {
+									    	if(vdto.getVattendence2().equals("Y")) {%>
+									    		<td style="width:25%;color:blue">출석</td>
+										    <%} else { %>
+										    	<td style="width:25%;color:red">결석</td>
+										    <%} 
+										}%>
+									    <%if(vdto.getVattendence3().equals("-")) {%>
+									    	<td style="width:25%;">-<td>
+									    <%} else {
+									    	if(vdto.getVattendence3().equals("Y")) {%>
+									    		<td style="width:25%;color:blue">출석</td>
+										    <%} else { %>
+										    	<td style="width:25%;color:red">결석</td>
+										    <%} 
+										}%>
+								<% }%> 
 								</tbody>
 							</table>
 						</div>
-                        </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -242,14 +273,17 @@
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-        
         $(function(){
 	        $('#state li > a').on('click', function() {
 	            // 버튼에 선택된 항목 텍스트 넣기 
 	            $('#week').text($(this).text());
 	                
 	            // 선택된 항목 값(value) 얻기
-	            var value = $(this).attr('value');
+	            //var value = $(this).attr('value');
+	            
+	            
+			
+	    						
 	            
 	        });
         });

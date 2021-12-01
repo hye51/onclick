@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onclick.app.domain.AttendenceDTO;
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.persistence.ClassService_Mapper;
 
@@ -138,9 +139,18 @@ public class ClassServiceImpl implements ClassService{
 
 	@Override
 	public ArrayList<ClassVo> classWeekVideo(int lidx, int cweek) {
-		//주차별 강의 정보 가져오기
+		//주차별 강의 정보 가져오기(동영상)
 		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
 		ArrayList<ClassVo> clist = csm.classWeekVideo(lidx, cweek);
+		return clist;
+	}
+
+	@Override
+	public ArrayList<ClassVo> classWeekLive(int lidx, int cweek) {
+		//주차별 강의 정보 가져오기(실시간)
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> clist = csm.classWeekLive(lidx, cweek);
+		
 		return clist;
 	}
 

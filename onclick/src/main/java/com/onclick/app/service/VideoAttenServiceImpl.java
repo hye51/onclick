@@ -32,7 +32,7 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		int percent= vd.getVpercent();
 		int full = vd.getVfull();
 
-		if(((double) percent / (double) full * 100.0) > 80.0) {
+		if(((double) percent / (double) full * 100.0) > 80.0 && vd.getVlevel()!=0) {
 			hm.put("vattendence", "Y");
 		}else {
 			hm.put("vattendence", "N");
