@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.domain.LecNoticeVO;
@@ -53,6 +55,18 @@ public class HomeController {
 	public String join() {
 		//학생,교수 회원 가입 화면
 		return "join";
+	}
+	
+	@RequestMapping(value="/find.do")
+	public String find() {
+		//학생,교수 ID/PW 찾기 화면
+		return "find";
+	}
+	
+	@RequestMapping(value="/siteMap.do")
+	public String siteMap() {
+		//학생,교수 ID/PW 찾기 화면
+		return "siteMap";
 	}
 	
 	@RequestMapping(value="/lecHome.do")
@@ -98,4 +112,19 @@ public class HomeController {
 		ArrayList<NoticeVO> data = ns.alarmList(sidx);
 		return data;
 	}
+	
+
+	@RequestMapping(value="/logout.do", method=RequestMethod.GET)
+	public String professorLogout(RedirectAttributes rttr,  HttpSession session) throws Exception{
+			//공통화면 로그아웃
+			
+			 //세션에 저장된 값을 삭제
+			 session.invalidate();
+			 
+			 rttr.addFlashAttribute("logout", "로그아웃 하였습니다.");
+
+			return "redirect:/";
+	}
+	
+	
 }

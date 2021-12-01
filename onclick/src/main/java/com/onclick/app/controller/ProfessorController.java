@@ -99,6 +99,21 @@ public class ProfessorController {
 		return cnt;
 	}
 	
+	@RequestMapping(value="/professor/proModifyAction.do")
+	public String professorModifyAction(@RequestParam("ppwd") String ppwd,
+									  @RequestParam("pemail1") String pemail1,
+									  @RequestParam("pemail2") String pemail2,
+									  @RequestParam("pphone1") String pphone1,
+									  @RequestParam("pphone2") String pphone2,
+									  @RequestParam("pphone3") String pphone3
+									) {
+		//교수 정보 수정실행
+		String pemail = pemail1+"@"+pemail2;
+		String pphone = pphone1 + "-" + pphone2 + "-" +pphone3;
+		
+		return "redirect:/professor/pwdCheck.do";
+	}
+	
 
 	@RequestMapping(value="/professor/proInfo.do")
 	public String professorInfo(@RequestParam("pidx") int pidx, Model model, HttpSession session) {
