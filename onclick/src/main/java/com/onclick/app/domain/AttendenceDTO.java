@@ -12,8 +12,15 @@ public class AttendenceDTO {
 	private String clive;
 	private int sidx;
 	private String aattend;
+	private String sname;
+		
 	
-	
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
 	public int getLidx() {
 		return lidx;
 	}

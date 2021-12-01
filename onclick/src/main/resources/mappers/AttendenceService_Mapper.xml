@@ -14,11 +14,11 @@ ORDER BY a.cweek, a.cseq
 </select>
 
 <select id="stuLiveAttend" parameterType="Integer" resultType="adto">
-SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.aattend
-FROM onclick_class a
-JOIN onclick_attendence b
-ON a.cidx = b.cidx
-WHERE b.sidx=#{1}
+SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.aattend, c.sname
+FROM onclick_class a, onclick_attendence b, onclick_student c
+WHERE a.cidx=b.cidx
+AND b.sidx=c.sidx
+AND b.sidx=#{1}
 AND a.lidx=#{0}
 ORDER BY a.cweek, a.cseq
 </select>
@@ -26,6 +26,28 @@ ORDER BY a.cweek, a.cseq
 <select id="proVideoAttend" parameterType="Integer" resultType="vdto">
 SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.vattendence, c.sname
 FROM onclick_class a, onclick_videoattendence b, onclick_student c
+WHERE a.cidx=b.cidx
+AND b.sidx=c.sidx
+AND a.cweek=#{1}
+AND a.lidx=#{0}
+ORDER BY a.cweek, a.cseq
+</select>
+
+<select id="proVideoAttend2" parameterType="Integer" resultType="vdto">
+select sidx,sname,
+nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{0}),'-') as vattendence,
+nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{1}),'-') as vattendence2,
+nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{2}),'-') as vattendence3 
+from onclick_student c
+</select>
+
+
+
+
+
+<select id="proLiveAttend" parameterType="Integer" resultType="adto">
+SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.aattend, c.sname
+FROM onclick_class a, onclick_attendence b, onclick_student c
 WHERE a.cidx=b.cidx
 AND b.sidx=c.sidx
 AND a.cweek=#{1}

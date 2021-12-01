@@ -97,7 +97,6 @@
                             </a>
                                 <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
                                 </nav>
                             	</div>
@@ -109,7 +108,6 @@
                             </a>
                                 <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/proLiveAttend.do?lidx=<%=lv.getLidx()%>">실시간 강의 출석</a>
                                     <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>&cweek=0">동영상 강의 출석</a>
                                 </nav>
                                	</div>

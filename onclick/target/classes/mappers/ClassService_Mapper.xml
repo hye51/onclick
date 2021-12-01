@@ -143,4 +143,13 @@ AND clive='N'
 ORDER BY cweek, cseq
 </select>
 
+<select id="classWeekLive" parameterType="Integer" resultType="cv">
+SELECT *
+FROM onclick_class
+WHERE lidx=#{0}
+AND cweek=#{1}
+AND cdelyn='N'
+AND clive='Y'
+ORDER BY cweek, cseq
+</select>
 </mapper>

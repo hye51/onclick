@@ -4,6 +4,7 @@ package com.onclick.app.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.onclick.app.domain.AttendenceDTO;
 import com.onclick.app.domain.ClassVo;
 
 public interface ClassService {
@@ -32,7 +33,10 @@ public interface ClassService {
 	//학생 대시보드 - 최근 수강한 강의
 	public ArrayList<ClassVo> lastClassDash(int sidx);
 	
-	//주차별 강의 정보 가져오기
+	//주차별 강의 정보 가져오기(동영상)
 	public ArrayList<ClassVo> classWeekVideo(int lidx, int cweek); 
+	
+	//주차별 강의 정보 가져오기(실시간)
+	public ArrayList<ClassVo> classWeekLive(int lidx, int cweek); 
 
 }
