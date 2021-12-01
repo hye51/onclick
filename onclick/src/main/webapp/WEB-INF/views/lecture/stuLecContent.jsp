@@ -1,11 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
 <%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
 <%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
+<%
+LocalDate now = LocalDate.now();
+LocalDate fin = LocalDate.parse(cv.getCfin(),DateTimeFormatter.ISO_DATE);
+
+if(now.isAfter(fin)) {%>
+<script type="text/javascript">
+	var result='N';
+	var confirm= window.confirm("출석 인정 기간이 지난 영상입니다. 시청 기록은 기록되지 않습니다."
+				+"강의를 수강하시겠습니까?");
+	if(!confirm){
+		location.href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>";
+	}
+</script>
+<% }else{%>
+<script type="text/javascript">
+	var result='Y';
+</script>
+<%} %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -93,7 +113,7 @@
                                 	출석 관리
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
@@ -146,7 +166,7 @@
 						      <!-- 211110 동영상 넣기 수정중 jhr-->
 						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
 						      <% if(cv.getCfile() != null){ %>
-								<video  id="myVideo" style="width:100%; height:450px;" controlsList="nodownload" controls>
+								<video  id="myVideo" class="bar" style="width:100%; height:450px;" controlsList="nodownload" controls>
 								  <source src="<%=cv.getCfile()%>" type="video/mp4">
 								</video>
 							 <% } %>
@@ -158,7 +178,7 @@
 								</div>
 								<br>
 						      <div class="text-center mt-2">
-						      	<button type="button" class="btn" style="width:100px;">강의 목록</button>
+						      	<button type="button" class="btn" style="width:100px;" onclick="location.href='<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>'">강의 목록</button>
 						      	 | 
 						      	<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#videorecord" aria-expanded="false" aria-controls="collapseExample" style="width:100px">시청 기록</button>
 								<div class="collapse" id="videorecord">
@@ -261,7 +281,8 @@
         			"vstart": startTime,
         			"vfull":videoFulltime,
         			"cidx":<%=cv.getCidx()%>,
-        			"vpercent":<%=vd.getVpercent()%>},
+        			"vpercent":<%=vd.getVpercent()%>,
+        			"result":result},
         		success:function(cnt){
         			//alert("성공입니다.");
         		},
@@ -269,6 +290,7 @@
         			alert("에러입니다.");
         		}
         	});
+		
 			
 		}, false);
 		
@@ -286,15 +308,16 @@
 	     		$('.reln').css("display","inline-block");
 	     	}
      	 });
+
         </script>
 		<style>
 		/*영상 조각 방지*/ 
-		 video::-webkit-media-controls-timeline {
+		video::-webkit-media-controls-timeline {
 		 display : none;
 		 } 
 		</style>
         <script type="text/javascript">
-        //알림클릭시 읽음로 표시 
+      //알림클릭시 읽음로 표시 
         function checkClass(nidx,sidx,cidx){
         	//강의 클릭시
         	 $.ajax({
@@ -440,7 +463,7 @@
          });
         </script>
         <style>
-        .icon-circle {
+.icon-circle {
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 100%;
@@ -477,8 +500,6 @@
 .d-flex {
     display: flex!important;
 }
-
-
         </style>
     </body>
 </html>

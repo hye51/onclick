@@ -31,9 +31,8 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		//동영상 출석 기록 
 		int percent= vd.getVpercent();
 		int full = vd.getVfull();
-		System.out.println("getVpercent  : "  + vd.getVpercent());
-		System.out.println("percent  : "  + ((double) percent / (double) full * 100.0));
-		if(((double) percent / (double) full * 100.0) > 80.0) {
+
+		if(((double) percent / (double) full * 100.0) > 80.0 && vd.getVlevel()!=0) {
 			hm.put("vattendence", "Y");
 		}else {
 			hm.put("vattendence", "N");
@@ -65,6 +64,29 @@ public class VideoAttenServiceImpl implements VideoAttenService{
 		ArrayList<VideoAttenDto> stuAttList = vsm.stuAttendence(sidx);
 		
 		return stuAttList;
+	}
+
+	@Override
+	public int videoUpdateAfter(VideoAttenDto vd) {
+		//영상 시청 기록 업데이트(출석기간 지난 강의에 대해)
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("sidx", vd.getSidx());
+		hm.put("cidx", vd.getCidx());
+		hm.put("vend", vd.getVend());
+
+		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
+		int result =vsm.videoUpdateAfter(hm);
+		
+		return result;
+	}
+
+	@Override
+	public int videoLevelUpdate(int vlevel, int vidx) {
+		//강의 평가
+		VideoAttenService_Mapper vsm = sqlSession.getMapper(VideoAttenService_Mapper.class);
+		int result= vsm.videoLevelUpdate(vlevel, vidx);
+		
+		return result;
 	}
 	
 	

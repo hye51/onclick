@@ -15,5 +15,7 @@
  <typeAlias alias="cv" type="com.onclick.app.domain.ClassVo"/>
  <typeAlias alias="rv" type="com.onclick.app.domain.RefVO"/>
  <typeAlias alias="nv" type="com.onclick.app.domain.NoticeVO"/>
+ <typeAlias alias="vdto" type="com.onclick.app.domain.VideoDTO"/>
+ <typeAlias alias="adto" type="com.onclick.app.domain.AttendenceDTO"/>
  </typeAliases>  
  </configuration>

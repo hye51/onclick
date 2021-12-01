@@ -1,11 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
-<%ArrayList<LecNoticeVO> lndList = (ArrayList<LecNoticeVO>)request.getAttribute("lndList"); %>
-<%ArrayList<TaskVO> tList = (ArrayList<TaskVO>)request.getAttribute("tlist"); %>
-<%ArrayList<ClassVo> cdList = (ArrayList<ClassVo>)request.getAttribute("cdList"); %>
+<%VideoAttenDto vd =(VideoAttenDto)request.getAttribute("vd"); %>
+<%ClassVo cv = (ClassVo)request.getAttribute("cv"); %>
+<%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
+<%
+LocalDate now = LocalDate.now();
+LocalDate fin = LocalDate.parse(cv.getCfin(),DateTimeFormatter.ISO_DATE);
+if(now.isAfter(fin)) {%>
+<script type="text/javascript">
+	var result='N';
+	var confirm= window.confirm("출석 인정 기간이 지난 영상입니다. 시청 기록은 기록되지 않습니다."
+				+"강의를 수강하시겠습니까?");
+	if(!confirm){
+		location.href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>";
+	}
+</script>
+<% }else{%>
+<script type="text/javascript">
+	var result='Y';
+</script>
+<%} %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,9 +33,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>강의홈</title>
+        <title>강의 내용 </title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="<%=request.getContextPath()%>/resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath() %>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -31,15 +50,10 @@
             <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-             <div class="row">
-	            <div class="dropdown col-md-9">
-				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
-				 강의 이동
-				 </button>
-					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					 </ul>
-				  </div>	               
-	          </div>
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="강의 이동" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
             </form>
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
@@ -60,19 +74,15 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-				<li class="nav-item">
-					<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
-					<a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">Mypage</a>
-					<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
-					<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
-					<% } %>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">LogOut</a>
-				</li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">Mypage</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">사이트맵</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">English</a>
+		        </li>
 		      </ul> 			     
         </nav>
         <div id="layoutSidenav">
@@ -80,9 +90,8 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-							<a style="color:white; text-decoration:none;" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>">
+						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png">
 							<%=lv.getLname() %>
-							<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/home.png"></a>
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
@@ -98,48 +107,22 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
-                          	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
-                          	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
+                          	<a class="nav-link" href="#" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                	출석 관리
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
-                                </nav>
-                            	</div>
-                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	출석관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>&cweek=0">동영상 강의 출석</a>
-                                </nav>
-                               	</div>
-                            <%} %>
-							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
-                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
-                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
-                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	강좌 목록
-                                <div class="sb-sidenav-collapse-arrow"></div>
-                            </a>
-                           	<% }%>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
-                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do?lidx=<%=lv.getLidx()%>">
+                           	<a class="nav-link " href="<%=request.getContextPath()%>/refList.do">
                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                               		자료
                               <div class="sb-sidenav-collapse-arrow"></div>
@@ -157,70 +140,75 @@
                     </div>
                 </nav>
             </div>
+            <!-- 강의 내용보기(학생) -->
             <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4"><%=lv.getLname() %></h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">HOME</li>
-                        </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/noticeList.do?lidx=<%=lv.getLidx()%>">공지사항</a></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                       	<table>
-                                       	<% for(LecNoticeVO lnv : lndList) { %>
-	                                       	<tr>
-		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx=<%=lnv.getLnidx()%>"><%=lnv.getLnsubject() %></a></td>
-	                                    	</tr>
-                                    	<% } %>
-                                    	</table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">과제</a></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                    	<table>
-                                       	<% for(TaskVO tv : tList) { %>
-	                                       	<tr>
-		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/taskContent.do?lidx=<%=tv.getLidx() %>&tuidx=<%=tv.getTuidx()%>"><%=tv.getTuname() %></a></td>
-	                                    	</tr>
-                                    	<% } %>
-                                    	</table>
-                                    </div>
-                                </div>
-                            </div>
-                            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ 
-                                int sidx = (Integer)session.getAttribute("sidx"); %>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">마감 예정인 강의</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                    	<table>
-                                        <% for(ClassVo cv : cdList) { %>
-	                                       	<tr>
-		                                    <td style="text-align:left"><a style="color:white; text-decoration:none; " href="<%=request.getContextPath()%>/stuLecContent.do?sidx=<%=sidx %>&cidx=<%=cv.getCidx()%>"><%=cv.getCname() %></a></td>
-	                                    	</tr>
-                                    	<% } %>
-                                    	</table>
-                                    </div>
-                                </div>
-                            </div>
-                            <%} %>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card text-dark text-black mb-4">
-                                    <div class="card-body">추가</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-black stretched-link" href="#">View Details</a>
-                                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+	            <h2 class="mt-4 ms-3">강의보기</h2>
+                	<ol class="breadcrumb mb-4 ms-4">
+                    	<li class="breadcrumb-item active"><%=cv.getCname()%></li>
+                	</ol>
+            	<main>
+					<div class="container-fluid px-4" style="width:90%; height:700px;">
+						<div class="row m-0" style="width:100%; height:100%">
+						    <div class="col-md-8">
+						      <div class="viewinfo" style="width:100%;">
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px;">
+		                    	<span style="padding-left:3px;"> 작성일 :</span> <%=cv.getCdate() %></div>
+	                   			<div style="padding-right:10px;letter-spacing:-0.5px; margin-top:3px;line-height:160%;">
+			                    <span style="padding-left:3px;">출결 인정 기간 : </span> <%=cv.getCsta() %> ~ <%=cv.getCfin() %></div>
+			                    <div style="padding-right:10px;letter-spacing:-0.5px;">
+			                    <span style="padding-left:3px;">다시보기 여부 : </span> 
+			                    <span class="rely" style="display : none; color:black;">가능</span> 
+			                    <span class="reln" style="display : none; color:black; ">불가능</span> 
+			                    </div>	                    
+                    		</div>
+						      <!-- 동영상 -->
+						      <!-- 211110 동영상 넣기 수정중 jhr-->
+						      <!-- 다운로드 방지를 위해 controlsList="nodownload" 추가 -->
+						      <% if(cv.getCfile() != null){ %>
+								<video  id="myVideo" class="bar" style="width:100%; height:450px;" controlsList="nodownload" controls>
+								  <source src="<%=cv.getCfile()%>" type="video/mp4">
+								</video>
+							 <% } %>
+								<br>
+								<div class="bd-callout bd-callout-info shadow ">
+								  <div class="card-body">
+								    <%=cv.getCcontents() %>
+								  </div>
+								</div>
+								<br>
+						      <div class="text-center mt-2">
+						      	<button type="button" class="btn" style="width:100px;" onclick="location.href='<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>'">강의 목록</button>
+						      	 | 
+						      	<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#videorecord" aria-expanded="false" aria-controls="collapseExample" style="width:100px">시청 기록</button>
+								<div class="collapse" id="videorecord">
+								  <div class="card card-body">
+								    <!-- 재생 상태 -->
+									<p>동영상 재생 <span id="videoProgress">0 / 0</span></p>	
+								  </div>
+								</div>
+						      </div>
+						    </div>
+						    <div class="col">
+						      	강의자료
+						    </div>
+						</div>
+                	</div>
+                	<div class="container-fluid px-4" style="width:80%; height:100px;">
+	                	<div class="row" >
+	                		<div class="col-md-1 text-center">
+	                			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gray" class="bi bi-person-circle" viewBox="0 0 16 16">
+								  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+								  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+								</svg>
+	                		</div>
+	                		<div class="col-md-9">
+	                			<input class="form-control" id="input" type="text" placeholder="댓글을 입력하세요" />
+	                		</div>
+	                		<div class="col-md-2">
+	                			<button type="button" class="btn btn-secondary btn-sm" style="width:50px">등록</button>
+	                		</div>
+		                </div>
+	                </div>	
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -237,20 +225,92 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-area-demo.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/datatables-simple-demo.js"></script>
-        <!-- jquery 3.3.1 라이브러리 활용 -->
+        <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
+         <!-- jquery 3.3.1 라이브러리 활용 -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
-        var sidx = <%=session.getAttribute("sidx")%>;
-        var pidx = <%=session.getAttribute("pidx")%>;
+      //동영상 총 시간 출력 
+		var video1 = document.getElementById("myVideo");
+		var startTime=<%=vd.getVend()%>;
+		var endTime;
+		var videoFulltime;
+
+   	 	//video data 로딩이 끝나기 않은 상태에서 duration 호출시 Nan값이 나옴 
+    	//로딩이 끝난 후 시점에 duration값을 호출하고 싶다면 vdieo에 eventlistener를 이용
+		video1.addEventListener('loadedmetadata', function() {
+			//이전 시청종료시점부터 
+			video1.currentTime=startTime;
+			
+			//전체 재생 시간 (초 단위 절삭)
+		    videoFulltime = Math.floor(video1.duration);
+		    console.log(videoFulltime);
+		});
+		
+		//동영상 재생 시간이 바뀌면 호출되는 이벤트
+		video1.addEventListener('timeupdate', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			var playtime = Math.floor(video1.currentTime);
+		//상태 표시
+		$("#videoProgress").html(playtime + " / " + videoFulltime);
+		}, false);
+		
+		//동영상 재생되면 호출되는 이벤트
+		video1.addEventListener('play', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			startTime = Math.floor(video1.currentTime);
+			console.log("startTime :" + startTime);
+		}, false);
+
+		
+		//동영상 정지되면 호출되는 이벤트
+		video1.addEventListener('pause', function(e){
+			//현재 재생 시간 (초 단위 절삭)
+			endTime = Math.floor(video1.currentTime);
+			console.log("endTime :" + endTime);	
+		
+			$.ajax({
+        		url:"<%=request.getContextPath()%>/videoEnd.do",
+        		type:'post',
+        		data:{"vend" : endTime, 
+        			"vstart": startTime,
+        			"vfull":videoFulltime,
+        			"cidx":<%=cv.getCidx()%>,
+        			"vpercent":<%=vd.getVpercent()%>,
+        			"result":result},
+        		success:function(cnt){
+        			//alert("성공입니다.");
+        		},
+        		error:function(){
+        			alert("에러입니다.");
+        		}
+        	});
+		
+			
+		}, false);
+		
+		 //재생이 종료되었을때 발생하는 이벤트
+		video1.addEventListener('ended', function(e){
+			alert("강의 수강이 완료되었습니다.");
+		}, false);
+
+		//다시보기 여부
+     	var rel = '<%=cv.getCreyn()%>';
+     	$(function(){
+	     	if(rel=='Y'){
+	     		$('.rely').css("display","inline-block");
+	     	}else{
+	     		$('.reln').css("display","inline-block");
+	     	}
+     	 });
+
         </script>
         <script type="text/javascript">
-        //알림클릭시 읽음로 표시 
+      //알림클릭시 읽음로 표시 
         function checkClass(nidx,sidx,cidx){
         	//강의 클릭시
         	 $.ajax({
@@ -395,8 +455,8 @@
 	 			});	
          });
         </script>
-         <style>
-.icon-circle {
+        <style>
+        .icon-circle {
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 100%;

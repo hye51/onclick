@@ -27,13 +27,32 @@ WHERE lidx=#{lidx}
 <select id="alarmList" parameterType="Integer" resultType="nv">
 SELECT * 
 FROM onclick_notice
-WHERE sidx=#{0}
+WHERE sidx=#{0} 
+AND ndelyn='N'
 </select>
 
 <update id="alarmUpdate" parameterType="Integer">
 UPDATE onclick_notice
 SET ncheck='Y' 
 WHERE nidx=#{0}
+</update>
+
+<update id="alarmClassDelete" parameterType="Integer">
+UPDATE onclick_notice
+SET ndelyn='Y' 
+WHERE cidx=#{0}
+</update>
+
+<update id="alarmTaskDelete" parameterType="Integer">
+UPDATE onclick_notice
+SET ndelyn='Y' 
+WHERE tuidx=#{0}
+</update>
+
+<update id="alarmNoticeDelete" parameterType="Integer">
+UPDATE onclick_notice
+SET ndelyn='Y' 
+WHERE lnidx=#{0}
 </update>
 
 </mapper> 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.onclick.app.domain.AttendenceDTO;
 import com.onclick.app.domain.ClassVo;
 import com.onclick.app.persistence.ClassService_Mapper;
 
@@ -32,19 +33,35 @@ public class ClassServiceImpl implements ClassService{
 		hm.put("cnotyn", cv.getCnotyn());
 		hm.put("lidx", cv.getLidx());
 		hm.put("cfile", cv.getCfile());
+		hm.put("clive", cv.getClive());
 		
-		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
-		int result = csm.classInsert(hm);
-
-		//insert후 cidx 값
-		int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
-
-		//강의를 듣는 모든학생 insert 
-		int cnt = csm.stuVideoDefault(cidx, cv.getLidx());
-
 		HashMap<String,Object> value = new HashMap<String,Object>();
-		value.put("result", result);
-		value.put("cidx", cidx);
+		
+		if(cv.getClive().equals("N")) {
+			ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+			int result = csm.classInsert(hm);
+	
+			//insert후 cidx 값
+			int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
+	
+			//강의를 듣는 모든학생 insert (동영상 출석)
+			int cnt = csm.stuVideoDefault(cidx, cv.getLidx());
+	
+			value.put("result", result);
+			value.put("cidx", cidx);
+		} else {
+			ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+			int result = csm.classInsert(hm);
+			
+			//insert후 cidx 값
+			int cidx = Integer.parseInt(String.valueOf(hm.get("cidx")));
+			
+			//강의를 듣는 모든학생 insert (실시간 출석)
+			int cnt = csm.stuLiveDefault(cidx, cv.getLidx());
+			
+			value.put("result", result);
+			value.put("cidx", cidx);
+		}
 		
 		return value;
 	}
@@ -118,6 +135,23 @@ public class ClassServiceImpl implements ClassService{
 		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
 		ArrayList<ClassVo> lclist = csm.lastClassDash(sidx);
 		return lclist;
+	}
+
+	@Override
+	public ArrayList<ClassVo> classWeekVideo(int lidx, int cweek) {
+		//주차별 강의 정보 가져오기(동영상)
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> clist = csm.classWeekVideo(lidx, cweek);
+		return clist;
+	}
+
+	@Override
+	public ArrayList<ClassVo> classWeekLive(int lidx, int cweek) {
+		//주차별 강의 정보 가져오기(실시간)
+		ClassService_Mapper csm = sqlSession.getMapper(ClassService_Mapper.class);
+		ArrayList<ClassVo> clist = csm.classWeekLive(lidx, cweek);
+		
+		return clist;
 	}
 
 

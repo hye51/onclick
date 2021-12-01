@@ -7,12 +7,12 @@
 	<selectKey keyProperty="cidx" resultType="int" order="AFTER"> 
 		SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM DUAL
 	</selectKey>
-	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile)
+	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile,clive)
 	VALUES(
 			ONCLICK_CIDX_SEQ.nextval, 
 			#{cname},
 			#{ccontents},
-			sysdate,
+			sysdate, 
 			#{csta},
 			#{cfin},
 			#{creyn},
@@ -20,7 +20,8 @@
 			(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
 			#{lidx},
 			#{cnotyn},
-			#{cfile}
+			#{cfile},
+			#{clive}
 		)
 </insert>
 
@@ -29,8 +30,25 @@ INSERT INTO onclick_videoattendence(vidx,sidx,cidx)
 SELECT vidx_seq.nextval,sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>	
 
+<insert id="stuLiveDefault" parameterType="Integer">
+INSERT INTO onclick_attendence(aidx,sidx,cidx)
+SELECT aidx_seq.nextval,sidx,#{0} FROM onclick_enroll WHERE lidx=#{1}
+</insert>
+
 <select id="classSelect" parameterType="Integer" resultType="cv">
-SELECT *	
+SELECT 	cidx,
+		cname,
+		ccontents,
+		cdate,
+		TO_CHAR(csta, 'YYYY-MM-DD') as csta,
+		TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+		cweek,
+		cseq,
+		cfile,
+		cnotyn,
+		cdelyn,
+		lidx,
+		creyn	
 FROM onclick_class
 WHERE lidx=#{lidx}
 AND cdelyn='N'
@@ -115,4 +133,23 @@ FROM(
 WHERE ROWNUM <= 5 ]]>
 </select>
 
+<select id="classWeekVideo" parameterType="Integer" resultType="cv">
+SELECT *
+FROM onclick_class
+WHERE lidx=#{0}
+AND cweek=#{1}
+AND cdelyn='N'
+AND clive='N'
+ORDER BY cweek, cseq
+</select>
+
+<select id="classWeekLive" parameterType="Integer" resultType="cv">
+SELECT *
+FROM onclick_class
+WHERE lidx=#{0}
+AND cweek=#{1}
+AND cdelyn='N'
+AND clive='Y'
+ORDER BY cweek, cseq
+</select>
 </mapper>

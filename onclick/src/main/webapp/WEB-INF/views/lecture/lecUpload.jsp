@@ -200,6 +200,19 @@
 											</label>
 									</td>
 							    </tr>
+							    <tr>
+							    	<td scope="row" class="text-secondary" style="border-bottom:0; text-align:left; width:10%">실시간/동영상</td>
+							      	<td colspan="3" style="border-bottom:0; width:90%">
+							      		<input class="form-check-input" type="radio" name="clive" value="Y">
+											<label class="form-check-label">
+											실시간
+											</label>
+										<input class="form-check-input" type="radio" name="clive" value="N" checked>
+											<label class="form-check-label">
+											동영상
+											</label>
+									</td>
+							    </tr>
 							</tbody>
 						</table>
 						<div class="form-row text-center mb-2">
