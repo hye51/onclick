@@ -34,16 +34,12 @@ ORDER BY a.cweek, a.cseq
 </select>
 
 <select id="proVideoAttend2" parameterType="Integer" resultType="vdto">
-select sidx,sname,
-nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{0}),'-') as vattendence,
-nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{1}),'-') as vattendence2,
-nvl((select vattendence from  onclick_videoattendence a  where a.sidx=c.sidx and a.cidx=#{2}),'-') as vattendence3 
-from onclick_student c
+SELECT sidx,sname,
+IFNULL((select vattendence FROM onclick_videoattendence a WHERE a.sidx=c.sidx AND a.cidx=#{0}),'-') as vattendence,
+IFNULL((select vattendence FROM onclick_videoattendence a WHERE a.sidx=c.sidx AND a.cidx=#{1}),'-') as vattendence2,
+IFNULL((select vattendence FROM onclick_videoattendence a WHERE a.sidx=c.sidx AND a.cidx=#{2}),'-') as vattendence3 
+FROM onclick_student c
 </select>
-
-
-
-
 
 <select id="proLiveAttend" parameterType="Integer" resultType="adto">
 SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.aattend, c.sname

@@ -3,23 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.NoticeService_Mapper">
 
-<insert id="alarmClassInsert" parameterType="HashMap">
-INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,cidx)
-SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{cidx} 
+<insert id="alarmClassInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="nidx">
+INSERT INTO onclick_notice(nwriter,ncontents,ndate,lidx,sidx,cidx)
+SELECT #{nwriter},#{ncontents},now(),#{lidx},sidx,#{cidx} 
 FROM onclick_enroll
 WHERE lidx=#{lidx}
 </insert>
 
-<insert id="alarmTaskInsert" parameterType="HashMap">
-INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,tuidx)
-SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{tuidx} 
+<insert id="alarmTaskInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="nidx">
+INSERT INTO onclick_notice(nwriter,ncontents,ndate,lidx,sidx,tuidx)
+SELECT #{nwriter},#{ncontents},now(),#{lidx},sidx,#{tuidx} 
 FROM onclick_enroll
 WHERE lidx=#{lidx}
 </insert>
 
-<insert id="alarmNoticeInsert" parameterType="HashMap">
-INSERT INTO onclick_notice(nidx,nwriter,ncontents,ndate,lidx,sidx,lnidx)
-SELECT nidx_seq.nextval,#{nwriter},#{ncontents},sysdate,#{lidx},sidx,#{lnidx} 
+<insert id="alarmNoticeInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="nidx">
+INSERT INTO onclick_notice(nwriter,ncontents,ndate,lidx,sidx,lnidx)
+SELECT #{nwriter},#{ncontents},now(),#{lidx},sidx,#{lnidx} 
 FROM onclick_enroll
 WHERE lidx=#{lidx}
 </insert>
