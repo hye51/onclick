@@ -4,13 +4,13 @@
 <mapper namespace="com.onclick.app.persistence.TaskService_Mapper">
 
 <select id="taskDashSelectAll" parameterType="Integer" resultType="tv">
-<![CDATA[SELECT *
+SELECT *
 FROM(
 	 SELECT tuidx,
 			tuname,
-			TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
-			TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
-			TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+			DATE_FORMAT(tustart, '%Y%m%d') as tustart,
+			DATE_FORMAT(tufin, '%Y%m%d'') as tufin,
+			DATE_FORMAT(tudate, '%Y%m%d'') as tudate,
 			tudelyn,
 			lidx,
 			tucontents,
@@ -20,15 +20,15 @@ FROM(
 	 AND lidx=#{lidx}
 	 ORDER BY tudate DESC
      )
-WHERE ROWNUM <= 5 ]]>
+LIMIT 0,5
 </select>
 
 <select id="taskSelectOne" parameterType="Integer" resultType="tv">
 SELECT tuidx,
 		tuname,
-		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
-		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
-		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+		DATE_FORMAT(tustart, '%Y%m%d') as tustart,
+		DATE_FORMAT(tufin, '%Y%m%d') as tufin,
+		DATE_FORMAT(tudate, '%Y%m%d') as tudate,
 		tudelyn,
 		lidx,
 		tucontents,
@@ -39,15 +39,12 @@ AND tuidx=#{tuidx}
 </select>
 
 <select id="taskSelectAll" parameterType="HashMap" resultType="tv">
-<![CDATA[SELECT B.rnum, B.* 
-FROM
-	(SELECT rownum as rnum, A.* 
-FROM
-	(SELECT tuidx,
+<![CDATA[
+	SELECT tuidx,
 		tuname,
-		TO_CHAR(tustart, 'YYYY-MM-DD') as tustart,
-		TO_CHAR(tufin, 'YYYY-MM-DD') as tufin,
-		TO_CHAR(tudate, 'YYYY-MM-DD') as tudate,
+		DATE_FORMAT(tustart, ''%Y%m%d'') as tustart,
+		DATE_FORMAT(tufin, ''%Y%m%d'') as tufin,
+		DATE_FORMAT(tudate, ''%Y%m%d'') as tudate,
 		tudelyn,
 		lidx,
 		tucontents,
@@ -55,9 +52,9 @@ FROM
 	FROM onclick_taskupload 
 	WHERE tudelyn='N'
 	AND lidx=#{lidx}
-	ORDER BY tudate DESC) A 
-WHERE rownum <= #{page}*#{perPageNum}) B 
-WHERE B.rnum >= (#{page}-1)*#{perPageNum}+1]]>
+	ORDER BY tudate DESC 
+LIMIT (#{page}*#{perPageNum}), ((#{page}-1)*#{perPageNum}+1)
+]]>
 </select>
 
 <select id="taskTotalCount" parameterType="Integer" resultType="Integer">
@@ -67,12 +64,12 @@ WHERE tudelyn='N'
 AND lidx=#{lidx}
 </select>
 
-<insert id="taskInsert" parameterType="HashMap">
+<insert id="taskInsert" parameterType="HashMap" useGeneratedKeys="true">
 	<selectKey resultType="Integer" keyProperty="tuidx" order="AFTER">
-		SELECT tuidx_seq.CURRVAL FROM DUAL
+		SELECT LAST_INSERT_ID();
 	</selectKey>
-INSERT INTO onclick_taskupload (TUIDX,TUNAME,TUSTART,TUFIN,TUDATE,LIDX,TUCONTENTS,FIDX)
-VALUES (tuidx_seq.nextval,#{tusubject},#{tustart},#{tufin},sysdate,#{lidx},#{tucontents},#{fidx})
+INSERT INTO onclick_taskupload (TUNAME,TUSTART,TUFIN,TUDATE,LIDX,TUCONTENTS,FIDX)
+VALUES (#{tusubject},#{tustart},#{tufin},now(),#{lidx},#{tucontents},#{fidx})
 </insert>
 
 <insert id="stuTaskDefault" parameterType="Integer">

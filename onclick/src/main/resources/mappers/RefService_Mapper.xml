@@ -4,23 +4,22 @@
 <mapper namespace="com.onclick.app.persistence.RefService_Mapper">
 
 <select id="refSelectAll" parameterType="HashMap" resultType="rv">
-<![CDATA[SELECT B.rnum, B.* 
-FROM
-	(SELECT rownum as rnum, A.* 
-FROM
-	(SELECT ridx,
+
+SELECT  ridx,
 		rname,
-		TO_CHAR(rdate, 'YYYY-MM-DD') as rdate,
+		DATE_FORMAT(rdate, ''%Y%m%d'') rdate,
 		rdelyn,
 		lidx,
 		rcontents,
 		fidx
-	FROM onclick_refupload
-	WHERE rdelyn='N'
-	AND lidx=#{lidx}
-	ORDER BY rdate DESC) A 
-WHERE rownum <= #{page}*#{perPageNum}) B 
-WHERE B.rnum >= (#{page}-1)*#{perPageNum}+1]]>
+FROM 
+ONCLICK_REFUPLOAD
+WHERE REDELYN='N'
+AND lidx=#{lidx}
+ORDER BY rdate 
+LIMIT (#{page}*#{perPageNum}),
+		  ((#{page}-1)*#{perPageNum}+1)
+
 </select>
 
 <select id="refTotalCount" parameterType="Integer" resultType="Integer">
@@ -30,18 +29,20 @@ WHERE rdelyn='N'
 AND lidx=#{lidx}
 </select>
 
-<insert id="refInsert" parameterType="HashMap">
-	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER">
-		SELECT ridx_seq.CURRVAL FROM DUAL
+
+<insert id="refInsert" parameterType="HashMap" useGeneratedKeys="true">
+	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER" >
+		SELECT LAST_INSERT_ID();
+
 	</selectKey>
-INSERT INTO onclick_refupload (RIDX,RNAME,RDATE,LIDX,RCONTENTS,FIDX)
-VALUES (ridx_seq.nextval, #{rname}, sysdate, #{lidx}, #{rcontents}, #{fidx})
+INSERT INTO onclick_refupload (RNAME,RDATE,LIDX,RCONTENTS,FIDX)
+VALUES (#{rname}, now(), #{lidx}, #{rcontents}, #{fidx})
 </insert>
 
 <select id="refSelectOne" parameterType="Integer" resultType="rv">
 SELECT ridx,
 		rname,
-		TO_CHAR(rdate, 'YYYY-MM-DD') rdate,
+		DATE_FORMAT(rdate, '%Y%m%d') rdate,
 		rdelyn,
 		lidx,
 		rcontents,
