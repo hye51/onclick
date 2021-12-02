@@ -56,11 +56,11 @@ FROM(
 	WHERE a.sidx=#{id}
 	AND b.tudelyn='N'
      )
-limit 0, 5
+LIMIT 0, 5
 </select>
 
 <select id="stuTaskContent" parameterType="String" resultType="tv">
-<![CDATA[SELECT *
+SELECT *
 FROM(
      SELECT *
      FROM onclick_taskupload
@@ -68,7 +68,7 @@ FROM(
      WHERE tudelyn='N'
      ORDER BY tudate DESC
      )
-WHERE ROWNUM <= 5 ]]>
+LIMIT 0, 5
 </select>
 	
 </mapper>

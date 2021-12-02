@@ -4,7 +4,13 @@
 <mapper namespace="com.onclick.app.persistence.RefService_Mapper">
 
 <select id="refSelectAll" parameterType="HashMap" resultType="rv">
-SELECT *
+SELECT  ridx,
+		rname,
+		DATE_FORMAT(rdate, ''%Y%m%d'') rdate,
+		rdelyn,
+		lidx,
+		rcontents,
+		fidx
 FROM 
 ONCLICK_REFUPLOAD
 WHERE REDELYN='N'
@@ -21,18 +27,18 @@ WHERE rdelyn='N'
 AND lidx=#{lidx}
 </select>
 
-<insert id="refInsert" parameterType="HashMap">
-	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER">
+<insert id="refInsert" parameterType="HashMap" useGeneratedKeys="true">
+	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER" >
 		SELECT LAST_INSERT_ID();
 	</selectKey>
-INSERT INTO onclick_refupload (RIDX,RNAME,RDATE,LIDX,RCONTENTS,FIDX)
-VALUES (ridx_seq.nextval, #{rname}, sysdate, #{lidx}, #{rcontents}, #{fidx})
+INSERT INTO onclick_refupload (RNAME,RDATE,LIDX,RCONTENTS,FIDX)
+VALUES (#{rname}, now(), #{lidx}, #{rcontents}, #{fidx})
 </insert>
 
 <select id="refSelectOne" parameterType="Integer" resultType="rv">
 SELECT ridx,
 		rname,
-		DATE_FORMAT(rdate, 'YYYY-MM-DD') rdate,
+		DATE_FORMAT(rdate, '%Y%m%d') rdate,
 		rdelyn,
 		lidx,
 		rcontents,

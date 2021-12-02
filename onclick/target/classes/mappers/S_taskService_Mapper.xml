@@ -13,7 +13,7 @@ VALUES (#{savedName},#{originName},#{originalFileExtension},#{route})
 
 <update id="s_taskUpdate" parameterType="HashMap">
 UPDATE onclick_stutask 
-SET TSUBYN='Y', TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, FIDX=#{fidx}
+SET TSUBYN='Y', TSUBJECT=#{tsubject}, TDATE=now(), TCONTENTS=#{tcontents}, FIDX=#{fidx}
 WHERE tidx=#{tidx}
 </update>
 
@@ -36,13 +36,13 @@ AND a.tuidx=#{1}
 
 <update id="s_taskModify" parameterType="HashMap">
 UPDATE onclick_stutask
-SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}
+SET TSUBJECT=#{tsubject}, TDATE=now(), TCONTENTS=#{tcontents}
 WHERE tidx=#{tidx}
 </update>
 
 <update id="s_taskFileModify" parameterType="HashMap">
 UPDATE onclick_stutask
-SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, FIDX=#{fidx}
+SET TSUBJECT=#{tsubject}, TDATE=now(), TCONTENTS=#{tcontents}, FIDX=#{fidx}
 WHERE tidx=#{tidx}
 </update>
 
@@ -56,8 +56,8 @@ AND tuidx=#{1}
 
 <select id="stuTask" parameterType="Integer" resultType="std">
 SELECT a.*, b.tuname, 
-		DATE_FORMAT(b.tustart, 'YYYY-MM-DD') as tustart, 
-		DATE_FORMAT(b.tufin, 'YYYY-MM-DD') as tufin
+		DATE_FORMAT(b.tustart, '%Y%m%d') as tustart, 
+		DATE_FORMAT(b.tufin,  '%Y%m%d') as tufin
 FROM onclick_stutask a, onclick_taskupload b
 WHERE a.tuidx = b.tuidx
 AND b.tudelyn='N'
