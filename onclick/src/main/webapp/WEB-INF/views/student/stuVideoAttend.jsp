@@ -37,25 +37,18 @@
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
           	<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+				<a id="alarm" class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fas fa-bell fa-fw"></i>
 				    <!-- Counter - Alerts -->
 				    <span class="badge badge-danger badge-counter">3+</span>
 				</a>
 				<!-- Dropdown - Alerts -->
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<ul  class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				<h6 class="dropdown-header">Alerts</h6>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-secondary">
-                           <img src="<%=request.getContextPath() %>/resources/assets/img/upload.svg" alt="Bootstrap" width="32" height="32"> 
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
+				<!-- 알림 내용 표시 -->
+					<li id ="alarmList">
+					
+					</li>	
 				</ul>     
 			</div>
             <!-- Navbar-->
@@ -169,27 +162,33 @@
 								<tbody>
 								<%for(int i=1; i<16; i++) {%>
 									<tr>
-										<th scope="row" style="valign:center;"><%=i %></th>
-									    <td><%for(VideoDTO vdto : vlist) {
-									    		if(vdto.getCweek()==i) {%>
-									    		<%=vdto.getCname() %>
-									    	<%} if(vlist.size() > 1){
-									    		out.println("<br>");
-									    	}
-									    	} %></td>
-									    <td><%for(VideoDTO vdto : vlist) {
-									    		if(vdto.getCweek()==i) {
-									    			if(vdto.getVattendence().equals("Y")) {%>
-									    			<span style="color:blue">O</span>
-									    			<%} else { %>
-									    			<span style="color:red">X</span>
-									    			<%} %>
-									    	<%} if(vlist.size() > 1){
-									    		out.println("<br>");
-									    	 }
-									    	} %></td>
+										<th scope="row" style="vartical-align:center;"><h5><%=i %></h5></th>
+									    <td><%for(int j=0; j<3; j++) {
+								    		if(vlist.get(j).getCweek()!=0) {
+								    			if(vlist.get(j).getCweek()==i){%>
+								    			<p><%=vlist.get(j).getCname() %></p>
+								    			<%}
+								    		} else {%>
+								    			<p>-</p>
+								    		<% }
+								    		}%>
+								    		</td>
+									    <td><%for(int j=0; j<3; j++) {
+									    		if(vlist.get(j).getCweek()!=0) {
+									    			if(vlist.get(j).getCweek()==i) {
+									    				if(vlist.get(j).getVattendence().equals("Y")) {%>
+									    					<p style="color:blue">O</p>
+									    				<%} else { %>
+									    					<p style="color:red">X</p>
+									    				<%} %>
+									    			<%} 
+									    		} else { %>
+									    			<p>-</p>
+									    	<%	}
+									    	}%>
+									    </td>
 									</tr>
-								<%} %>	
+								<%} %>			
 								</tbody>
 							</table>
                         </div>
@@ -219,8 +218,192 @@
         <script src="<%=request.getContextPath() %>/resources/js/datatables-simple-demo.js"></script>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-        
+        //알림클릭시 읽음로 표시 
+        function checkClass(nidx,sidx,cidx){
+        	//강의 클릭시
+        	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		dataType : "json",
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+        				location.href="<%=request.getContextPath()%>/stuLecContent.do?sidx="+sidx+"&cidx="+cidx;
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.(update1)");
+	        		}
+	        	});
+        }
+     
+        function checkTask(nidx,lidx,tuidx){
+        	//과제 클릭시
+       	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		dataType : "json",
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+	        			 location.href="<%=request.getContextPath()%>/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.(update2)");
+	        		}
+	        	});
+       }
+       
+       function checkLec(nidx,lnidx){
+       		//공지사항 클릭시
+      	 $.ajax({
+	        		url:"<%=request.getContextPath()%>/alarmUpdate.do",
+	        		type:'post',
+	        		dataType : "json",
+	        		data:{"nidx" : nidx},
+	        		success:function(cnt){
+	        			location.href="<%=request.getContextPath()%>/lecNoticeContent.do?lnidx="+lnidx;
+	        		},
+	        		error:function(){
+	        			alert("에러입니다.(update3)");
+	        		}
+	        	});
+      }
+      
+         $('#alarm').click(function(){
+	        var sidx = <%=session.getAttribute("sidx")%>;
+	        var str;
+			var tstr="";
+			
+	         $.ajax({
+	 			type : "GET",
+	 			url : "<%=request.getContextPath()%>/alarmSelect.do",
+	 			dataType : "json",
+	 			data : { "sidx" : sidx 
+	 					},
+	 			cache : false,
+	 			error : function(){
+	 				alert("error 입니다 :");
+	 			},
+	 			success : function(data){
+	 						if(data.length == 0){
+	 							alert("알림이 존재하지 않습니다");
+	 						}else {
+	 							$.each (data, function (index, nv) {
+	 							
+	 								if(nv.cidx!=0){
+										//강좌인 경우
+	 								str="<a name='alarmCheck'class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkClass("+nv.nidx+","+nv.sidx+","+nv.cidx+"); return false;'>"
+	 										+"<div class='mr-3'>"
+	 				                       +"<div class='icon-circle bg-primary'>"
+	 				                       +"<i class=''bi bi-camera-reels-fill text-white '></i>"
+	 				                       +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-camera-reels-fill text-white' viewBox='0 0 16 16'>"
+				                    	   +"<path d='M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>"
+				                    	   +"<path d='M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'/>"
+				                    	   +"<path d='M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7z'/>"
+				                    	   +"</svg>"
+	 				                       +" </div>"
+	 			                    	+"</div>"
+	 									+"<div>"
+	 			                    	+"<div class='small text-gray-500'>강좌";
+	 			                    	if(nv.ncheck=="N"){
+	 			                    		str=str +"<span style='float:right;'>안읽음</span>";
+	 			                    	}else{
+	 			                    		str=str +"<span style='float:right;'>읽음</span>";
+	 			                    	}
+	 			                    	str=str  +"</div>"
+	 								    +"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+	 		                    		+"</div>"
+	 		                			+"</a>";
+	 								tstr = tstr+str;
+									}else if(nv.tuidx!=0){
+									//과제인 경우
+										str="<a name='alarmCheck'class='dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkTask("+nv.nidx+","+nv.lidx+","+nv.tuidx+"); return false;'>"
+											+"<div class='mr-3'>"
+		 				                       +" <div class='icon-circle bg-success'>"
+		 				                         +"  <i class='fas fa-file-alt text-white'></i>"
+		 				                       +" </div>"
+		 			                    	+"</div>"
+		 									+"<div>"
+		 			                    	+"<div class='small text-gray-500'>과제"
+		 			                    	if(nv.ncheck=="N"){
+		 			                    		str=str +"<span style='float:right;'>안읽음</span>";
+		 			                    	}else{
+		 			                    		str=str +"<span style='float:right;'>읽음</span>";
+		 			                    	}
+		 			                    	str=str  +"</div>"
+		 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+		 		                    		+"</div>"
+		 		                			+"</a>";
+										tstr = tstr+str;
+									}else if(nv.lnidx!=0){
+									//공지사항인 경우
+										str="<a class='alarmCheck dropdown-item d-flex align-items-center list-group-item-action list-group-item' onclick='checkLec("+nv.nidx+","+nv.lnidx+"); return false;' >"
+											+"<div class='mr-3'>"
+		 				                       +" <div class='icon-circle bg-warning'>"
+		 				                         +"  <i class='fas fa-file-alt text-white'></i>"
+		 				                       +" </div>"
+		 			                    	+"</div>"
+		 									+"<div>"
+		 			                    	+"<div class='small text-gray-500'>공지사항"
+		 			                    	if(nv.ncheck=="N"){
+		 			                    		str=str +"<span style='float:right;'>안읽음</span>";
+		 			                    	}else{
+		 			                    		str=str +"<span style='float:right;'>읽음</span>";
+		 			                    	}
+		 			                    	str=str  +"</div>"
+		 									+"<span class='font-weight-bold'>"+nv.ncontents+"</span>"
+		 		                    		+"</div>"
+		 		                			+"</a>";
+										tstr = tstr+str;
+										}
+	 								});
+	 		
+	 								$("#alarmList").html(tstr);	
+	 							} 
+	 					}
+	
+	 			});	
+         });
         </script>
+        <style>
+.icon-circle {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bg-primary {
+    background-color: #4e73df!important;
+}
+.bg-success {
+    background-color: #1cc88a!important; 
+}
+.bg-warning {
+    background-color: #f6c23e!important;
+}
+.text-white {
+    color: #fff!important;
+}
+.dropdown-header {
+    background-color: #4e73df;
+    border: 1px solid #4e73df;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #fff;
+}
+.dropdown-header {
+    font-weight: 800;
+    font-size: .65rem;
+    color: #b7b9cc;
+    text-transform: uppercase!important;
+}
+
+.d-flex {
+    display: flex!important;
+}
+
+
+        </style>
         
     </body>
 </html>

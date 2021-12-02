@@ -3,12 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.S_taskService_Mapper">
 
-<insert id="s_taskFileInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="fidx">
+<insert id="s_taskFileInsert" parameterType="HashMap">
 	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
-		SELECT LAST_INSERT_ID();
+		SELECT fidx_seq.CURRVAL FROM DUAL
 	</selectKey>
-INSERT INTO onclick_file (FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
-VALUES (#{savedName},#{originName},#{originalFileExtension},#{route})
+INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
+VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
 </insert>
 
 <update id="s_taskUpdate" parameterType="HashMap">
@@ -56,8 +56,8 @@ AND tuidx=#{1}
 
 <select id="stuTask" parameterType="Integer" resultType="std">
 SELECT a.*, b.tuname, 
-		DATE_FORMAT(b.tustart, 'YYYY-MM-DD') as tustart, 
-		DATE_FORMAT(b.tufin, 'YYYY-MM-DD') as tufin
+		TO_CHAR(b.tustart, 'YYYY-MM-DD') as tustart, 
+		TO_CHAR(b.tufin, 'YYYY-MM-DD') as tufin
 FROM onclick_stutask a, onclick_taskupload b
 WHERE a.tuidx = b.tuidx
 AND b.tudelyn='N'

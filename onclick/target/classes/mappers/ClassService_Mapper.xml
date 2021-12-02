@@ -3,21 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
 
-<insert id="classInsert" parameterType="HashMap">
+<insert id="classInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="cidx">
 	<selectKey keyProperty="cidx" resultType="int" order="AFTER"> 
-		SELECT ONCLICK_CIDX_SEQ.CURRVAL FROM DUAL
+		SELECT LAST_INSERT_ID();
 	</selectKey>
-	INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile,clive)
-	VALUES(
-			ONCLICK_CIDX_SEQ.nextval, 
-			#{cname},
+	INSERT INTO onclick_class(cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn,cfile,clive)
+	VALUES( #{cname},
 			#{ccontents},
-			sysdate, 
+			now(), 
 			#{csta},
 			#{cfin},
 			#{creyn},
 			#{cweek},
-			(SELECT NVL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
+			(SELECT IFNULL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
 			#{lidx},
 			#{cnotyn},
 			#{cfile},
@@ -25,14 +23,14 @@
 		)
 </insert>
 
-<insert id="stuVideoDefault" parameterType="Integer">
-INSERT INTO onclick_videoattendence(vidx,sidx,cidx)
-SELECT vidx_seq.nextval,sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
+<insert id="stuVideoDefault" parameterType="Integer" useGeneratedKeys="true" keyProperty="vidx">
+INSERT INTO onclick_videoattendence(sidx,cidx)
+SELECT sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>	
 
-<insert id="stuLiveDefault" parameterType="Integer">
-INSERT INTO onclick_attendence(aidx,sidx,cidx)
-SELECT aidx_seq.nextval,sidx,#{0} FROM onclick_enroll WHERE lidx=#{1}
+<insert id="stuLiveDefault" parameterType="Integer" useGeneratedKeys="true" keyProperty="aidx">
+INSERT INTO onclick_attendence(sidx,cidx)
+SELECT sidx,#{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>
 
 <select id="classSelect" parameterType="Integer" resultType="cv">
@@ -40,8 +38,8 @@ SELECT 	cidx,
 		cname,
 		ccontents,
 		cdate,
-		TO_CHAR(csta, 'YYYY-MM-DD') as csta,
-		TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+		DATE_FORMAT(csta, '%Y-%m-%d') as csta,
+		DATE_FORMAT(cfin, '%Y-%m-%d') as cfin,
 		cweek,
 		cseq,
 		cfile,
@@ -60,8 +58,8 @@ SELECT  cidx,
 		cname,
 		ccontents,
 		cdate,
-		TO_CHAR(csta, 'YYYY-MM-DD') as csta,
-		TO_CHAR(cfin, 'YYYY-MM-DD') as cfin,
+		DATE_FORMAT(csta, '%Y-%m-%d') as csta,
+		DATE_FORMAT(cfin, '%Y-%m-%d') as cfin,
 		cweek,
 		cseq,
 		cfile,
@@ -83,7 +81,7 @@ WHERE cidx=#{0}
 UPDATE onclick_class
 SET cname=#{cname},
 	ccontents=#{ccontents},
-	cdate=sysdate,
+	cdate=now(),
 	csta=#{csta},
 	cfin=#{cfin},
 	creyn=#{creyn},
@@ -99,11 +97,11 @@ FROM(
 	SELECT *
 	FROM onclick_class
 	WHERE lidx=#{lidx}
-	AND TO_CHAR(cfin, 'yy/MM/dd') >= TO_CHAR(sysdate, 'yy/MM/dd')
+	AND DATE_FORMAT(cfin, '%y/%m/%d') >= DATE_FORMAT(now(), '%y/%m/%d')
 	AND cdelyn='N'
 	ORDER BY cfin
-	     )
-WHERE ROWNUM <= 5 ]]>
+	)
+LIMIT 0,5]]>
 </select>
 
 <select id="classAllFinDash" parameterType="Integer" resultType="cv">
@@ -115,8 +113,8 @@ FROM(
 	ON a.lidx = b.lidx
 	WHERE b.sidx=#{sidx}
 	AND a.cdelyn='N'
-     )
-WHERE ROWNUM <= 5 ]]>
+    )
+LIMIT 0,5]]>
 </select>
 
 <select id="lastClassDash" parameterType="Integer" resultType="cv">
@@ -130,7 +128,7 @@ FROM(
 	AND sidx=#{sidx}
 	ORDER BY b.vlast DESC
      )
-WHERE ROWNUM <= 5 ]]>
+LIMIT 0,5]]>
 </select>
 
 <select id="classWeekVideo" parameterType="Integer" resultType="cv">
