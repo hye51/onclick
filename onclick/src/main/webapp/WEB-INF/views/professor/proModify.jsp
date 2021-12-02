@@ -1,8 +1,10 @@
 <!-- 211027 jhr 작업 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ page import="com.onclick.app.domain.*" %>    
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.onclick.app.domain.*" %>    
 <% ProfessorVO pv = (ProfessorVO)request.getAttribute("pv"); %>
+<%ArrayList<LecVO> alist = (ArrayList<LecVO>)request.getAttribute("alist"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,14 +15,14 @@
         <meta name="author" content="" />
         <title>정보 수정</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../resources/css/styles.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath()%>/resources/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>">
-           	<img alt="" src="../resources/assets/img/ex.png" id="logo">
+           	<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -39,7 +41,7 @@
 				</div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="../resources/assets/img/alarm.png"></button>
+          <button type="button"><img alt="" src="<%=request.getContextPath()%>/resources/assets/img/alarm.png"></button>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 				<li class="nav-item">
@@ -58,8 +60,8 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
-						<img alt="" src="../resources/assets/img/user.png">
-							홍길동님
+						<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/user.png">
+							&nbsp;&nbsp;<%=pv.getPname() %>&nbsp;님
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Interface</div>
@@ -70,7 +72,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                     <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">정보 수정</a>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">정보 수정</a>
                                 </nav>
                             </div>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLec" aria-expanded="false" aria-controls="collapseLec">
@@ -78,11 +80,11 @@
                                 	강의 목록
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                           <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLec" aria-labelledby="headingTh" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecture/home.do">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
-                                    <a class="nav-link" href="layout-static.html">강의1</a>
+                                   <%for(LecVO lv : alist){%>
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a>
+                                   <% } %>
                                 </nav>
                             </div>
                              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -172,12 +174,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/js/scripts.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../resources/assets/demo/chart-area-demo.js"></script>
-        <script src="../resources/assets/demo/chart-bar-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-area-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../resources/js/datatables-simple-demo.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/datatables-simple-demo.js"></script>
     	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
         //emil split

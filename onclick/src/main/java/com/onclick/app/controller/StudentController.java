@@ -87,6 +87,10 @@ public class StudentController {
 	@RequestMapping(value="/student/stuDashBoard.do")
 	public String DashBoard(@RequestParam("sidx") String sidx, Model model, HttpSession session) {
 		//학생 대시보드 이동 
+		//학생 정보 가져가기
+		StudentVO sv = ss.studentSelectOne(Integer.parseInt(sidx));
+		model.addAttribute("sv", sv);
+		
 		//강의 이름 가져오기(대시보드-강의목록)
 		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(Integer.parseInt(sidx));
 		model.addAttribute("stuLecList", stuLecList);
@@ -112,8 +116,16 @@ public class StudentController {
 
 	
 	@RequestMapping(value="/student/pwdCheck.do")
-	public String studentpwdCheck() {
+	public String studentpwdCheck(Model model, HttpSession session) {
 		//학생 정보수정 - 비밀번호 확인 페이지
+		int sidx = (Integer)session.getAttribute("sidx");
+		//학생 정보 가져가기
+		StudentVO sv = ss.studentSelectOne(sidx);
+		model.addAttribute("sv", sv);
+		
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
 		
 		return "/student/pwdCheck";
 	}
@@ -124,16 +136,21 @@ public class StudentController {
 		//학생 정보수정 - 비밀번호 확인 실행 ajax
 		int cnt = ss.studentPwdCheck(spwd);
 		
+		
 		return cnt;
 	}
 	
 	@RequestMapping(value="/student/stuModify.do")
-	public String studentModify(HttpSession session, HttpServletRequest request) {
+	public String studentModify(HttpSession session, HttpServletRequest request, Model model) {
 		//학생 정보 수정화면 이동
 		int sidx = (Integer)session.getAttribute("sidx");
 		StudentVO sv = ss.studentSelectOne(sidx);
 		request.setAttribute("sv", sv);
 
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
+		
 		return "/student/stuModify";
 	}
 

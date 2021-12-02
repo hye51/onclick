@@ -20,7 +20,7 @@ FROM(
 	 AND lidx=#{lidx}
 	 ORDER BY lndate DESC
      )
-WHERE ROWNUM <= 5 ]]>
+LIMIT 0,5]]>
 </select>
 
 <select id="lecNoticeContent" parameterType="Integer" resultType="lnv">
@@ -31,12 +31,12 @@ AND lnidx=#{lnidx}
 </select>
 
 
-<insert id="lecNoticeInsert" parameterType="HashMap">
+<insert id="lecNoticeInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="lnidx">
 	<selectKey resultType="Integer" keyProperty="lnidx" order="AFTER">
-		SELECT lnidx_seq.CURRVAL FROM DUAL
+		SELECT LAST_INSERT_ID();
 	</selectKey>
-INSERT INTO onclick_lecnotice (LNIDX,LNSUBJECT,LNCONTENTS,LNDATE,LIDX,FIDX)
-VALUES(lnidx_seq.nextval,#{lnsubject},#{lncontents},sysdate,#{lidx},#{fidx})
+INSERT INTO onclick_lecnotice (LNSUBJECT,LNCONTENTS,LNDATE,LIDX,FIDX)
+VALUES(#{lnsubject},#{lncontents},now(),#{lidx},#{fidx})
 </insert>
 
 <update id="lecNotModify" parameterType="HashMap">

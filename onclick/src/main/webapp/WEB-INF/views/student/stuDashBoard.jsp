@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.onclick.app.domain.*" %>
 <% int sidx = (Integer)session.getAttribute("sidx"); %>
+<%StudentVO sv = (StudentVO)request.getAttribute("sv"); %>
 <%ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList"); %>
 <%ArrayList<TaskVO> stuTaskList = (ArrayList<TaskVO>)request.getAttribute("stuTaskList"); %>
 <%ArrayList<NoticeVO> alarm =(ArrayList<NoticeVO>)session.getAttribute("alarm");  %>
@@ -75,7 +76,7 @@
                      <div class="sb-sidenav-menu">
 						<div class="nav-link collapsed">
 						<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/user.png">
-							홍길동님
+							&nbsp;&nbsp;<%=sv.getSname() %>&nbsp;님
 						</div>
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>

@@ -81,12 +81,23 @@ public class ProfessorController {
 		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
 		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
 		model.addAttribute("alist", alist);
-
+		
+		ProfessorVO pv = ps.proInfo(pidx);
+		model.addAttribute("pv", pv);
+		
 		return "/professor/proDashBoard" ;
 	}
 	@RequestMapping(value="/professor/pwdCheck.do")
-	public String professorpwdCheck() {
+	public String professorpwdCheck(HttpSession session, Model model) {
 		//학생 정보수정 - 비밀번호 확인 페이지
+		int pidx = (Integer)session.getAttribute("pidx");
+		
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
+		ProfessorVO pv = ps.proInfo(pidx);
+		model.addAttribute("pv", pv);
+		
 		return "/professor/pwdCheck";
 	}
 	
@@ -123,13 +134,22 @@ public class ProfessorController {
 
 		return "professor/proInfo";
 	}
-/*		
-	@RequestMapping(value="*.do")
-	public String professorModify() {
+		
+	@RequestMapping(value="/professor/proModify.do")
+	public String professorModify(HttpSession session, Model model) {
 		//교수 정보 수정 화면
-		return "";
+		int pidx = (Integer)session.getAttribute("pidx");
+		
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
+		ProfessorVO pv = ps.proInfo(pidx);
+		model.addAttribute("pv", pv);
+		
+		return "professor/proModify";
 	}
 	
+/*	
 	@RequestMapping(value="*.do")
 	public String professorModifyAction() {
 		//교수 정보 수정 완료

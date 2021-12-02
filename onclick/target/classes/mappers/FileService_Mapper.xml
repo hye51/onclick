@@ -23,12 +23,12 @@ SET fdelyn='Y'
 WHERE fidx=#{fidx}
 </update>
 
-<insert id="fileInsert" parameterType="HashMap">
+<insert id="fileInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="fidx">
 	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
-		SELECT fidx_seq.CURRVAL FROM DUAL
+		SELECT LAST_INSERT_ID();
 	</selectKey>
-INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
-VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
+INSERT INTO onclick_file (FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
+VALUES (#{savedName},#{originName},#{originalFileExtension},#{route})
 </insert>
 
 </mapper> 

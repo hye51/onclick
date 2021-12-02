@@ -27,6 +27,7 @@ WHERE rdelyn='N'
 AND lidx=#{lidx}
 </select>
 
+
 <insert id="refInsert" parameterType="HashMap" useGeneratedKeys="true">
 	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER" >
 		SELECT LAST_INSERT_ID();
