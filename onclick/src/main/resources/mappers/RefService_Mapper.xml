@@ -7,7 +7,7 @@
 
 SELECT  ridx,
 		rname,
-		DATE_FORMAT(rdate, ''%Y%m%d'') rdate,
+		DATE_FORMAT(rdate, ''%Y-%m-%d'') as rdate,
 		rdelyn,
 		lidx,
 		rcontents,
@@ -30,10 +30,9 @@ AND lidx=#{lidx}
 </select>
 
 
-<insert id="refInsert" parameterType="HashMap" useGeneratedKeys="true">
+<insert id="refInsert" parameterType="HashMap" useGeneratedKeys="true" keyProperty="ridx">
 	<selectKey resultType="Integer" keyProperty="ridx" order="AFTER" >
 		SELECT LAST_INSERT_ID();
-
 	</selectKey>
 INSERT INTO onclick_refupload (RNAME,RDATE,LIDX,RCONTENTS,FIDX)
 VALUES (#{rname}, now(), #{lidx}, #{rcontents}, #{fidx})
@@ -42,7 +41,7 @@ VALUES (#{rname}, now(), #{lidx}, #{rcontents}, #{fidx})
 <select id="refSelectOne" parameterType="Integer" resultType="rv">
 SELECT ridx,
 		rname,
-		DATE_FORMAT(rdate, '%Y%m%d') rdate,
+		DATE_FORMAT(rdate, '%Y-%m-%d') as rdate,
 		rdelyn,
 		lidx,
 		rcontents,
