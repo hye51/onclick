@@ -47,7 +47,7 @@ AND sidx=#{sidx}
 </select>	
 
 <select id="stuTaskSelectAll" parameterType="Integer" resultType="tv">
-<![CDATA[SELECT *
+SELECT *
 FROM(
 	SELECT a.lidx, b.tuname, b.tuidx
 	FROM onclick_enroll a
