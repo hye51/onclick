@@ -21,8 +21,8 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>">
-           	<img alt="" src="<%=request.getContextPath()%>/resources/assets/img/ex.png" id="logo">
+            <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
+           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
             | ONclick 
             <span class="fs-6">online non-contact system</span>
             </a>
@@ -30,28 +30,31 @@
             <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-		       <div class="row">
-			     <div class="dropdown col-md-9">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
-					강의 이동
-					</button>
-					 	<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						</ul>
-					</div>	
-				</div>
+ 			 <div class="row">
+	            <div class="dropdown col-md-9">
+				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
+				 강의 이동
+				 </button>   
+					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						 <% for(LecVO lv : alist) { %>
+						 <li><a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv.getLidx()%>"><%=lv.getLname()%></a></li>
+	                     <% } %>
+                     </ul>
+				  </div>	               
+	          </div>
             </form>
             <!-- heyri1019 alarm -->
-          <button type="button"><img alt="" src="<%=request.getContextPath()%>/resources/assets/img/alarm.png"></button>
+          	<!-- Nav Item - Alerts -->
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-				<li class="nav-item">
+				<li class="nav-item">				
 					<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<%=request.getContextPath()%>/professor/proLogout.do">LogOut</a>
+					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">LogOut</a>
 				</li>
 		      </ul> 			     
         </nav>

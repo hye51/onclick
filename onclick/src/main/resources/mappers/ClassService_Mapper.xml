@@ -100,7 +100,7 @@ FROM(
 	AND DATE_FORMAT(cfin, '%y/%m/%d') >= DATE_FORMAT(now(), '%y/%m/%d')
 	AND cdelyn='N'
 	ORDER BY cfin
-	)
+	)c
 LIMIT 0,5]]>
 </select>
 
@@ -113,7 +113,7 @@ FROM(
 	ON a.lidx = b.lidx
 	WHERE b.sidx=#{sidx}
 	AND a.cdelyn='N'
-    )
+    )c
 LIMIT 0,5]]>
 </select>
 
@@ -127,7 +127,7 @@ FROM(
 	WHERE a.cdelyn='N'
 	AND sidx=#{sidx}
 	ORDER BY b.vlast DESC
-     )
+     )c
 LIMIT 0,5]]>
 </select>
 

@@ -9,8 +9,8 @@ FROM(
 	 SELECT tuidx,
 			tuname,
 			DATE_FORMAT(tustart, '%Y-%m-%d') as tustart,
-			DATE_FORMAT(tufin, '%Y-%m-%d'') as tufin,
-			DATE_FORMAT(tudate, '%Y-%m-%d'') as tudate,
+			DATE_FORMAT(tufin, '%Y-%m-%d') as tufin,
+			DATE_FORMAT(tudate, '%Y-%m-%d') as tudate,
 			tudelyn,
 			lidx,
 			tucontents,
@@ -19,7 +19,7 @@ FROM(
 	 WHERE tudelyn='N'
 	 AND lidx=#{lidx}
 	 ORDER BY tudate DESC
-     )
+     )c
 LIMIT 0,5
 </select>
 
@@ -42,9 +42,9 @@ AND tuidx=#{tuidx}
 <![CDATA[
 	SELECT tuidx,
 		tuname,
-		DATE_FORMAT(tustart, ''%Y-%m-%d'') as tustart,
-		DATE_FORMAT(tufin, ''%Y-%m-%d'') as tufin,
-		DATE_FORMAT(tudate, ''%Y-%m-%d'') as tudate,
+		DATE_FORMAT(tustart, '%Y-%m-%d') as tustart,
+		DATE_FORMAT(tufin, '%Y-%m-%d') as tufin,
+		DATE_FORMAT(tudate, '%Y-%m-%d') as tudate,
 		tudelyn,
 		lidx,
 		tucontents,

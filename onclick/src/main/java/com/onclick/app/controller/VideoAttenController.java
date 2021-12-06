@@ -1,6 +1,8 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.onclick.app.domain.ClassVo;
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.VideoAttenDto;
 import com.onclick.app.service.ClassService;
 import com.onclick.app.service.LecService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.service.VideoAttenService;
 
 @Controller
@@ -28,6 +32,9 @@ public class VideoAttenController {
 	
 	@Autowired
 	LecService ls;
+	
+	@Autowired
+	StudentService ss;
 
 	@RequestMapping(value="/lecEvaluation.do")
 	public String videoLevelUpdate( @RequestParam("vidx") int vidx,
@@ -67,6 +74,9 @@ public class VideoAttenController {
 	@RequestMapping(value="/stuLecContent.do")
 	public String stuLecContent(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model,HttpSession session) {
 		//학생 동영상 출석 화면
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
 		//강의정보
 		ClassVo cv = cs.classSelectOne(cidx);
 		model.addAttribute("cv", cv);
@@ -86,6 +96,9 @@ public class VideoAttenController {
 	@RequestMapping(value="/stuLecRe.do")
 	public String stuLecRe(@RequestParam("sidx") int sidx, @RequestParam("cidx") int cidx, Model model,HttpSession session) {
 		//학생 동영상 출석 화면
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
 		//강의정보
 		ClassVo cv = cs.classSelectOne(cidx);
 		model.addAttribute("cv", cv);
@@ -101,6 +114,9 @@ public class VideoAttenController {
 	@RequestMapping(value="/proLecContent.do")
 	public String proLecContent(@RequestParam("pidx") int pidx, @RequestParam("cidx") int cidx, Model model) {
 		//교수 동영상 출석 화면
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
 		//강의정보
 		ClassVo cv = cs.classSelectOne(cidx);
 		model.addAttribute("cv", cv);

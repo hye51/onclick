@@ -21,11 +21,15 @@ import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.PageMaker;
 import com.onclick.app.domain.RefVO;
 import com.onclick.app.service.FileService;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.RefService;
 import com.onclick.app.util.UploadFileUtiles;
 
 @Controller
 public class RefController { //자료 컨트롤러
+	
+	@Autowired
+	LecService ls;
 	
 	@Autowired
 	RefService rs;
@@ -40,8 +44,13 @@ public class RefController { //자료 컨트롤러
 	private String uploadPath;
 	
 	@RequestMapping(value="/refWrite.do")
-	public String refWrite() {
+	public String refWrite(HttpSession session, Model model) {
 		//자료 작성 화면
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		return "lecture/refUpload";
 	}
 	
@@ -152,8 +161,13 @@ public class RefController { //자료 컨트롤러
 	
 	
 	@RequestMapping(value="/refModify.do")
-	public String refModify(@RequestParam("ridx") int ridx, HttpSession session) {
+	public String refModify(@RequestParam("ridx") int ridx, HttpSession session, Model model) {
 		//자료 수정 화면
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		RefVO rv = rs.refSelectOne(ridx);
 		session.setAttribute("rv", rv);
 		
