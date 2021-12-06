@@ -124,8 +124,13 @@ public class TaskController { //교수 과제 컨트롤러
 	
 		
 	@RequestMapping(value="/taskWrite.do")
-	public String taskWrite() {
+	public String taskWrite(HttpSession session, Model model) {
 		//교수 과제 작성 화면
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		return "lecture/taskUpload";
 	}
 	
@@ -215,7 +220,13 @@ public class TaskController { //교수 과제 컨트롤러
 	
 	@RequestMapping(value="/taskModify.do")
 	public String taskModify(@RequestParam("tuidx") int tuidx,
-							HttpSession session) {
+			HttpSession session, Model model) {
+		
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		//교수 과제 수정 화면
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
@@ -342,7 +353,13 @@ public class TaskController { //교수 과제 컨트롤러
 	
 	
 	@RequestMapping(value="/taskSubmitList.do")
-	public String taskSubmitList(@RequestParam("tuidx") int tuidx, Model model) {
+	public String taskSubmitList(@RequestParam("tuidx") int tuidx, HttpSession session, Model model) {
+		
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		//과제에 대한 학생 제출 리스트(제출 현황)
 		ArrayList<S_taskDTO> submitList = ts.taskSubmitList(tuidx);
 		model.addAttribute("submitList", submitList);

@@ -19,7 +19,7 @@ FROM(
 	 WHERE lndelyn='N'
 	 AND lidx=#{lidx}
 	 ORDER BY lndate DESC
-     )
+     )c
 LIMIT 0,5]]>
 </select>
 

@@ -55,7 +55,7 @@ FROM(
 	ON a.lidx = b.lidx
 	WHERE a.sidx=#{id}
 	AND b.tudelyn='N'
-     )
+     )c
 LIMIT 0, 5
 </select>
 
@@ -63,11 +63,11 @@ LIMIT 0, 5
 SELECT *
 FROM(
      SELECT *
-     FROM onclick_taskupload
+     FROM onclick_taskupload 
      AND tuname=#{tuname}
      WHERE tudelyn='N'
      ORDER BY tudate DESC
-     )
+     )c
 LIMIT 0, 5
 </select>
 	

@@ -54,7 +54,7 @@
 				<a id="alarm" class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fas fa-bell fa-fw"></i>
 				    <!-- Counter - Alerts -->
-				    <span class="badge badge-danger badge-counter">3+</span>
+				    <span class="badge badge-danger badge-counter">+</span>
 				</a>
 				<!-- Dropdown - Alerts -->
 				<ul  class="dropdown-menu" aria-labelledby="dropdownMenuLink">

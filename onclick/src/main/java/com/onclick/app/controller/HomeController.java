@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.ClassVo;
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.NoticeVO;
@@ -24,6 +25,7 @@ import com.onclick.app.service.ClassService;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.service.TaskService;
 
 @Controller
@@ -43,7 +45,9 @@ public class HomeController {
 
 	@Autowired
 	ClassService cs;
-
+	
+	@Autowired
+	StudentService ss;
 	
 	@RequestMapping(value="/")
 	public String main() {
@@ -71,7 +75,19 @@ public class HomeController {
 	
 	@RequestMapping(value="/lecHome.do")
 	public String LecHome(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
-
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//대시보드 강의 목록에서 강의 메인 홈으로 넘어가기
 		LecVO lv = ls.lecHome(lidx);
 		session.setAttribute("lv", lv);

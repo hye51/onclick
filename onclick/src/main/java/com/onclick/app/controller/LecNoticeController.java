@@ -20,12 +20,16 @@ import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecNoticeService;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
 import com.onclick.app.util.UploadFileUtiles;
 
 @Controller
 public class LecNoticeController { //과목 공지사항 컨트롤러
 
+	@Autowired
+	LecService ls;
+	
 	@Autowired
 	LecNoticeService lns;
 
@@ -67,8 +71,13 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	
 	
 	@RequestMapping(value="/lecNoticeWrite.do")
-	public String lecNoticeWrite() {
+	public String lecNoticeWrite(HttpSession session, Model model) {
 		//과목 공지사항 작성 화면
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		return "lecture/noticeUpload";
 	}
 
@@ -151,8 +160,13 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	
 	
 	@RequestMapping(value="/lecNotModify.do")
-	public String lecNoticeModify(@RequestParam("lnidx") int lnidx, HttpSession session) {
+	public String lecNoticeModify(@RequestParam("lnidx") int lnidx, HttpSession session, Model model) {
 		//공지사항 수정 화면
+		int pidx = (Integer)session.getAttribute("pidx");
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
 		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
 		session.setAttribute("lnv", lnv);
 		

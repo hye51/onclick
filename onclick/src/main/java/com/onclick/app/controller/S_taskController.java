@@ -1,6 +1,7 @@
 //211027 jhr 작업
 package com.onclick.app.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
@@ -8,17 +9,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.FileVO;
-import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.S_taskService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.service.TaskService;
 import com.onclick.app.util.UploadFileUtiles;
 
@@ -34,11 +37,20 @@ public class S_taskController {
 	@Autowired
 	FileService fs;
 	
+	@Autowired
+	StudentService ss;
+	
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
 	@RequestMapping(value="/stuTaskWrite.do")
-	public String taskWrite(@RequestParam("tuidx") int tuidx, HttpSession session) {
+	public String taskWrite(@RequestParam("tuidx") int tuidx, HttpSession session, Model model) {
+		
+		int sidx = (Integer)session.getAttribute("sidx");
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
+		
 		//학생 과제작성 화면
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
@@ -130,8 +142,13 @@ public class S_taskController {
 	
 	
 	@RequestMapping(value="/stuTaskModify.do")
-	public String taskUpdate() {
+	public String taskUpdate(HttpSession session, Model model) {
 		//학생 과제수정 화면
+		int sidx = (Integer)session.getAttribute("sidx");
+		//강의 이름 가져오기(대시보드-강의목록)
+		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		model.addAttribute("stuLecList", stuLecList);
+		
 		return "lecture/stuTaskModify";
 	}
 	
