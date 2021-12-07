@@ -55,6 +55,16 @@ public class ClassController {
 		return "lecture/lecUpload";
 	}
 	
+	@RequestMapping(value="/lecPlan.do")
+	public String classPlan(HttpSession session, Model model) {
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+		int pidx = (Integer)session.getAttribute("pidx");
+		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+		model.addAttribute("alist", alist);
+		
+		return "lecture/lecPlan";
+	}
+	
 	@RequestMapping(value="/lecUploadAction.do")
 	public String classWriteAction(ClassVo cv,HttpSession session) {
 		System.out.println("*****");
