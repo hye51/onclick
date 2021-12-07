@@ -172,28 +172,32 @@
 								<%for(int i=1; i<16; i++) {%>
 									<tr>
 										<th scope="row" style="vartical-align:center;"><h5><%=i %></h5></th>
-									    <td><%for(int j=0; j<3; j++) {
-								    		if(vlist.get(j).getCweek()!=0) {
-								    			if(vlist.get(j).getCweek()==i){%>
-								    			<p><%=vlist.get(j).getCname() %></p>
-								    			<%}
-								    		} else {%>
-								    			<p>-</p>
-								    		<% }
-								    		}%>
+									    <td><%if(!vlist.isEmpty()){
+									    		for(int j=0; j<3; j++) {
+										    		if(vlist.get(j).getCweek()!=0) {
+										    			if(vlist.get(j).getCweek()==i){%>
+										    			<p><%=vlist.get(j).getCname() %></p>
+										    			<%}
+										    		} else {%>
+										    			<p>-</p>
+										    		<% }
+									    		}
+									    	}%>
 								    		</td>
-									    <td><%for(int j=0; j<3; j++) {
-									    		if(vlist.get(j).getCweek()!=0) {
-									    			if(vlist.get(j).getCweek()==i) {
-									    				if(vlist.get(j).getVattendence().equals("Y")) {%>
-									    					<p style="color:blue">O</p>
-									    				<%} else { %>
-									    					<p style="color:red">X</p>
-									    				<%} %>
-									    			<%} 
-									    		} else { %>
-									    			<p>-</p>
-									    	<%	}
+									    <td><%if(!vlist.isEmpty()){
+										    	for(int j=0; j<3; j++) {
+										    		if(vlist.get(j).getCweek()!=0) {
+										    			if(vlist.get(j).getCweek()==i) {
+										    				if(vlist.get(j).getVattendence().equals("Y")) {%>
+										    					<p style="color:blue">O</p>
+										    				<%} else { %>
+										    					<p style="color:red">X</p>
+										    				<%} %>
+										    			<%} 
+										    		} else { %>
+										    			<p>-</p>
+										    	<%	}
+										    	}
 									    	}%>
 									    </td>
 									</tr>

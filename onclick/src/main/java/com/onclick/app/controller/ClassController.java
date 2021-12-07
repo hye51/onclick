@@ -57,6 +57,9 @@ public class ClassController {
 	
 	@RequestMapping(value="/lecUploadAction.do")
 	public String classWriteAction(ClassVo cv,HttpSession session) {
+		System.out.println("*****");
+		System.out.println("cv"+cv.getLidx());
+		
 		//강좌업로드 실행
 		HashMap<String,Object> value = cs.classInsert(cv);
 		

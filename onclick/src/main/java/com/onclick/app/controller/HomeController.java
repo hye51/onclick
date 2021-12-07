@@ -105,7 +105,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/stuList.do")
-	public String lecStudentList(@RequestParam("lidx") int lidx, Model model) {
+	public String lecStudentList(@RequestParam("lidx") int lidx, Model model, HttpSession session) {
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//강의 - 학생 목록 
 		ArrayList<StudentVO> alist = ls.lecStudentList(lidx);
 		model.addAttribute("alist", alist);

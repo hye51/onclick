@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.FileVO;
+import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.S_taskDTO;
 import com.onclick.app.domain.TaskVO;
 import com.onclick.app.service.FileService;
+import com.onclick.app.service.LecService;
 import com.onclick.app.service.S_taskService;
 import com.onclick.app.service.StudentService;
 import com.onclick.app.service.TaskService;
@@ -39,6 +41,9 @@ public class S_taskController {
 	
 	@Autowired
 	StudentService ss;
+	
+	@Autowired
+	LecService ls;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -125,7 +130,20 @@ public class S_taskController {
 	
 	@RequestMapping(value="/stuTaskContent.do")
 	public String taskContents(@RequestParam("tidx") int tidx,
-							HttpSession session) {
+							HttpSession session, Model model) {
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//학생 제출한 과제내용 보기
 		S_taskDTO std = sts.s_taskSelectOne(tidx);
 		session.setAttribute("std", std);

@@ -15,7 +15,7 @@
 			#{cfin},
 			#{creyn},
 			#{cweek},
-			(SELECT IFNULL(MAX(cseq),0)+1 FROM onclick_class where cweek=#{cweek}),
+			SELECT cseq FROM((SELECT IFNULL(MAX(cseq),0)+1 as cseq FROM onclick_class where cweek=#{cweek}) a ),
 			#{lidx},
 			#{cnotyn},
 			#{cfile},

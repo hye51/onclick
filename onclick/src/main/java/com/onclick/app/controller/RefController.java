@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.Criteria;
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.PageMaker;
@@ -23,6 +24,7 @@ import com.onclick.app.domain.RefVO;
 import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.RefService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.util.UploadFileUtiles;
 
 @Controller
@@ -36,6 +38,9 @@ public class RefController { //자료 컨트롤러
 	
 	@Autowired
 	FileService fs;
+	
+	@Autowired
+	StudentService ss;
 	
 	@Autowired
 	PageMaker pm;
@@ -120,7 +125,20 @@ public class RefController { //자료 컨트롤러
 	
 	@RequestMapping(value="/refList.do")
 	public String refList(@RequestParam("lidx") int lidx, 
-					Criteria cri, Model model) {
+					Criteria cri, HttpSession session, Model model) {
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//자료 목록
 		//자료 전체 개수
 		int refTC = rs.refTotalCount(lidx);
@@ -128,10 +146,13 @@ public class RefController { //자료 컨트롤러
 		int page = cri.getPage();
 		int perPageNum = cri.getPerPageNum();
 		
+		int start = (page-1)*(perPageNum)+1;
+		int end = page * perPageNum;
+		
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("lidx", lidx);
-		hm.put("page", page);
-		hm.put("perPageNum", perPageNum);
+		hm.put("start", start);
+		hm.put("end", end);
 		
 		ArrayList<RefVO> rlist = rs.refSelectAll(hm);
 		
@@ -146,8 +167,21 @@ public class RefController { //자료 컨트롤러
 	
 	
 	@RequestMapping(value="/refContent.do")
-	public String refContents(@RequestParam("ridx") int ridx, HttpSession session) {
+	public String refContents(@RequestParam("ridx") int ridx, HttpSession session, Model model) {
 		//자료 내용보기
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		RefVO rv = rs.refSelectOne(ridx);
 		session.setAttribute("rv", rv);
 		

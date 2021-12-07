@@ -143,7 +143,7 @@
 						    <option value="14">14 주차</option>
 						    <option value="15">15 주차</option>
 						  </select>
-							<table class="table text-center" style="width:100%">
+							<table class="table text-center" >
 								<thead>
 									<tr class="table-secondary">
 										<th style="width:15%">학번</th>
@@ -171,35 +171,33 @@
 								<tbody>
 								<%for(VideoDTO vdto : vlist) {%>
 									<tr>
-									    <td style=""><%=vdto.getSidx() %></td>
-									    <td style=""><%=vdto.getSname() %></td>
-									    <%if(vdto.getVattendence().equals("-")) {%>
-									    	<td style="">-<td>
-									    <%} else {
-									    	if(vdto.getVattendence().equals("Y")) {%>
-									    		<td style="color:blue">출석</td>
-										    <%} else { %>
-										    	<td style="color:red">결석</td>
-										    <%} 
-										}%>
-									    <%if(vdto.getVattendence2().equals("-")) {%>
-									    	<td style="">-<td>
-									    <%} else {
-									    	if(vdto.getVattendence2().equals("Y")) {%>
-									    		<td style="color:blue">출석</td>
-										    <%} else { %>
-										    	<td style="color:red">결석</td>
-										    <%} 
-										}%>
-									    <%if(vdto.getVattendence3().equals("-")) {%>
-									    	<td style="">-<td>
-									    <%} else {
-									    	if(vdto.getVattendence3().equals("Y")) {%>
-									    		<td style="color:blue">출석</td>
-										    <%} else { %>
-										    	<td style="color:red">결석</td>
-										    <%} 
-										}%>
+									    <td><%=vdto.getSidx() %></td>
+									    <td><%=vdto.getSname() %></td>
+									    <td><%if(vdto.getVattendence().equals("-")) {%>
+										    	-
+										    <%} else if(vdto.getVattendence().equals("Y")) {%>
+										    	출석
+											<%} else { %>
+											        결석
+											<%}%>
+										</td>
+									    <td><%if(vdto.getVattendence2().equals("-")) {%>
+										    	-
+										    <%} else if(vdto.getVattendence2().equals("Y")) {%>
+										    	출석
+											<%} else { %>
+											        결석
+											<%}%>
+										</td>
+										<td><%if(vdto.getVattendence3().equals("-")) {%>
+										    	-
+										    <%} else if(vdto.getVattendence3().equals("Y")) {%>
+										    	출석
+											<%} else { %>
+											        결석
+											<%}%>
+										</td>
+									 </tr>
 								<% }%> 
 								</tbody>
 							</table>
@@ -231,6 +229,7 @@
         function weekChange(value) {
 			var lidx = <%=lv.getLidx()%>;
 			//선택한 주차와 강의 고유번호 받아서 페이지 이동
+			
 			location = '${pageContext.request.contextPath}/proVideoAttend.do?lidx='+lidx+'&cweek='+value;
 		}
         </script>

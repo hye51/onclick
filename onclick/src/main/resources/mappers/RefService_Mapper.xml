@@ -7,19 +7,16 @@
 
 SELECT  ridx,
 		rname,
-		DATE_FORMAT(rdate, ''%Y-%m-%d'') as rdate,
+		DATE_FORMAT(rdate, '%Y-%m-%d') as rdate,
 		rdelyn,
 		lidx,
 		rcontents,
 		fidx
-FROM 
-ONCLICK_REFUPLOAD
-WHERE REDELYN='N'
+FROM ONCLICK_REFUPLOAD
+WHERE RDELYN='N'
 AND lidx=#{lidx}
 ORDER BY rdate 
-LIMIT (#{page}*#{perPageNum}),
-		  ((#{page}-1)*#{perPageNum}+1)
-
+LIMIT #{start},#{end}
 </select>
 
 <select id="refTotalCount" parameterType="Integer" resultType="Integer">

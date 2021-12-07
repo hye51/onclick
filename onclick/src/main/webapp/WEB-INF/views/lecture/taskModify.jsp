@@ -262,6 +262,7 @@
 				fm.enctype="multipart/form-data";
 				fm.submit();
 				
+				return;
 			};
         </script>
     </body>
