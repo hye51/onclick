@@ -69,22 +69,28 @@ public class AttendenceController {
 		String cidx = "0"; 
 		int ci = 0;
 		
-		for(int i=0; i<clist.size();i++) {
-			ci = clist.get(i).getCidx();
-			if (clist.size() ==3) //동영상 강의 3개
-				cidx = ci+","+cidx;           // 3,2,1,0
-			 else if (clist.size() ==2) //동영상 강의 2개	
-				cidx =  ci +","+cidx;    //  2,1,0
-			 else if (clist.size() ==1) //동영상 강의 1개
-				cidx =  ci +",0,0";
-			 else if(clist.size() ==0) //동영상 강의 없음
-			 	cidx = "0,0,0";
-			
+		if(clist.size() != 0) {
+			for(int i=0; i<clist.size();i++) {
+				ci = clist.get(i).getCidx();
+				if (clist.size() ==3) //동영상 강의 3개
+					cidx = ci+","+cidx;           // 3,2,1,0
+				 else if (clist.size() ==2) //동영상 강의 2개	
+					cidx =  ci +","+cidx;    //  2,1,0
+				 else if (clist.size() ==1) //동영상 강의 1개
+					cidx =  ci +",0,0";
+				 //else if(clist.size() ==0) //동영상 강의 없음
+				 //	cidx = "0,0,0";
+			}
+		} else {
+			cidx = "0,0,0";
 		}
+		
 //		System.out.println("cidx"+cidx);
 	
 		String[] str = cidx.split(",");
-//		System.out.println("배열"+str[0]);
+		System.out.println("배열1"+str[0]);
+		System.out.println("배열2"+str[1]);
+		System.out.println("배열3"+str[2]);
 		
 		ArrayList<VideoDTO> vlist = null;
 		
@@ -95,6 +101,11 @@ public class AttendenceController {
 		} else {
 			vlist = as.proVideoAttend(Integer.parseInt(str[0]),Integer.parseInt(str[1]),Integer.parseInt(str[2]));
 		}
+		
+		System.out.println("vlist : " +vlist.size());
+		System.out.println("vlist" + vlist);
+		System.out.println("clist" + clist);
+		
 		
 		model.addAttribute("vlist", vlist);
 		model.addAttribute("clist", clist);

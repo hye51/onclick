@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecNoticeVO;
 import com.onclick.app.domain.LecVO;
@@ -22,6 +23,7 @@ import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecNoticeService;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.util.UploadFileUtiles;
 
 @Controller
@@ -39,13 +41,29 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	@Autowired
 	NoticeService ns;
 	
+	@Autowired
+	StudentService ss;
+	
 	@Resource(name="uploadPath")
 	private String uploadPath;
 	
 	
 	@RequestMapping(value="/noticeList.do")
-	public String lecNoticeList(@RequestParam("lidx") String lidx, Model model) {
+	public String lecNoticeList(@RequestParam("lidx") String lidx, Model model, HttpSession session) {
 		//강의 공지사항 목록
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		ArrayList<LecNoticeVO> lnList = lns.lecNoticeSelectAll(Integer.parseInt(lidx));		
 		model.addAttribute("lnList", lnList);
 		
@@ -55,8 +73,21 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 	
 	@RequestMapping(value="/lecNoticeContent.do")
 	public String lecNoticeContents(@RequestParam("lnidx") int lnidx,
-									HttpSession session) {
+									HttpSession session, Model model) {
 		//강의 공지사항 내용보기
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		LecNoticeVO lnv = lns.lecNoticeContent(lnidx);
 		session.setAttribute("lnv", lnv);
 		

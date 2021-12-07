@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
 <%@ page import="com.onclick.app.domain.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%LecVO lv = (LecVO)session.getAttribute("lv"); %>
 <%TaskVO tv = (TaskVO)session.getAttribute("tv");%>
 <%S_taskDTO std = (S_taskDTO)session.getAttribute("std"); %>
@@ -18,7 +19,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ 
+    	ArrayList<EnrollDTO> stuLecList = (ArrayList<EnrollDTO>)request.getAttribute("stuLecList");%>
+    	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
            	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
@@ -29,10 +32,18 @@
             <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="강의 이동" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
+ 			 <div class="row">
+	            <div class="dropdown col-md-9">
+				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
+				 강의 이동
+				 </button>   
+					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						 <% for(EnrollDTO ed : stuLecList) { %>
+						 <li> <a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=ed.getLidx()%>"><%=ed.getLname() %></a></li>
+	                     <% } %>
+                     </ul>
+				  </div>	               
+	          </div>
             </form>
             <!-- heyri1019 alarm -->
           	<!-- Nav Item - Alerts -->
@@ -40,7 +51,7 @@
 				<a id="alarm" class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fas fa-bell fa-fw"></i>
 				    <!-- Counter - Alerts -->
-				    <span class="badge badge-danger badge-counter">3+</span>
+				    <span class="badge badge-danger badge-counter">+</span>
 				</a>
 				<!-- Dropdown - Alerts -->
 				<ul  class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -53,17 +64,60 @@
 			</div>
             <!-- Navbar-->
 		      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Mypage</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">사이트맵</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">English</a>
-		        </li>
+				<li class="nav-item">				
+					<a class="nav-link" href="<%=request.getContextPath()%>/student/pwdCheck.do">Mypage</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">LogOut</a>
+				</li>
 		      </ul> 			     
         </nav>
+    <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ 
+    	ArrayList<LecVO> alist = (ArrayList<LecVO>)request.getAttribute("alist"); %>
+	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
+           	<img alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex.png" id="logo">
+            | ONclick 
+            <span class="fs-6">online non-contact system</span>
+            </a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn order-lg-1" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+ 			 <div class="row">
+	            <div class="dropdown col-md-9">
+				 <button class="btn btn-secondary dropdown-toggle" type="button" id="select" data-bs-toggle="dropdown" aria-expanded="false">
+				 강의 이동
+				 </button>   
+					 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						 <% for(LecVO lv2 : alist) { %>
+						 <li><a class="nav-link" href="<%=request.getContextPath()%>/lecHome.do?lidx=<%=lv2.getLidx()%>"><%=lv2.getLname()%></a></li>
+	                     <% } %>
+                     </ul>
+				  </div>	               
+	          </div>
+	            </form>
+	            <!-- heyri1019 alarm -->
+	          	<!-- Nav Item - Alerts -->
+	          	
+	            <!-- Navbar-->
+			      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+					<li class="nav-item">
+						<a class="nav-link" href="<%=request.getContextPath()%>/professor/pwdCheck.do">Mypage</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<%=request.getContextPath()%>/siteMap.do">사이트맵</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">LogOut</a>
+					</li>
+			      </ul> 			     
+	        </nav>
+    <% } %>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -87,6 +141,7 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuList.do?lidx=<%=lv.getLidx()%>">멤버 목록</a>
                                 </nav>
                             </div>
+                          	<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                           	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	출석관리
@@ -97,11 +152,31 @@
                                     <a class="nav-link" href="<%=request.getContextPath()%>/stuVideoAttend.do?lidx=<%=lv.getLidx()%>">동영상 강의 출석</a>
                                 </nav>
                             	</div>
+                            <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttend" aria-expanded="false" aria-controls="collapseAttend">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	출석관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                                <div class="collapse" id="collapseAttend" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="<%=request.getContextPath()%>/proVideoAttend.do?lidx=<%=lv.getLidx()%>&cweek=0">동영상 강의 출석</a>
+                                </nav>
+                               	</div>
+                            <%} %>
+							<% if(session.getAttribute("sidx") != null && session.getAttribute("pidx") == null){ %>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/stuLecList.do?lidx=<%=lv.getLidx()%>">
                            	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 	강좌 목록
                                 <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
+                           	<% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ %>
+                           	<a class="nav-link" href="<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>">
+                           	<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                	강좌 목록
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+                           	<% }%>
                            	<a class="nav-link" href="<%=request.getContextPath()%>/taskList.do?lidx=<%=lv.getLidx()%>">
                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                		과제
@@ -187,7 +262,7 @@
                 	<!-- 교수 과제 내용보기 -->
 					<%} else {%>
 					<div class="container-fluid px-4 ">
-						<table class="table mx-auto bg-light" style="width:80%">   
+						<table class="table mx-auto bg-light" style="width:80%">
 							<thead>
 								<tr>   
 			      					<td colspan="4" scope="row" style="border:0; font-weight: 700;"><strong><%=std.getTsubject() %></strong></td>

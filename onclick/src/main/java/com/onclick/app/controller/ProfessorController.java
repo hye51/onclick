@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.ProfessorVO;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.ProfessorService;
+import com.onclick.app.service.StudentService;
 
 @Controller
 public class ProfessorController { 
@@ -25,6 +27,9 @@ public class ProfessorController {
 	
 	@Autowired
 	LecService ls;
+	
+	@Autowired
+	StudentService ss;
 	
 	@ResponseBody
 	@RequestMapping(value="/professor/idCheck.do")
@@ -129,6 +134,18 @@ public class ProfessorController {
 	@RequestMapping(value="/professor/proInfo.do")
 	public String professorInfo(@RequestParam("pidx") int pidx, Model model, HttpSession session) {
 		//교수정보 보기
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		ProfessorVO pv = ps.proInfo(pidx);
 		model.addAttribute("pv", pv);
 

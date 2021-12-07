@@ -53,7 +53,7 @@ AND tuidx=#{tuidx}
 	WHERE tudelyn='N'
 	AND lidx=#{lidx}
 	ORDER BY tudate DESC 
-LIMIT (#{page}*#{perPageNum}), ((#{page}-1)*#{perPageNum}+1)
+LIMIT #{start}, #{end}
 ]]>
 </select>
 
@@ -73,8 +73,8 @@ VALUES (#{tusubject},#{tustart},#{tufin},now(),#{lidx},#{tucontents},#{fidx})
 </insert>
 
 <insert id="stuTaskDefault" parameterType="Integer">
-INSERT INTO onclick_stutask(TIDX, SIDX, TUIDX)
-SELECT tidx_seq.nextval, SIDX, #{1}  FROM onclick_enroll WHERE lidx=#{0}
+INSERT INTO onclick_stutask(SIDX, TUIDX)
+SELECT SIDX, #{1}  FROM onclick_enroll WHERE lidx=#{0}
 </insert>
 
 <update id="taskModify" parameterType="HashMap">

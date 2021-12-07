@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onclick.app.domain.Criteria;
+import com.onclick.app.domain.EnrollDTO;
 import com.onclick.app.domain.FileVO;
 import com.onclick.app.domain.LecVO;
 import com.onclick.app.domain.PageMaker;
@@ -25,6 +26,7 @@ import com.onclick.app.service.FileService;
 import com.onclick.app.service.LecService;
 import com.onclick.app.service.NoticeService;
 import com.onclick.app.service.S_taskService;
+import com.onclick.app.service.StudentService;
 import com.onclick.app.service.TaskService;
 import com.onclick.app.util.UploadFileUtiles;
 
@@ -49,6 +51,8 @@ public class TaskController { //교수 과제 컨트롤러
 	@Autowired
 	NoticeService ns;
 	
+	@Autowired
+	StudentService ss;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -57,7 +61,19 @@ public class TaskController { //교수 과제 컨트롤러
 	public String taskContent(@RequestParam("tuidx") int tuidx,
 						@RequestParam("lidx") int lidx,
 						Model model, HttpSession session) {
-		System.out.println("수정완료 후 과제 내용보기");
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//대시보드 과제 목록에서 과제 내용보기로 넘어가기
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
@@ -85,6 +101,19 @@ public class TaskController { //교수 과제 컨트롤러
 	@RequestMapping(value="/taskList.do")
 	public String taskList(@RequestParam("lidx") int lidx, 
 			Criteria cri, Model model, HttpSession session) {
+		
+		if(session.getAttribute("sidx")!=null && session.getAttribute("pidx")==null) {
+			int sidx = (Integer)session.getAttribute("sidx");
+			//강의 이름 가져오기
+			ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+			model.addAttribute("stuLecList", stuLecList);
+		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
+			int pidx = (Integer)session.getAttribute("pidx");
+			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+			model.addAttribute("alist", alist);
+		}
+		
 		//페이징 처리
 		//과제 전체 개수
 		int taskTC = ts.taskTotalCount(lidx);		
@@ -92,10 +121,14 @@ public class TaskController { //교수 과제 컨트롤러
 		int page = cri.getPage();
 		int perPageNum = cri.getPerPageNum();
 		
+		int start = (page-1)*(perPageNum)+1;
+		int end = page * perPageNum;
+		
+				
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("lidx", lidx);
-		hm.put("page", page);
-		hm.put("perPageNum", perPageNum);
+		hm.put("start", start);
+		hm.put("end", end);
 		
 		//교수가 업로드한 과제 목록
 		ArrayList<TaskVO> tlist = ts.taskSelectAll(hm);
@@ -270,7 +303,7 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 1) {
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			} else {
-				str = "redirect:/taskModify.do?tuidx="+tuidx;
+				str = "redirect:/taskModify.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 			
 		} else {//첨부파일 수정 O
@@ -305,7 +338,7 @@ public class TaskController { //교수 과제 컨트롤러
 			if(value == 2) { //파일 insert + 과제 수정
 				str = "redirect:/taskContent.do?tuidx="+tuidx+"&lidx="+lidx;
 			} else {
-				str = "redirect:/taskModify.do?tuidx="+tuidx;
+				str = "redirect:/taskModify.do?tuidx="+tuidx+"&lidx="+lidx;
 			}
 		}
 		
