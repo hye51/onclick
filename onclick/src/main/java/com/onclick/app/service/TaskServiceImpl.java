@@ -88,7 +88,7 @@ public class TaskServiceImpl implements TaskService{
 	@Transactional
 	public int taskInsert(HashMap<String, Object> hm, int lidx) {
 		//과제만 업로드
-		hm.put("fidx", "");
+		hm.put("fidx", null);
 		TaskService_Mapper tsm = sqlSession.getMapper(TaskService_Mapper.class);
 		int value1 = tsm.taskInsert(hm);
 		

@@ -24,7 +24,7 @@ public class S_taskServiceImpl implements S_taskService{
 	public int s_taskUpdate(HashMap<String,Object> hm) {
 		//학생 과제 제출
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		hm.put("fidx", "");
+		hm.put("fidx", null);
 		int value = stsm.s_taskUpdate(hm);
 		
 		return value;

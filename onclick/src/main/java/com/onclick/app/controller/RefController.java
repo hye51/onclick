@@ -74,7 +74,7 @@ public class RefController { //자료 컨트롤러
 			hm.put("rname", rname);
 			hm.put("rcontents", rcontents);
 			hm.put("lidx", lidx);
-			hm.put("fidx", "");
+			hm.put("fidx", null);
 			
 			int value = rs.refInsert(hm);
 			//insert된 강의 공지사항 인덱스 받아오기
@@ -146,7 +146,7 @@ public class RefController { //자료 컨트롤러
 		int page = cri.getPage();
 		int perPageNum = cri.getPerPageNum();
 		
-		int start = (page-1)*(perPageNum)+1;
+		int start = (page-1)*(perPageNum);
 		int end = page * perPageNum;
 		
 		HashMap<String, Object> hm = new HashMap<String, Object>();
@@ -155,6 +155,8 @@ public class RefController { //자료 컨트롤러
 		hm.put("end", end);
 		
 		ArrayList<RefVO> rlist = rs.refSelectAll(hm);
+		
+		System.out.println("rlist:"+rlist);
 		
 		pm.setCri(cri);
 		pm.setTotalCount(refTC);

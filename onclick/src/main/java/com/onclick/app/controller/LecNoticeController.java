@@ -130,7 +130,7 @@ public class LecNoticeController { //과목 공지사항 컨트롤러
 			hm.put("lnsubject", lnsubject);
 			hm.put("lncontents", lncontents);
 			hm.put("lidx", lidx);
-			hm.put("fidx", "");
+			hm.put("fidx", null);
 			
 			int value = lns.lecNoticeInsert(hm);
 			//insert된 강의 공지사항 인덱스 받아오기
