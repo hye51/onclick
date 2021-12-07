@@ -121,7 +121,7 @@ public class TaskController { //교수 과제 컨트롤러
 		int page = cri.getPage();
 		int perPageNum = cri.getPerPageNum();
 		
-		int start = (page-1)*(perPageNum)+1;
+		int start = (page-1)*(perPageNum);
 		int end = page * perPageNum;
 		
 				
