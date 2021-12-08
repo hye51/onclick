@@ -4,6 +4,7 @@
 <mapper namespace="com.onclick.app.persistence.TaskService_Mapper">
 
 <select id="taskDashSelectAll" parameterType="Integer" resultType="tv">
+<![CDATA[
 SELECT *
 FROM(
 	 SELECT tuidx,
@@ -21,6 +22,7 @@ FROM(
 	 ORDER BY tudate DESC
      )c
 LIMIT 0,5
+]]>
 </select>
 
 <select id="taskSelectOne" parameterType="Integer" resultType="tv">

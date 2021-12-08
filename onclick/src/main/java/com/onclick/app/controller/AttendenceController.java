@@ -42,10 +42,13 @@ public class AttendenceController {
 		int sidx = (Integer)session.getAttribute("sidx");
 		//강의 이름 가져오기(대시보드-강의목록)
 		ArrayList<EnrollDTO> stuLecList = ss.stuLecSelectAll(sidx);
+		
 		model.addAttribute("stuLecList", stuLecList);
 		//동영상 출석
 		ArrayList<VideoDTO> vlist = as.stuVideoAttend(lidx, sidx);
 		model.addAttribute("vlist", vlist);
+		
+//		System.out.println("stuAttendvlist:"+vlist.size());
 		
 		return "student/stuVideoAttend";
 	}
