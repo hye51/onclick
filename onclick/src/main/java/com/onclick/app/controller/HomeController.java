@@ -115,8 +115,8 @@ public class HomeController {
 		} else if(session.getAttribute("sidx")==null && session.getAttribute("pidx")!=null) {
 			int pidx = (Integer)session.getAttribute("pidx");
 			//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
-			ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
-			model.addAttribute("alist", alist);
+			ArrayList<LecVO> alist2 = ls.lecSelectAll(pidx);
+			model.addAttribute("alist2", alist2);
 		}
 		
 		//강의 - 학생 목록 

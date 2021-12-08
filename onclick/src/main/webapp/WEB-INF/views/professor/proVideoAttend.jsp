@@ -176,25 +176,25 @@
 									    <td><%if(vdto.getVattendence().equals("-")) {%>
 										    	-
 										    <%} else if(vdto.getVattendence().equals("Y")) {%>
-										    	출석
+										    	<p style="color:blue">출석</p>
 											<%} else { %>
-											        결석
+											        <p style="color:red">결석</p>
 											<%}%>
 										</td>
 									    <td><%if(vdto.getVattendence2().equals("-")) {%>
 										    	-
 										    <%} else if(vdto.getVattendence2().equals("Y")) {%>
-										    	출석
+										    	<p style="color:blue">출석</p>
 											<%} else { %>
-											        결석
+											        <p style="color:red">결석</p>
 											<%}%>
 										</td>
 										<td><%if(vdto.getVattendence3().equals("-")) {%>
 										    	-
 										    <%} else if(vdto.getVattendence3().equals("Y")) {%>
-										    	출석
+										    	<p style="color:blue">출석</p>
 											<%} else { %>
-											        결석
+											    <p style="color:red">결석</p>
 											<%}%>
 										</td>
 									 </tr>
