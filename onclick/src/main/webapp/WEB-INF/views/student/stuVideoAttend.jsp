@@ -1,3 +1,4 @@
+<%@page import="org.springframework.util.ObjectUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
@@ -172,32 +173,21 @@
 								<%for(int i=1; i<16; i++) {%>
 									<tr>
 										<th scope="row" style="vartical-align:center;"><h5><%=i %></h5></th>
-									    <td><%if(!vlist.isEmpty()){
-									    		for(int j=0; j<3; j++) {
-										    		if(vlist.get(j).getCweek()!=0) {
-										    			if(vlist.get(j).getCweek()==i){%>
-										    			<p><%=vlist.get(j).getCname() %></p>
-										    			<%}
-										    		} else {%>
-										    			<p>-</p>
-										    		<% }
-									    		}
+									    <td><%for(VideoDTO vdto : vlist) {
+									    		if(vdto.getCweek()==i) {
+									    			%>
+									    			<p><%=vdto.getCname() %></p>
+									    		<%}
 									    	}%>
-								    		</td>
-									    <td><%if(!vlist.isEmpty()){
-										    	for(int j=0; j<3; j++) {
-										    		if(vlist.get(j).getCweek()!=0) {
-										    			if(vlist.get(j).getCweek()==i) {
-										    				if(vlist.get(j).getVattendence().equals("Y")) {%>
+								    	</td>
+									    <td><%for(VideoDTO vdto : vlist) {
+									    		if(vdto.getCweek()==i) {
+									    			if(vdto.getVattendence().equals("Y")) {%>
 										    					<p style="color:blue">O</p>
 										    				<%} else { %>
 										    					<p style="color:red">X</p>
 										    				<%} %>
-										    			<%} 
-										    		} else { %>
-										    			<p>-</p>
-										    	<%	}
-										    	}
+									    		<%}
 									    	}%>
 									    </td>
 									</tr>

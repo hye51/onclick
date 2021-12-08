@@ -99,7 +99,9 @@ FROM(
 	WHERE lidx=#{lidx}
 	AND DATE_FORMAT(cfin, '%y/%m/%d') >= DATE_FORMAT(now(), '%y/%m/%d')
 	AND cdelyn='N'
-	ORDER BY cfin
+	AND clive='N'
+	AND csta <= now()
+	ORDER BY cfin, cseq
 	)c
 LIMIT 0,5]]>
 </select>
@@ -112,7 +114,10 @@ FROM(
 	JOIN onclick_enroll b
 	ON a.lidx = b.lidx
 	WHERE b.sidx=#{sidx}
+	AND a.csta <= now()
 	AND a.cdelyn='N'
+	AND clive='N'
+	ORDER BY cfin, cseq
     )c
 LIMIT 0,5]]>
 </select>
@@ -126,6 +131,8 @@ FROM(
 	ON a.cidx = b.cidx
 	WHERE a.cdelyn='N'
 	AND sidx=#{sidx}
+	AND a.csta <= now()
+	AND clive='N'
 	ORDER BY b.vlast DESC
      )c
 LIMIT 0,5]]>
