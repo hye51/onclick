@@ -75,7 +75,7 @@
 		      </ul> 			     
         </nav>
     <% } else if(session.getAttribute("pidx") != null && session.getAttribute("sidx") == null){ 
-    	ArrayList<LecVO> alist2 = (ArrayList<LecVO>)request.getAttribute("alist"); %>
+    	ArrayList<LecVO> alist2 = (ArrayList<LecVO>)request.getAttribute("alist2"); %>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="<%=request.getContextPath()%>/">
