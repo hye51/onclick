@@ -23,12 +23,12 @@
 		)
 </insert>
 
-<insert id="stuVideoDefault" parameterType="Integer" useGeneratedKeys="true" keyProperty="vidx">
+<insert id="stuVideoDefault" parameterType="Integer" useGeneratedKeys="true">
 INSERT INTO onclick_videoattendence(sidx,cidx)
 SELECT sidx, #{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>	
 
-<insert id="stuLiveDefault" parameterType="Integer" useGeneratedKeys="true" keyProperty="aidx">
+<insert id="stuLiveDefault" parameterType="Integer" useGeneratedKeys="true">
 INSERT INTO onclick_attendence(sidx,cidx)
 SELECT sidx,#{0} FROM onclick_enroll WHERE lidx=#{1}
 </insert>
