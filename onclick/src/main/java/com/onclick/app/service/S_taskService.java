@@ -33,6 +33,6 @@ public interface S_taskService {
 	public int stuExFileDelete(int tidx, int fidx);
 	
 	//학생 과제 정보 가져가기(학생 과제 목록)
-	public ArrayList<S_taskDTO> stuTask(int sidx);
+	public ArrayList<S_taskDTO> stuTask(int sidx, int lidx);
 	
 }

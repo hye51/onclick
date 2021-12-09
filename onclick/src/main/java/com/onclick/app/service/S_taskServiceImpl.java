@@ -97,10 +97,10 @@ public class S_taskServiceImpl implements S_taskService{
 
 
 	@Override
-	public ArrayList<S_taskDTO> stuTask(int sidx) {
+	public ArrayList<S_taskDTO> stuTask(int sidx, int lidx) {
 		//학생 과제정보 가져가기(학생 과제 목록)
 		S_taskService_Mapper stsm = sqlSession.getMapper(S_taskService_Mapper.class);
-		ArrayList<S_taskDTO> stlist = stsm.stuTask(sidx);
+		ArrayList<S_taskDTO> stlist = stsm.stuTask(sidx,lidx);
 		
 		return stlist;
 	}

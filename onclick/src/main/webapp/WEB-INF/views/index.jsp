@@ -16,10 +16,8 @@
          <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark p-3">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-4" href="index.html">학교로고  | ONclick</a>
-         </nav>   
-      <div id="univPhoto" class="bg-secondary" >
-      		<h4 class="text-light">학교사진</h4>
-      </div>
+         </nav>
+      	<img class="bg-dark" alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex4.jpg" id="photo">
       <div id="layoutLogin" class="position-absolute top-50 end-0 translate-middle-y bg-light" >
 		<main>
                <div id="layoutLogin_contents" style=" border-radius:0px" >

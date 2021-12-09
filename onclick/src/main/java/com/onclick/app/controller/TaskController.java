@@ -148,7 +148,7 @@ public class TaskController { //교수 과제 컨트롤러
 			int sidx = (Integer)session.getAttribute("sidx");
 			
 			//학생 과제 정보 세션에 담기
-			ArrayList<S_taskDTO> stlist = sts.stuTask(sidx);
+			ArrayList<S_taskDTO> stlist = sts.stuTask(sidx,lidx);
 			session.setAttribute("stlist", stlist);
 		}
 	
