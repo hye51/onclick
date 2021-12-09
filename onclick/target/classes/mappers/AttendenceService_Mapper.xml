@@ -10,6 +10,7 @@ WHERE a.cidx=b.cidx
 AND b.sidx=c.sidx
 AND b.sidx=#{1}
 AND a.lidx=#{0}
+AND a.cdelyn='N'
 ORDER BY a.cweek, a.cseq
 </select>
 
@@ -30,6 +31,7 @@ WHERE a.cidx=b.cidx
 AND b.sidx=c.sidx
 AND a.cweek=#{1}
 AND a.lidx=#{0}
+AND a.cdelyn='N'
 ORDER BY a.cweek, a.cseq
 </select>
 

@@ -4,8 +4,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%LecVO lv = (LecVO)session.getAttribute("lv");
-	session.setAttribute("lidx", lv.getLidx());%>
+<%LecVO lv = (LecVO)session.getAttribute("lv");%>
 <%Criteria cri = new Criteria(); %>
 <%PageMaker pm = (PageMaker)request.getAttribute("pm"); %>
 <%ArrayList<TaskVO> tlist = (ArrayList<TaskVO>)request.getAttribute("tlist");  %>

@@ -61,7 +61,8 @@ SELECT a.*, b.tuname,
 FROM onclick_stutask a, onclick_taskupload b
 WHERE a.tuidx = b.tuidx
 AND b.tudelyn='N'
-AND a.sidx=#{sidx}
+AND a.sidx=#{0}
+AND b.lidx=#{1}
 ORDER BY b.tudate DESC
 </select>
 
