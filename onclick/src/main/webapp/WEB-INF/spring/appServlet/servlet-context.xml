@@ -26,7 +26,7 @@
 	</beans:bean>	
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="C:/java exercise/dev_html/workspace/onclick/onclick/onclick/uploadFiles" />
+		<beans:constructor-arg value="C:/image/uploadFile" />
 	</beans:bean>
 	
 		<beans:bean id = "loginInterceptor" class = "com.onclick.app.Interceptor.LoginInterceptor"></beans:bean>

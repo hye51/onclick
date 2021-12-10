@@ -115,6 +115,7 @@ FROM(
 	ON a.lidx = b.lidx
 	WHERE b.sidx=#{sidx}
 	AND a.csta <= now()
+	AND a.cfin >= now()
 	AND a.cdelyn='N'
 	AND clive='N'
 	ORDER BY cfin, cseq

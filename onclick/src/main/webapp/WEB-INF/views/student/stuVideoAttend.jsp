@@ -182,7 +182,7 @@
 								    	</td>
 									    <td><%for(VideoDTO vdto : vlist) {
 									    		if(vdto.getCweek()==i) {
-									    			if(vdto.getVattendence().equals("Y")) {%>
+									    			if(vdto.getVattendence().equals("Y")&&vdto.getVlevel()!=0) {%>
 										    					<p style="color:blue">O</p>
 										    				<%} else { %>
 										    					<p style="color:red">X</p>

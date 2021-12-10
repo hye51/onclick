@@ -27,7 +27,7 @@ public class FileController {
 		String originName = (String)fileDown.get("FORIGINNAME");
 		
 		//파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:/java exercise/dev_html/workspace/onclick/onclick/onclick/uploadFiles/"+savedName));
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:/image/uploadFile"+savedName));
 		
 		response.setContentType("application/octet-stream");
 		response.setContentLength(fileByte.length);
