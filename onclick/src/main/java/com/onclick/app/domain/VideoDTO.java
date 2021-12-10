@@ -12,7 +12,15 @@ public class VideoDTO {
 	private int sidx;
 	private String vattendence;
 	private String vattendence2;
+	private int vlevel;
 	
+	
+	public int getVlevel() {
+		return vlevel;
+	}
+	public void setVlevel(int vlevel) {
+		this.vlevel = vlevel;
+	}
 	public String getVattendence2() {
 		return vattendence2;
 	}

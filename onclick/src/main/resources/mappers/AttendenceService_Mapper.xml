@@ -4,7 +4,7 @@
 <mapper namespace="com.onclick.app.persistence.AttendenceService_Mapper">
 
 <select id="stuVideoAttend" parameterType="Integer" resultType="vdto">
-SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.vattendence, c.sname
+SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.vattendence, b.vlevel, c.sname
 FROM onclick_class a, onclick_videoattendence b, onclick_student c
 WHERE a.cidx=b.cidx
 AND b.sidx=c.sidx
@@ -25,7 +25,7 @@ ORDER BY a.cweek, a.cseq
 </select>
 
 <select id="proVideoAttend" parameterType="Integer" resultType="vdto">
-SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.vattendence, c.sname
+SELECT a.lidx, a.cidx, a.cname, a.cweek, a.cseq, a.clive, b.sidx, b.vattendence, b.vlevel, c.sname
 FROM onclick_class a, onclick_videoattendence b, onclick_student c
 WHERE a.cidx=b.cidx
 AND b.sidx=c.sidx

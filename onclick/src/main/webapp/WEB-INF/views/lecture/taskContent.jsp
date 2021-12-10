@@ -246,7 +246,7 @@
 							    		<td colspan="3" style="border-bottom:0;"></td>
 							    	<%} else { 
 							    		FileVO fv = (FileVO)session.getAttribute("fv");%>
-							    		<td colspan="3" style="border-bottom:0"><a href="<%=request.getContextPath()%>/taskFileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
+							    		<td colspan="3" style="border-bottom:0"><a href="<%=request.getContextPath()%>/fileDownload.do?fidx=<%=fv.getFidx()%>"><%=fv.getForiginname() %></a></td>
 							    	<%} %>
 							    </tr>
 							    <tr>
