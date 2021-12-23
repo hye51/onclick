@@ -4,6 +4,7 @@ package com.onclick.app.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +57,17 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="/lecPlan.do")
-	public String classPlan(HttpSession session, Model model) {
-		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
-		int pidx = (Integer)session.getAttribute("pidx");
-		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
-		model.addAttribute("alist", alist);
+	public String classPlan(HttpSession session, Model model, RedirectAttributes rttr, HttpServletRequest request) {
+		rttr.addFlashAttribute("hold", "개발 중입니다.");
 		
-		return "lecture/lecPlan";
+	    String referer = request.getHeader("Referer");
+	    return "redirect:"+ referer;
+		//교수 사번으로 강의 테이블에서 강의 목록 가져오기 
+//		int pidx = (Integer)session.getAttribute("pidx");
+//		ArrayList<LecVO> alist = ls.lecSelectAll(pidx);
+//		model.addAttribute("alist", alist);
+		
+//		return "lecture/lecPlan";
 	}
 	
 	@RequestMapping(value="/lecUploadAction.do")
