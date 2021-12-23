@@ -159,7 +159,7 @@
 								<div class="btn-group" role="group" style="float:right;" >
 								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classUpdate.do?cidx=<%=cv.getCidx()%>">수정</a>
 								  <a role="button" class="btn btn-primary" href="<%=request.getContextPath()%>/classDelete.do?cidx=<%=cv.getCidx()%>&lidx=<%=cv.getLidx()%>">삭제</a>
-								  <button type="button" class="btn btn-primary" onclick="location.href='<%=request.getContextPath()%>/lecList.do?lidx=<%=lv.getLidx()%>'">목록</button>
+								  <button type="button" class="btn btn-primary" onclick="location.href='<%=request.getContextPath()%>/proLecList.do?lidx=<%=lv.getLidx()%>' ">목록</button>
 								</div>
 						    </div>
 						    <div class="col">

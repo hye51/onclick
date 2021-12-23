@@ -54,6 +54,7 @@ font-weight: 200;
             <input type="radio" name="vlevel" value="3"> 보통 
             <input type="radio" name="vlevel" value="4"> 어려움  
             <input type="radio" name="vlevel" value="5"> 매우 어려움  
+            <input type="textarea" name="vcontents" value="vcontents" placeholder="기타 전달 할 말이 있으면 작성해주세요">
             <br>
             <button type="button" class="btn btn-warning mt-4" style=" padding: 10px 10px;"onclick="check(); return false;">제출</button>
         	</form>
@@ -75,6 +76,10 @@ function check(){
 	
 	if(fm.vlevel.value==""){
 		fm.vlevel.focus();
+		alert("강의 평가를 해주세요.");
+		return false;
+	}else if(fm.vcontents.value==""){
+		fm.vcontents.focus();
 		alert("강의 평가를 해주세요.");
 		return false;
 	}
