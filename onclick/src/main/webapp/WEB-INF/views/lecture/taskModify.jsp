@@ -185,7 +185,7 @@
 						</table>
 						<div class="form-row text-center mb-2">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="history.back(-1)">취소</button>
-							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check(); return false;">완료</button>
+							<button type="button" class="btn btn-secondary btn-sm" style="width:80px" onclick="check();return false;">완료</button>
                     	</div>
                     	</form>
                 	</div>	
@@ -262,7 +262,6 @@
 				fm.enctype="multipart/form-data";
 				fm.submit();
 				
-				return;
 			};
         </script>
     </body>
