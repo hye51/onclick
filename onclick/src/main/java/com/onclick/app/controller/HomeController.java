@@ -3,6 +3,7 @@ package com.onclick.app.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/siteMap.do")
-	public String siteMap() {
-		//학생,교수 ID/PW 찾기 화면
-		return "siteMap";
+	public String siteMap(RedirectAttributes rttr, HttpServletRequest request) {
+		rttr.addFlashAttribute("hold", "개발 중입니다.");
+	    String referer = request.getHeader("Referer");
+	    return "redirect:"+ referer;
 	}
 	
 	@RequestMapping(value="/lecHome.do")
