@@ -17,7 +17,7 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-4" href="index.html">학교로고  | ONclick</a>
          </nav>
-      	<img class="bg-dark" alt="" src="<%=request.getContextPath() %>/resources/assets/img/ex4.jpg" id="photo">
+      	<img class="bg-dark" style="width:100% ; height:100%"alt="" src="<%=request.getContextPath() %>/resources/assets/img/univ.PNG" id="photo">
       <div id="layoutLogin" class="position-absolute top-50 end-0 translate-middle-y bg-light" >
 		<main>
                <div id="layoutLogin_contents" style=" border-radius:0px" >
@@ -97,6 +97,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath() %>/resources/js/scripts.js"></script>
     	<script type="text/javascript">
+    	
+    	alert("(학생)ID:2222, PWD:2222");
+    	alert("(교수)ID:1111, PWD:1111");
     	
 	        var msg = '${loginNok}';
 	        if(msg != ""){

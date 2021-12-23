@@ -264,6 +264,8 @@ public class TaskController { //교수 과제 컨트롤러
 		TaskVO tv = ts.taskSelectOne(tuidx);
 		session.setAttribute("tv", tv);
 		
+		System.out.println("tv:"+tv);
+		
 		if((Integer)tv.getFidx() != null) {
 			FileVO fv = fs.fileSelectAll(tv.getFidx());	
 			session.setAttribute("fv", fv);
